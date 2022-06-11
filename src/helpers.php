@@ -1,0 +1,38 @@
+<?php declare(strict_Types=1);
+
+if (!function_exists('exception_handler')) {
+    function exception_handler($e): void
+    {
+        dump((new ReflectionObject($e))->getshortName());
+        dump("Message: {$e->getMessage()}");
+        dump("File: {$e->getFile()}");
+    }
+}
+if (!function_exists('error_handler')) {
+    function error_handler(int $errno, string $errstr, string $errfile = '', int $errline = 0, array $errcontext = []): void
+    {
+        dump("Error {$errstr}");
+        dump("File: {$errfile}");
+        dump("Line: {$errline}");
+
+        die;
+    }
+}
+if (!function_exists('dd')) {
+    function dd(mixed $data): void
+    {
+        dump($data);
+
+        die;
+    }
+}
+if (!function_exists('dump')) {
+    function dump(mixed $data): void
+    {
+        $is_cli = php_sapi_name() === 'cli';
+
+        print($is_cli ? PHP_EOL : '<pre>');
+        is_null($data) || is_bool($data) ? var_dump($data) : print_r($data);
+        print($is_cli ? PHP_EOL : '</pre>');
+    }
+}
