@@ -1,5 +1,18 @@
 <?php declare(strict_Types=1);
 
+if (!function_exists('app')) {
+    function app(): mixed
+    {
+        $app = Automation\Core\Application::instance();
+
+        if (0 === func_num_args()) {
+            return $app;
+        }
+        if (0 < func_num_args()) {
+            return $app->resolve(...func_get_args());
+        }
+    }
+}
 if (!function_exists('exception_handler')) {
     function exception_handler($e): void
     {
