@@ -8,4 +8,12 @@ $app = Automation\Core\Application::instance();
 
 $app->run();
 
-$app->resolve('aaa');
+class Dependency
+{
+
+}
+
+$app->resolve(function (string $name, Dependency $dependency): void {
+    dump($name);
+    dump($dependency);
+}, ['rochdi']);

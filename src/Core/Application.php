@@ -4,7 +4,7 @@ namespace Automation\Core;
 
 use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject;
 use Dotenv\Dotenv;
-use Automation\Exceptions\ClassNotFoundException;
+use Automation\Exceptions\{ClassNotFoundException, DependencyNotFoundException};
 
 final class Application
 {
@@ -49,11 +49,47 @@ final class Application
             
             $parameters = $reflector?->getConstructor()?->getParameters();
         }
+        if ($abstract instanceof Closure) {
+            $reflector = new ReflectionFunction($abstract);
+
+            $parameters = $reflector?->getParameters();
+        }
+
+        $dependencies = array_merge($params, $this->resolveDependencies($parameters ?? []));
+
+        $resolved = is_callable($abstract) ? call_user_func($abstract, ...$dependencies) : new $abstract(...$dependencies);
+
+        if (is_string($abstract)) {
+            $this->instances[] = $resolved;
+
+            if ($share) $this->shared[$abstract] = $resolved;
+        }
+
+        return $resolved;
     }
 
     private function resolveDependencies(array $params): array
     {
         $results = [];
+
+        foreach ($params as $param):
+
+            if ($param->hasType()) {
+                $param_name = $param->getName();
+                $param_type = $param->getType();
+
+                if (!$param_type->isBuiltIn()) {
+                    $type_name = $param_type->getName();
+
+                    if (!class_exists($type_name)) {
+                        throw new DependencyNotFoundException($type_name);
+                    }
+
+                    $results[$param_name] = $this->resolve($type_name);
+                }
+            }
+
+        endforeach;
 
         return $results;
     }
