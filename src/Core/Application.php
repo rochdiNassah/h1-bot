@@ -4,6 +4,7 @@ namespace Automation\Core;
 
 use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject;
 use Dotenv\Dotenv;
+use Automation\Exceptions\ClassNotFoundException;
 
 final class Application
 {
@@ -37,7 +38,16 @@ final class Application
     public function resolve(string|object|array|callable $abstract, array $params = [], bool|int $share = false): mixed
     {
         if (is_string($abstract)) {
+            if (array_key_exists($abstract, $this->shared)) {
+                return $this->shared[$abstract];
+            }
+            if (!class_exists($abstract)) {
+                throw new ClassNotFoundException($abstract);
+            }
+
+            $reflector = new ReflectionClass($abstract);
             
+            $parameters = $reflector?->getConstructor()?->getParameters();
         }
     }
 

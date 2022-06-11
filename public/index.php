@@ -7,3 +7,5 @@ require PROJECT_ROOT.'/vendor/autoload.php';
 $app = Automation\Core\Application::instance();
 
 $app->run();
+
+$app->resolve('aaa');
