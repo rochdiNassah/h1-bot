@@ -6,6 +6,9 @@ if (!function_exists('exception_handler')) {
         dump((new ReflectionObject($e))->getshortName());
         dump("Message: {$e->getMessage()}");
         dump("File: {$e->getFile()}");
+        dump("Line: {$e->getLine()}");
+
+        die;
     }
 }
 if (!function_exists('error_handler')) {
