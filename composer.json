@@ -1,13 +1,15 @@
 {
     "autoload": {
         "psr-4": {
-            "Automation\\": "src/"
+            "Automation\\": "src/",
+            "Tests\\": "tests/"
         },
         "files": [
             "src/Core/helpers.php"
         ]
     },
     "require": {
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "phpunit/phpunit": "^9.5"
     }
 }

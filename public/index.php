@@ -7,13 +7,3 @@ require PROJECT_ROOT.'/vendor/autoload.php';
 $app = Automation\Core\Application::instance();
 
 $app->run();
-
-class Dependency
-{
-
-}
-
-$app->resolve(function (string $name, Dependency $dependency): void {
-    dump($name);
-    dump($dependency);
-}, ['rochdi']);
