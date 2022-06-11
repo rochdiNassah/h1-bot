@@ -4,6 +4,6 @@ define('PROJECT_ROOT', dirname(__DIR__));
 
 require PROJECT_ROOT.'/vendor/autoload.php';
 
-$app = Automation\Application::instance();
+$app = Automation\Core\Application::instance();
 
 $app->run();

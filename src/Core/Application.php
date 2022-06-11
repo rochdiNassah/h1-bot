@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Automation;
+namespace Automation\Core;
 
 use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject;
 use Dotenv\Dotenv;
@@ -8,6 +8,10 @@ use Dotenv\Dotenv;
 final class Application
 {
     private static $instance;
+
+    private array $instances = [];
+
+    private array $shared = [];
 
     public static function instance(bool|int $recreate = false): self
     {
@@ -26,5 +30,21 @@ final class Application
         set_exception_handler('exception_handler');
 
         Dotenv::createImmutable(PROJECT_ROOT)->load();
+
+        
+    }
+
+    public function resolve(string|object|array|callable $abstract, array $params = [], bool|int $share = false): mixed
+    {
+        if (is_string($abstract)) {
+            
+        }
+    }
+
+    private function resolveDependencies(array $params): array
+    {
+        $results = [];
+
+        return $results;
     }
 }
