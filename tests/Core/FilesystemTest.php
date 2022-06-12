@@ -6,29 +6,20 @@ use Automation\Core\Filesystem;
 
 final class FilesystemTest extends TestCase
 {
-    public function test_path_is_exists(): void
+    public function test_path_existence(): void
     {
         $fs = app(Filesystem::class);
 
-        fopen((string) $fs->to('tests/Core/foo'), 'x');
+        $path = 'tests/Core/foo';
 
-        $this->assertTrue($fs->to('tests/Core')->exists('foo'));
+        fopen((string) $fs->to($path), 'w+');
 
-        unlink((string) $fs->to('tests/Core/foo'));
+        $this->assertTrue($fs->exists($path));
+        $this->assertFalse($fs->missing($path));
 
-        $this->assertFalse($fs->to('tests/Core')->exists('foo'));
-    }
+        unlink($path);
 
-    public function test_path_is_missing(): void
-    {
-        $fs = app(Filesystem::class);
-
-        fopen((string) $fs->to('tests/Core/bar'), 'x');
-
-        $this->assertFalse($fs->to('tests/Core')->missing('bar'));
-
-        unlink((string) $fs->to('tests/Core/bar'));
-
-        $this->assertTrue($fs->to('tests/Core')->missing('bar'));
+        $this->assertFalse($fs->exists($path));
+        $this->assertTrue($fs->missing($path));
     }
 }
