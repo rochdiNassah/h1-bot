@@ -2,12 +2,12 @@
 
 namespace Tests\Core;
 
+use Automation\Core\Filesystem;
+
 final class FilesystemTest extends TestCase
 {
     public function test_is_exists(): void
     {
-        $fs = $this->app->filesystem;
-
-        $this->assertTrue($fs->exists('composer.json'));
+        dump((string) app(Filesystem::class));
     }
 }

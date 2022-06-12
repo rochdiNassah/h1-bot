@@ -7,5 +7,3 @@ use Automation\Core\Facades\Filesystem;
 $app = Automation\Core\Application::instance();
 
 $app->run();
-
-dump(Filesystem::exists('compfoser.json'));
