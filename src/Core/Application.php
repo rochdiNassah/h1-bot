@@ -14,6 +14,8 @@ final class Application
 
     private array $shared = [];
 
+    private array $bindings = [];
+
     private function __construct(
 
     ) {
@@ -38,7 +40,9 @@ final class Application
         set_error_handler('error_handler');
         set_exception_handler('exception_handler');
 
-        Dotenv::createImmutable(PROJECT_ROOT)->load();
+        $this->bind('project_root', dirname(__DIR__, 2));
+
+        Dotenv::createImmutable($this->resolve('project_root'))->load();
 
         $this->instantiateCoreClasses();
     }
@@ -54,7 +58,7 @@ final class Application
     {
         $core_aliases = $this->coreAliases();
 
-        $this->resolve($core_aliases['filesystem'], ['project_root' => PROJECT_ROOT], share: true);
+        $this->resolve($core_aliases['filesystem'], ['project_root' => $this->resolve('project_root')], share: true);
     }
 
     public function __get(string $alias): mixed
@@ -68,11 +72,25 @@ final class Application
         throw new Exception(sprintf('"%s" is not a core alias.', $alias));
     }
 
+    public function bind(string $abstract, mixed $concrete): void
+    {
+        $this->bindings[$abstract] = $concrete;
+    }
+
     public function resolve(string|object|array|callable $abstract, array $params = [], bool|int $share = false): mixed
     {
         if (is_string($abstract)) {
             if (array_key_exists($abstract, $this->shared)) {
                 return $this->shared[$abstract];
+            }
+            if (array_key_exists($abstract, $this->bindings)) {
+                $abstract = $this->bindings[$abstract];
+
+                if (is_string($abstract)) {
+                    return $abstract;
+                } else {
+                    return $this->resolve($abstract);
+                }
             }
             if (!class_exists($abstract)) {
                 throw new ClassNotFoundException($abstract);
