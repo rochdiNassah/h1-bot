@@ -2,7 +2,7 @@
 
 namespace Automation\Core;
 
-use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType;
+use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType, ReflectionNamedType, ReflectionParameter;
 use Dotenv\Dotenv;
 use Automation\Exceptions\{ClassNotFoundException, DependencyNotFoundException};
 
@@ -64,7 +64,7 @@ final class Application
     {
         $core_aliases = $this->coreAliases();
 
-        $this->resolve($core_aliases['filesystem'], ['project_root' => $this->resolve('project_root')], share: true);
+        $this->resolve($core_aliases['filesystem'], ['project_root' => app('project_root')], share: true);
         $this->resolve($core_aliases['request'], share: true);
 
         if (!$running_in_cli_mode) {
@@ -135,43 +135,28 @@ final class Application
         $results = [];
 
         foreach ($params as $param):
-            if ($param->hasType()) {
-                $param_name = $param->getName();
-                $param_type = $param->getType();
-
-                if ($param_type instanceof ReflectionUnionType):
-                    $types = $param_type->getTypes();
-
-                    foreach ($types as $type) {
-                        if (!$type->isBuiltIn()) {
-                            $type_name = $type->getName();
-
-                            $results[$param_name] = $this->makeDependency($type_name);
-
-                            continue 2;
+            if ($param instanceof ReflectionParameter) {
+                if ($param->hasType()) {
+                    $param_name = $param->getName();
+                    $param_type = $param->getType();
+    
+                    if ($param_type instanceof ReflectionNamedType) {
+                        if (!$param_type->isBuiltIn()) {
+                            $type_name = $param_type->getName();
+    
+                            if (!class_exists($type_name)) {
+                                throw new DependencyNotFoundException($type_name);
+                            }
+    
+                            $results[$param_name] = $this->resolve($type_name);
+    
+                            continue;
                         }
-                    }
-                endif;
-
-                if ($param_type instanceof \ReflectionNamedType) {
-                    if (!$param_type->isBuiltIn()) {
-                        $type_name = $param_type->getName();
-
-                        $results[$param_name] = $this->makeDependency($type_name);
                     }
                 }
             }
         endforeach;
 
         return $results;
-    }
-
-    private function makeDependency(string $type_name): mixed
-    {
-        if (!class_exists($type_name)) {
-            throw new DependencyNotFoundException($type_name);
-        }
-
-        return $this->resolve($type_name);
     }
 }

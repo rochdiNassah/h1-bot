@@ -10,8 +10,8 @@ class Filesystem implements FilesystemInterface
     private string $current_path;
 
     public function __construct(
-        private Application $app,
-        private string $project_root
+        private string $project_root,
+        private Application $app
     ) {
         $this->current_path = $project_root;
     }

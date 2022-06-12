@@ -7,5 +7,3 @@ use Automation\Core\Facades\{Request, Filesystem};
 $app = Automation\Core\Application::instance();
 
 $app->run();
-
-Request::foo();
