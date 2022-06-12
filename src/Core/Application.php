@@ -31,8 +31,6 @@ final class Application
         set_exception_handler('exception_handler');
 
         Dotenv::createImmutable(PROJECT_ROOT)->load();
-
-        
     }
 
     public function resolve(string|object|array|callable $abstract, array $params = [], bool|int $share = false): mixed
