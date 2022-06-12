@@ -42,6 +42,10 @@ final class ApplicationTest extends TestCase
 class Dependency
 {
     public function __construct(
+        private DependencyTwo $dependency_two,
+        private DependencyThree $dependency_three,
+        private DependencyFour $dependency_four,
+        private DependencyFive $dependency_five,
         private string $a = 'foo',
         private string $b = 'bar',
         private string $c = 'baz'
@@ -51,6 +55,22 @@ class Dependency
 
     public function __toString(): string
     {
+        return (string) $this->dependency_two;
+    }
+}
+
+class DependencyTwo {
+    public function __toString(): string
+    {
         return '55';
     }
 }
+class DependencyThree {}
+class DependencyFour {
+    public function __construct(
+        private DependencyTwo $dependency_two
+    ) {
+
+    }
+}
+class DependencyFive {}
