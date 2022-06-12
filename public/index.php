@@ -10,4 +10,4 @@ $app = Automation\Core\Application::instance();
 
 $app->run();
 
-dump(Filesystem::exists('composer.json'));
+dump(Filesystem::to('composer.json')->exists());

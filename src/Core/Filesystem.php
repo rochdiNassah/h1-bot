@@ -7,19 +7,26 @@ use Automation\Core\Application;
 
 class Filesystem implements FilesystemInterface
 {
+    private string $current_path;
+
     public function __construct(
         private Application $app,
         private string $project_root
     ) {
-
+        $this->current_path = $project_root;
     }
 
-    public function exists(string $path): bool
+    public function __toString(): string
     {
-        return true;
+        return $this->current_path;
     }
 
-    public function missing(string $path): bool
+    public function exists(string $path = null): bool
+    {
+        return file_exists((string) $this.$path);
+    }
+
+    public function missing(string $path = null): bool
     {
         return !$this->exists();
     }
@@ -29,9 +36,13 @@ class Filesystem implements FilesystemInterface
         return true;
     }
 
-    public function to(string $path): string
+    public function to(string $path): self
     {
-        return '';
+        $path = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->project_root, $path));
+
+        $this->current_path = $path;
+
+        return $this;
     }
 
     public function rename(string $path): bool

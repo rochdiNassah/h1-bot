@@ -4,11 +4,11 @@ namespace Automation\Interfaces;
 
 interface FilesystemInterface
 {
-    public function exists(string $path): bool;
+    public function exists(string $path = null): bool;
 
-    public function missing(string $path): bool;
+    public function missing(string $path = null): bool;
 
-    public function to(string $path): string;
+    public function to(string $path): self;
 
     public function remove(string $path, bool|int $recursive = false): bool;
 
