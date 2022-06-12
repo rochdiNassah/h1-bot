@@ -10,4 +10,5 @@ $app = Automation\Core\Application::instance();
 
 $app->run();
 
-dump(Filesystem::to('composer.json')->exists());
+dump(Filesystem::to('public')->to('inddex.php')->exists());
+dump(Filesystem::to('public')->to('index.php')->exists());

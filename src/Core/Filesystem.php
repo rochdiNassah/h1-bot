@@ -18,7 +18,11 @@ class Filesystem implements FilesystemInterface
 
     public function __toString(): string
     {
-        return $this->current_path;
+        $current_path = $this->current_path;
+
+        $this->current_path = $this->project_root;
+
+        return $current_path;
     }
 
     public function exists(string $path = null): bool
@@ -38,7 +42,7 @@ class Filesystem implements FilesystemInterface
 
     public function to(string $path): self
     {
-        $path = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->project_root, $path));
+        $path = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->current_path, $path));
 
         $this->current_path = $path;
 
