@@ -44,7 +44,7 @@ final class Application
 
         Dotenv::createImmutable($this->resolve('project_root'))->load();
 
-        $this->instantiateCoreClasses();
+        $this->instantiateCoreClasses(php_sapi_name() === 'cli');
     }
 
     public function coreAliases(): array
@@ -54,11 +54,15 @@ final class Application
         ];
     }
 
-    private function instantiateCoreClasses(): void
+    private function instantiateCoreClasses($running_in_cli_mode = false): void
     {
         $core_aliases = $this->coreAliases();
 
         $this->resolve($core_aliases['filesystem'], ['project_root' => $this->resolve('project_root')], share: true);
+
+        if (!$running_in_cli_mode) {
+            
+        }
     }
 
     public function __get(string $alias): mixed
