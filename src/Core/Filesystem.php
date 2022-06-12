@@ -25,14 +25,16 @@ class Filesystem implements FilesystemInterface
         return $current_path;
     }
 
-    public function exists(string $path = null): bool
+    public function exists(string $path = ''): bool
     {
-        return file_exists((string) $this.$path);
+        $path = $this->to($path);
+
+        return file_exists((string) $path);
     }
 
     public function missing(string $path = null): bool
     {
-        return !$this->exists();
+        return !$this->exists($path);
     }
 
     public function remove(string $path, bool|int $recursive = false): bool
