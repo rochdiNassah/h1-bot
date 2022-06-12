@@ -4,8 +4,10 @@ define('PROJECT_ROOT', dirname(__DIR__));
 
 require PROJECT_ROOT.'/vendor/autoload.php';
 
+use Automation\Core\Facades\Filesystem;
+
 $app = Automation\Core\Application::instance();
 
 $app->run();
 
-dump($app->filesystem->exists('composer.json'));
+dump(Filesystem::exists('composer.json'));
