@@ -3,9 +3,17 @@
 namespace Automation\Core;
 
 use Automation\Interfaces\FilesystemInterface;
+use Automation\Core\Application;
 
 class Filesystem implements FilesystemInterface
 {
+    public function __construct(
+        private Application $app,
+        private string $project_root
+    ) {
+
+    }
+
     public function exists(string $path): bool
     {
         return true;

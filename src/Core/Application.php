@@ -14,6 +14,14 @@ final class Application
 
     private array $shared = [];
 
+    private function __construct(
+
+    ) {
+        $this->shared[__CLASS__] = $this;
+    }
+
+    private function __clone() {}
+
     public static function instance(bool|int $recreate = false): self
     {
         $i = static::$instance;
@@ -46,7 +54,18 @@ final class Application
     {
         $core_aliases = $this->coreAliases();
 
-        $this->resolve($core_aliases['filesystem'], share: true);
+        $this->resolve($core_aliases['filesystem'], ['project_root' => PROJECT_ROOT], share: true);
+    }
+
+    public function __get(string $alias): mixed
+    {
+        $aliases = $this->coreAliases();
+
+        if (array_key_exists($alias,$aliases )) {
+            return $this->shared[$aliases[$alias]];
+        }
+
+        throw new Exception(sprintf('"%s" is not a core alias.', $alias));
     }
 
     public function resolve(string|object|array|callable $abstract, array $params = [], bool|int $share = false): mixed
