@@ -4,8 +4,8 @@ namespace Automation\Exceptions;
 
 class DependencyNotFoundException extends ClassNotFoundException
 {
-    public function __construct(string $dependeny)
+    public function __construct(string $dependency)
     {
-        parent::__construct($dependeny);
+        parent::__construct($dependency);
     }
 }
