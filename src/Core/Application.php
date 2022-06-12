@@ -2,7 +2,7 @@
 
 namespace Automation\Core;
 
-use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject;
+use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType;
 use Dotenv\Dotenv;
 use Automation\Exceptions\{ClassNotFoundException, DependencyNotFoundException};
 
@@ -73,24 +73,43 @@ final class Application
         $results = [];
 
         foreach ($params as $param):
-
             if ($param->hasType()) {
                 $param_name = $param->getName();
                 $param_type = $param->getType();
 
-                if (!$param_type->isBuiltIn()) {
-                    $type_name = $param_type->getName();
+                if ($param_type instanceof ReflectionUnionType):
+                    $types = $param_type->getTypes();
 
-                    if (!class_exists($type_name)) {
-                        throw new DependencyNotFoundException($type_name);
+                    foreach ($types as $type) {
+                        if (!$type->isBuiltIn()) {
+                            $type_name = $type->getName();
+
+                            $results[$param_name] = $this->makeDependency($type_name);
+
+                            continue 2;
+                        }
                     }
+                endif;
 
-                    $results[$param_name] = $this->resolve($type_name);
+                if ($param_type instanceof \ReflectionNamedType) {
+                    if (!$param_type->isBuiltIn()) {
+                        $type_name = $param_type->getName();
+
+                        $results[$param_name] = $this->makeDependency($type_name);
+                    }
                 }
             }
-
         endforeach;
 
         return $results;
+    }
+
+    private function makeDependency(string $type_name): mixed
+    {
+        if (!class_exists($type_name)) {
+            throw new DependencyNotFoundException($type_name);
+        }
+
+        return $this->resolve($type_name);
     }
 }

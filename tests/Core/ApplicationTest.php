@@ -6,7 +6,7 @@ use Automation\Core\Application;
 
 final class ApplicationTest extends TestCase
 {
-    public function test_resolving_dependencies(): void
+    public function test_closure_is_resolvable(): void
     {
         $app = Application::instance();
 
@@ -14,6 +14,20 @@ final class ApplicationTest extends TestCase
             return 'foo';
         });
 
-        $this->assert
+        $this->assertSame($resolved, 'foo');
+
+        $resolved = $app->resolve(function (int $a, int $b, int|string $c, Dependency $dependency, int|string $d = 64) {
+            return $a + $b + $c + $d + (string) $dependency;
+        }, ['b' => 3, 'a' => 1, 'a' => 2, 'c' => '4']);
+
+        $this->assertSame($resolved, 128);
+    }
+}
+
+class Dependency
+{
+    public function __toString(): string
+    {
+        return '55';
     }
 }
