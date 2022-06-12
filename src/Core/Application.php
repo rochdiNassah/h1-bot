@@ -50,7 +50,13 @@ final class Application
     public function coreAliases(): array
     {
         return [
-            'filesystem' => \Automation\Core\Filesystem::class
+            'filesystem' => \Automation\Core\Filesystem::class,
+            'request'    => \Automation\Core\Http\Request::class,
+            'database'   => \Automation\Core\Database::class,
+            'router'     => \Automation\Core\Router::class,
+            'cookie'     => \Automation\Core\Http\Cookie::class,
+            'session'    => \Automation\Core\Http\Session::class,
+            'view'       => \Automation\Core\View::class,
         ];
     }
 
@@ -59,6 +65,7 @@ final class Application
         $core_aliases = $this->coreAliases();
 
         $this->resolve($core_aliases['filesystem'], ['project_root' => $this->resolve('project_root')], share: true);
+        $this->resolve($core_aliases['request'], share: true);
 
         if (!$running_in_cli_mode) {
             
