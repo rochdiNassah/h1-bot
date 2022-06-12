@@ -31,6 +31,22 @@ final class Application
         set_exception_handler('exception_handler');
 
         Dotenv::createImmutable(PROJECT_ROOT)->load();
+
+        $this->instantiateCoreClasses();
+    }
+
+    public function coreAliases(): array
+    {
+        return [
+            'filesystem' => \Automation\Core\Filesystem::class
+        ];
+    }
+
+    private function instantiateCoreClasses(): void
+    {
+        $core_aliases = $this->coreAliases();
+
+        $this->resolve($core_aliases['filesystem'], share: true);
     }
 
     public function resolve(string|object|array|callable $abstract, array $params = [], bool|int $share = false): mixed
