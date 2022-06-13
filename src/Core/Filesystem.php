@@ -29,9 +29,9 @@ class Filesystem implements FilesystemInterface
     {
         $root = (string) $this;
 
-        $path = is_array($path) ? $path : [$path];
+        $paths = is_array($path) ? $path : [$path];
 
-        foreach ($path as $path) {
+        foreach ($paths as $path) {
             $path = rtrim($root.DIRECTORY_SEPARATOR.$path, '\\/');
 
             if (!file_exists($path)) {
