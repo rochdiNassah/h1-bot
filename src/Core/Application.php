@@ -57,6 +57,7 @@ final class Application
             'cookie'     => \Automation\Core\Http\Cookie::class,
             'session'    => \Automation\Core\Http\Session::class,
             'view'       => \Automation\Core\View::class,
+            'console'    => \Automation\Core\Console::class
         ];
     }
 
@@ -65,10 +66,11 @@ final class Application
         $core_aliases = $this->coreAliases();
 
         $this->resolve($core_aliases['filesystem'], ['project_root' => app('project_root')], share: true);
-        $this->resolve($core_aliases['request'], share: true);
 
-        if (!$running_in_cli_mode) {
-            
+        if ($running_in_cli_mode) {
+            $this->resolve($core_aliases['console'], share: true);
+        } else {
+            $this->resolve($core_aliases['request'], share: true);
         }
     }
 

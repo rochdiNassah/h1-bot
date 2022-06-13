@@ -10,7 +10,8 @@
     },
     "require": {
         "vlucas/phpdotenv": "^5.4",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "symfony/console": "^6.1"
     },
     "scripts": {
         "test": "./vendor/bin/phpunit tests --colors --testdox"

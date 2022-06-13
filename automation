@@ -1,0 +1,12 @@
+#!/usr/local/bin/php
+<?php declare(strict_types=1);
+
+require './vendor/autoload.php';
+
+use Automation\Core\Facades\Console;
+
+$app = Automation\Core\Application::instance();
+
+$app->run();
+
+Console::run();
