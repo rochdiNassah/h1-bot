@@ -6,6 +6,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputInterface, InputArgument, InputOption};
 use symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 #[AsCommand(
     name: 'decode',
@@ -16,37 +17,44 @@ class DecodeCommand extends Command
     protected function configure(): void
     {
         $this->setHelp('Decode a text or file.');
-        $this->addArgument('target', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $target = $input->getArgument('target');
+        $question_helper = $this->getHelper('question');
 
-        if (file_exists($target)) {
-            $target = file_get_contents($target);
-        }
+        $question = new Question('<comment>Enter the text or file path you want to decode: </comment>');
 
-        $result = base64_decode($target);
+        $target = $question_helper->ask($input, $output, $question);
 
-        if (json_decode($result)) {
-            $output->writeLn('<info>Data decoded and converted to json successfully!</info>');
-            $output->writeLn(str_repeat("=", 32));
-            dump(json_decode($result));
-            $output->writeLn(str_repeat("=", 32));
+        $output->writeLn('');
 
-            return Command::SUCCESS;   
-        }
+        if (0 < strlen($target ?? '')) {
+            if (file_exists($target)) {
+                $target = file_get_contents($target);
+            }
 
-        if ($result) {
-            $output->writeLn([
-                '<info>Data decoded successfully!</info>',
-                str_repeat("=", 32),
-                $result,
-                str_repeat("=", 32)
-            ]);
+            $result = base64_decode($target);
 
-            return Command::SUCCESS;
+            if (json_decode($result)) {
+                $output->writeLn('<info>Data decoded and converted to json successfully!</info>');
+                $output->writeLn(str_repeat("=", 32));
+                dump(json_decode($result));
+                $output->writeLn(str_repeat("=", 32));
+
+                return Command::SUCCESS;   
+            }
+
+            if ($result) {
+                $output->writeLn([
+                    '<info>Data decoded successfully!</info>',
+                    str_repeat("=", 32),
+                    $result,
+                    str_repeat("=", 32)
+                ]);
+
+                return Command::SUCCESS;
+            }
         }
 
         $output->writeLn('<error>Something went worng! Please check your command well.</error>');

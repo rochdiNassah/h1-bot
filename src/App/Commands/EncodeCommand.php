@@ -6,6 +6,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputInterface, InputArgument, InputOption};
 use symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 #[AsCommand(
     name: 'encode',
@@ -16,28 +17,35 @@ class EncodeCommand extends Command
     protected function configure(): void
     {
         $this->setHelp('Encode a text or file.');
-        $this->addArgument('target', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $target = $input->getArgument('target');
+        $question_helper = $this->getHelper('question');
 
-        if (file_exists($target)) {
-            $target = file_get_contents($target);
-        }
+        $question = new Question('<comment>Enter the text or file path you want to encode: </comment>');
 
-        $result = base64_encode($target);
+        $target = $question_helper->ask($input, $output, $question);
 
-        if ($result) {
-            $output->writeLn([
-                '<info>Data encoded successfully!</info>',
-                str_repeat("=", 32),
-                $result,
-                str_repeat("=", 32)
-            ]);
+        $output->writeLn('');
 
-            return Command::SUCCESS;
+        if (0 < strlen($target ?? '')) {
+            if (file_exists($target)) {
+                $target = file_get_contents($target);
+            }
+
+            $result = base64_encode($target);
+
+            if ($result) {
+                $output->writeLn([
+                    '<info>Data encoded successfully!</info>',
+                    str_repeat("=", 32),
+                    $result,
+                    str_repeat("=", 32)
+                ]);
+
+                return Command::SUCCESS;
+            }
         }
 
         $output->writeLn('<error>Something went worng! Please check your command well.</error>');
