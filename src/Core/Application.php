@@ -57,7 +57,14 @@ final class Application
             'cookie'     => \Automation\Core\Http\Cookie::class,
             'session'    => \Automation\Core\Http\Session::class,
             'view'       => \Automation\Core\View::class,
-            'console'    => \Automation\Core\Console::class
+            'console'    => \Symfony\Component\Console\Application::class
+        ];
+    }
+
+    private function consoleCommands(): array
+    {
+        return [
+            \Automation\App\Commands\Base64Command::class,
         ];
     }
 
@@ -69,6 +76,12 @@ final class Application
 
         if ($running_in_cli_mode) {
             $this->resolve($core_aliases['console'], share: true);
+
+            $console_commands = $this->consoleCommands();
+
+            foreach ($console_commands as $command) {
+                $this->console->add($this->resolve($command));
+            }
         } else {
             $this->resolve($core_aliases['request'], share: true);
         }

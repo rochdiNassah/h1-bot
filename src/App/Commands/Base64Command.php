@@ -7,10 +7,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'base64')]
 class Base64Command extends Command
 {
-    protected static $defaultName = 'base64';
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         return Command::SUCCESS;

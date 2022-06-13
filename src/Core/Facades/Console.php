@@ -6,6 +6,6 @@ class Console extends Facade
 {
     protected static function accessor(): string
     {
-        return \Automation\Core\Console::class;
+        return \Symfony\Component\Console\Application::class;
     }
 }
