@@ -17,17 +17,22 @@ class DecodeCommand extends Command
     protected function configure(): void
     {
         $this->setHelp('Decode a text or file.');
+        $this->addArgument('target', InputArgument::OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $question_helper = $this->getHelper('question');
+        if (null === $input->getArgument('target')) {
+            $question_helper = $this->getHelper('question');
 
-        $question = new Question('<comment>Enter the text or file path you want to decode: </comment>');
+            $question = new Question('<comment>Enter the text or file path you want to decode: </comment>');
 
-        $target = $question_helper->ask($input, $output, $question);
+            $target = $question_helper->ask($input, $output, $question);
 
-        $output->writeLn('');
+            $output->writeLn('');
+        } else {
+            $target = $input->getArgument('target');
+        }
 
         if (0 < strlen($target ?? '')) {
             if (file_exists($target)) {
