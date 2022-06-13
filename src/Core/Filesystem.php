@@ -27,12 +27,12 @@ class Filesystem implements FilesystemInterface
 
     public function exists(string $path = ''): bool
     {
-        $path = $this->to($path);
+        $path = rtrim((string) $this->to($path), '\\/');
 
-        return file_exists((string) $path);
+        return file_exists($path);
     }
 
-    public function missing(string $path = null): bool
+    public function missing(string $path = ''): bool
     {
         return !$this->exists($path);
     }
