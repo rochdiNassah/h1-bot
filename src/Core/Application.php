@@ -64,7 +64,8 @@ final class Application
     private function consoleCommands(): array
     {
         return [
-            \Automation\App\Commands\Base64Command::class,
+            \Automation\App\Commands\EncodeCommand::class,
+            \Automation\App\Commands\DecodeCommand::class,
         ];
     }
 
