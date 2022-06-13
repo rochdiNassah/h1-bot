@@ -76,7 +76,7 @@ final class Application
     {
         $aliases = $this->coreAliases();
 
-        if (array_key_exists($alias,$aliases )) {
+        if (array_key_exists($alias, $aliases)) {
             return $this->shared[$aliases[$alias]];
         }
 
