@@ -4,9 +4,9 @@ namespace Automation\Interfaces;
 
 interface FilesystemInterface
 {
-    public function exists(string $path = ''): bool;
+    public function exists(string|array $path = ''): bool;
 
-    public function missing(string $path = ''): bool;
+    public function missing(string|array $path = ''): bool;
 
     public function to(string $path): self;
 
