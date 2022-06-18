@@ -8,9 +8,6 @@ This is a framework that consists of many ready to use tools and scripts.
 * Run `composer install`.
 * Link `./automation` executable file to your `$_PATH` so it can be located by your system.
 
-### Usage
-```automation <command>```
-
 ### Available commands
 * `encode` Base64 encode a text or file.
 * `decode` Base64 decode a text or file.
