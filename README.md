@@ -1,5 +1,5 @@
 # What is this?
-This is a framework that consists of many ready to use tools and scripts.
+This is a framework that consists of many ready-to-use tools and scripts.
 
 ### Installation
 * Clone this repository.
