@@ -6,8 +6,8 @@ This is a framework that consists of many ready-to-use tools and scripts.
 * Copy `.env.example` to `.env`.
 * Adjust environment variables in `.env`.
 * Run `composer install`.
-* Link `./automation` executable file to your `$_PATH` so it can be located by your system.
+* Link `automation` executable file to your `PATH` so it can be located by your system.
 
 ### Available commands
-* `encode` Base64 encode a text or file.
-* `decode` Base64 decode a text or file.
+* `encode` Encode a text or file.
+* `decode` Decode a text or file.
