@@ -15,7 +15,7 @@ use Symfony\Component\Console\Question\Question;
 class EncodeCommand extends Command
 {
     private const SUPPORTED_ENCODING_TYPES = [
-        'base64', 'b64', 'url', 'html'
+        'base64', 'url', 'html'
     ];
 
     protected function configure(): void
@@ -53,13 +53,7 @@ class EncodeCommand extends Command
                 $target = file_get_contents($target);
             }
 
-            switch ($as) {
-                case 'base64':
-                    $result = base64_encode($target);
-                    break;
-                case 'url':
-                    $result = url_encode($target);
-            }
+            $result = _encode($target, $as);
 
             if ($result) {
                 $output->writeLn([

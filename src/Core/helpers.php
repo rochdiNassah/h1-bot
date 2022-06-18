@@ -1,14 +1,28 @@
 <?php declare(strict_Types=1);
 
-if (!function_exists('url_encode')) {
-    function url_encode(string $string): string
+if (!function_exists('_encode')) {
+    function _encode(string $string, string $as): string
     {
-        $characters = str_split($string);
-
-        foreach ($characters as $key => $character) {
-            $characters[$key] = '%';
-            $characters[$key] .= bin2hex($character);
+        if ('base64' === $as) {
+            return base64_encode($string);
         }
+        
+        $formats = [
+            'html' => '&#x%s;',
+            'url'  => '%%%s'
+        ];
+
+        if (!array_key_exists($as, $formats)) {
+            throw new Exception(sprintf('"%s" is not a supported encoding type.', $as));
+        }
+
+        $format = $formats[$as];
+
+        $characters = str_split(bin2hex($string), 2);
+
+        $characters = array_map(function ($item) use ($format) {
+            return sprintf($format, $item);
+        }, $characters);
 
         return implode($characters);
     }
