@@ -14,10 +14,15 @@ use Symfony\Component\Console\Question\Question;
 )]
 class EncodeCommand extends Command
 {
+    private const SUPPORTED_ENCODING_TYPES = [
+        'base64', 'b64', 'url', 'html'
+    ];
+
     protected function configure(): void
     {
         $this->setHelp('Encode a text or file.');
         $this->addArgument('target', InputArgument::OPTIONAL);
+        $this->addOption('as', null, InputOption::VALUE_REQUIRED, 'Encode the given data as', 'base64');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -34,12 +39,25 @@ class EncodeCommand extends Command
             $target = $input->getArgument('target');
         }
 
-        if (0 < strlen($target ?? '')) {
+        $as = $input->getOption('as');
+
+        $result = false;
+
+        if (!is_null($as)) {
+            if (!in_array($as, self::SUPPORTED_ENCODING_TYPES)) {
+                $output->writeLn("<error>\"{$as}\" is not a supported encoding type!</error>");
+
+                return Command::FAILURE;
+            }
             if (file_exists($target)) {
                 $target = file_get_contents($target);
             }
 
-            $result = base64_encode($target);
+            switch ($as) {
+                case 'base64':
+                    $result = base64_encode($target);
+                    break;
+            }
 
             if ($result) {
                 $output->writeLn([
