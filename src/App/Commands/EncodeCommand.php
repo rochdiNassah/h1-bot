@@ -57,11 +57,13 @@ class EncodeCommand extends Command
                 case 'base64':
                     $result = base64_encode($target);
                     break;
+                case 'url':
+                    $result = url_encode($target);
             }
 
             if ($result) {
                 $output->writeLn([
-                    '<info>Data encoded successfully!</info>',
+                    "<info>Data encoded as \"{$as}\" successfully!</info>",
                     str_repeat("=", 32),
                     $result,
                     str_repeat("=", 32)

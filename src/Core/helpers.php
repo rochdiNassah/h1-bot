@@ -1,5 +1,18 @@
 <?php declare(strict_Types=1);
 
+if (!function_exists('url_encode')) {
+    function url_encode(string $string): string
+    {
+        $characters = str_split($string);
+
+        foreach ($characters as $key => $character) {
+            $characters[$key] = '%';
+            $characters[$key] .= bin2hex($character);
+        }
+
+        return implode($characters);
+    }
+}
 if (!function_exists('app')) {
     function app(): mixed
     {
