@@ -1,4 +1,4 @@
-<?php declare(strict_Types=1);
+<?php declare(strict_types=1);
 
 if (!function_exists('_encode')) {
     function _encode(string $string, string $as): string
@@ -18,11 +18,9 @@ if (!function_exists('_encode')) {
 
         $format = $formats[$as];
 
-        $characters = str_split(bin2hex($string), 2);
-
         $characters = array_map(function ($item) use ($format) {
             return sprintf($format, $item);
-        }, $characters);
+        },  str_split(bin2hex($string), 2));
 
         return implode($characters);
     }

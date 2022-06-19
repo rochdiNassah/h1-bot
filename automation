@@ -1,9 +1,7 @@
 #!/usr/local/bin/php
 <?php declare(strict_types=1);
 
-$root = substr(__FILE__, 0, -strlen(basename(__FILE__)));
-
-require $root.'/vendor/autoload.php';
+require sprintf('%s/vendor/autoload.php', substr(__FILE__, 0, -strlen(basename(__FILE__))));
 
 use Automation\Core\Facades\Console;
 
