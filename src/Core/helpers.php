@@ -1,44 +1,5 @@
 <?php declare(strict_types=1);
 
-if (!function_exists('_decode')) {
-    function _decode(string $string, string $as): string
-    {
-        if ('base64' === $as) {
-            return base64_decode($string, true);
-        }
-        if ('html' === $as) {
-            return html_entity_decode($string);
-        }
-        if ('url' === $as) {
-            return urldecode($string);
-        }
-    }
-}
-if (!function_exists('_encode')) {
-    function _encode(string $string, string $as): string
-    {
-        if ('base64' === $as) {
-            return base64_encode($string);
-        }
-        
-        $formats = [
-            'html' => '&#x%s;',
-            'url'  => '%%%s'
-        ];
-
-        if (!array_key_exists($as, $formats)) {
-            throw new Exception(sprintf('"%s" is not a supported encoding type.', $as));
-        }
-
-        $format = $formats[$as];
-
-        $characters = array_map(function ($item) use ($format) {
-            return sprintf($format, $item);
-        },  str_split(bin2hex($string), 2));
-
-        return implode($characters);
-    }
-}
 if (!function_exists('app')) {
     function app(): mixed
     {

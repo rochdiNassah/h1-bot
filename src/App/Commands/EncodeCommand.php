@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputInterface, InputArgument, InputOption};
 use symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Automation\Core\Facades\Encoder;
 
 #[AsCommand(
     name: 'encode',
@@ -14,10 +15,6 @@ use Symfony\Component\Console\Question\Question;
 )]
 class EncodeCommand extends Command
 {
-    public const SUPPORTED_ENCODING_TYPES = [
-        'base64', 'url', 'html'
-    ];
-
     protected function configure(): void
     {
         $this->setHelp('Encode a text or file.');
@@ -44,7 +41,7 @@ class EncodeCommand extends Command
         $result = false;
 
         if (!is_null($as)) {
-            if (!in_array($as, self::SUPPORTED_ENCODING_TYPES)) {
+            if (!in_array($as, Encoder::supportedTypes())) {
                 $output->writeLn("<error>\"{$as}\" is not a supported encoding type!</error>");
 
                 return Command::FAILURE;
@@ -53,7 +50,7 @@ class EncodeCommand extends Command
                 $target = file_get_contents($target);
             }
 
-            $result = _encode($target, $as);
+            $result = Encoder::encode($target, $as);
 
             if ($result) {
                 $output->writeLn([

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputInterface, InputArgument, InputOption};
 use symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Automation\App\Commands\EncodeCommand;
+use Automation\Core\Facades\Encoder;
 
 #[AsCommand(
     name: 'decode',
@@ -19,7 +19,7 @@ class DecodeCommand extends Command
     {
         $this->setHelp('Decode a text or file.');
         $this->addArgument('target', InputArgument::OPTIONAL);
-        $this->addOption('as', null, InputOption::VALUE_REQUIRED, 'Decode the given data as', 'base64');
+        $this->addOption('as', null, InputOption::VALUE_REQUIRED, 'Decode the given data as');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -40,18 +40,26 @@ class DecodeCommand extends Command
 
         $result = false;
 
+        if (is_null($as)) {
+            $as = Encoder::detect($target);
+
+            if (false === $as) {
+                $output->writeLn("<error>You provided a non-valid encoded data!</error>");
+
+                return Command::FAILURE;
+            }
+        }
         if (file_exists($target)) {
             $target = file_get_contents($target);
         }
-
         if (!is_null($as)) {
-            if (!in_array($as, EncodeCommand::SUPPORTED_ENCODING_TYPES)) {
+            if (!in_array($as, Encoder::supportedTypes())) {
                 $output->writeLn("<error>\"{$as}\" is not a supported decoding type!</error>");
 
                 return Command::FAILURE;
             }
 
-            $result = _decode($target, $as);
+            $result = Encoder::decode($target, $as);
 
             if ($result) {
                 $output->writeLn([
