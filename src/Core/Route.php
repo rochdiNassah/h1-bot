@@ -23,7 +23,13 @@ class Route
 
     public function parse(): void
     {
-        
+        $this->path = trim($this->path, '\\/');
+
+        $wild_cards = preg_match_all('/\{(.*?)\}/', $this->path, $match);
+
+        if ($match) {
+            
+        }
     }
 
     public function path(): string

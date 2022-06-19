@@ -20,7 +20,7 @@ class Router
         
     }
 
-    public function __call(string $method, array $params = []): void
+    public function __call(string $method, array $params): void
     {
         $method = strtoupper($method);
 

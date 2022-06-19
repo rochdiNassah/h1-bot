@@ -8,4 +8,6 @@ $app = Automation\Core\Application::instance();
 
 $app->run();
 
-Router::get();
+Router::get('/person/{name}/{ag+e}/name', function (): string {
+    return 'foo';
+});
