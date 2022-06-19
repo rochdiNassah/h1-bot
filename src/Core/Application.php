@@ -44,7 +44,13 @@ final class Application
 
         Dotenv::createImmutable($this->resolve('project_root'))->load();
 
-        $this->instantiateCoreClasses(php_sapi_name() === 'cli');
+        $in_cli_mode = php_sapi_name() === 'cli';
+
+        $this->instantiateCoreClasses($in_cli_mode);
+
+        if ($in_cli_mode) {
+            return;
+        }
 
         $this->request->parse();
     }
