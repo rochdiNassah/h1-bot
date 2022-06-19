@@ -65,7 +65,8 @@ final class Application
             'cookie'     => \Automation\Core\Http\Cookie::class,
             'session'    => \Automation\Core\Http\Session::class,
             'view'       => \Automation\Core\View::class,
-            'console'    => \Symfony\Component\Console\Application::class
+            'console'    => \Symfony\Component\Console\Application::class,
+            'encoder'    => \Automation\Core\Encoder::class
         ];
     }
 

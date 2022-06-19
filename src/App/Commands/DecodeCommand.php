@@ -40,14 +40,15 @@ class DecodeCommand extends Command
 
         $result = false;
 
+        if (file_exists($target)) {
+            $target = file_get_contents($target);
+        }
+
         if (!is_null($as)) {
             if (!in_array($as, EncodeCommand::SUPPORTED_ENCODING_TYPES)) {
                 $output->writeLn("<error>\"{$as}\" is not a supported decoding type!</error>");
 
                 return Command::FAILURE;
-            }
-            if (file_exists($target)) {
-                $target = file_get_contents($target);
             }
 
             $result = _decode($target, $as);

@@ -4,7 +4,7 @@ if (!function_exists('_decode')) {
     function _decode(string $string, string $as): string
     {
         if ('base64' === $as) {
-            return base64_decode($string);
+            return base64_decode($string, true);
         }
         if ('html' === $as) {
             return html_entity_decode($string);
