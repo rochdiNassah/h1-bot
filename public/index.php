@@ -8,4 +8,4 @@ $app = Automation\Core\Application::instance();
 
 $app->run();
 
-dump(Encoder::foo());
+dump(Encoder::decode('%72%6f%63%68%64%69ddsd', 'url'));

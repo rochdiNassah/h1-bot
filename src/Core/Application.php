@@ -83,6 +83,7 @@ final class Application
         $core_aliases = $this->coreAliases();
 
         $this->resolve($core_aliases['filesystem'], ['project_root' => app('project_root')], share: true);
+        $this->resolve($core_aliases['encoder'], share: true);
 
         if ($running_in_cli_mode) {
             $this->resolve($core_aliases['console'], share: true);

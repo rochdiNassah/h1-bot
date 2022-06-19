@@ -8,5 +8,7 @@ interface EncoderInterface
 
     public function decode(string $string, string $as): string;
 
-    public function detect(string $string): string;
+    public function detect(string $string): string|false;
+
+    public function supportedTypes(): array;
 }
