@@ -8,6 +8,8 @@ class Encoder implements EncoderInterface
 {
     public const SUPPORTED_TYPES = ['base64', 'url', 'html'];
 
+    private $decoded_json;
+
     private array $formats = [
         'html' => '&#x%s;',
         'url' => '%%%s'
@@ -47,16 +49,32 @@ class Encoder implements EncoderInterface
         endif;
 
         if ('base64' === $as) {
-            return base64_decode($string);
+            $result = base64_decode($string);
         }
         if ('url' === $as) {
-            return urldecode($string);
+            $result = urldecode($string);
         }
         if ('html' === $as) {
-            return html_entity_decode($string);
+            $result = html_entity_decode($string);
+        }
+        if ($json = json_decode($result)) {
+            $this->decoded_json = $json;
         }
 
-        throw new Exception('Something went wrong with the encoder!');
+        return $result;
+    }
+
+    public function getDecodedJson(): object|null
+    {
+        if (is_object($this->decoded_json)) {
+            $object = $this->decoded_json;
+
+            $this->decoded_json = null;
+
+            return $object;
+        }
+
+        return null;
     }
 
     /**
