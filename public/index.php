@@ -2,10 +2,10 @@
 
 require '../vendor/autoload.php';
 
-use Automation\Core\Facades\{Request, Filesystem};
+use Automation\Core\Facades\{Request, Filesystem, Router};
 
 $app = Automation\Core\Application::instance();
 
 $app->run();
 
-dump(Request::path());
+Router::get();

@@ -90,6 +90,7 @@ final class Application
         }
 
         $this->resolve($core_aliases['request'], share: true);
+        $this->resolve($core_aliases['router'], share: true);
     }
 
     public function __get(string $alias): mixed
