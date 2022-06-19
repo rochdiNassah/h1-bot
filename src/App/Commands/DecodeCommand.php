@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputInterface, InputArgument, InputOption};
 use symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Automation\App\Commands\EncodeCommand;
 
 #[AsCommand(
     name: 'decode',
@@ -18,6 +19,7 @@ class DecodeCommand extends Command
     {
         $this->setHelp('Decode a text or file.');
         $this->addArgument('target', InputArgument::OPTIONAL);
+        $this->addOption('as', null, InputOption::VALUE_REQUIRED, 'Decode the given data as', 'base64');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -34,25 +36,25 @@ class DecodeCommand extends Command
             $target = $input->getArgument('target');
         }
 
-        if (0 < strlen($target ?? '')) {
+        $as = $input->getOption('as');
+
+        $result = false;
+
+        if (!is_null($as)) {
+            if (!in_array($as, EncodeCommand::SUPPORTED_ENCODING_TYPES)) {
+                $output->writeLn("<error>\"{$as}\" is not a supported decoding type!</error>");
+
+                return Command::FAILURE;
+            }
             if (file_exists($target)) {
                 $target = file_get_contents($target);
             }
 
-            $result = base64_decode($target);
-
-            if (json_decode($result)) {
-                $output->writeLn('<info>Data decoded and converted to json successfully!</info>');
-                $output->writeLn(str_repeat("=", 32));
-                dump(json_decode($result));
-                $output->writeLn(str_repeat("=", 32));
-
-                return Command::SUCCESS;   
-            }
+            $result = _decode($target, $as);
 
             if ($result) {
                 $output->writeLn([
-                    '<info>Data decoded successfully!</info>',
+                    "<info>Data decoded as \"{$as}\" successfully!</info>",
                     str_repeat("=", 32),
                     $result,
                     str_repeat("=", 32)

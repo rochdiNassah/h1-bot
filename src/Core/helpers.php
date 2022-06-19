@@ -1,5 +1,19 @@
 <?php declare(strict_types=1);
 
+if (!function_exists('_decode')) {
+    function _decode(string $string, string $as): string
+    {
+        if ('base64' === $as) {
+            return base64_decode($string);
+        }
+        if ('html' === $as) {
+            return html_entity_decode($string);
+        }
+        if ('url' === $as) {
+            return urldecode($string);
+        }
+    }
+}
 if (!function_exists('_encode')) {
     function _encode(string $string, string $as): string
     {

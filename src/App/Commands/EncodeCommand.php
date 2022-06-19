@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\Question;
 )]
 class EncodeCommand extends Command
 {
-    private const SUPPORTED_ENCODING_TYPES = [
+    public const SUPPORTED_ENCODING_TYPES = [
         'base64', 'url', 'html'
     ];
 
