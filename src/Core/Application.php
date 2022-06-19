@@ -45,6 +45,8 @@ final class Application
         Dotenv::createImmutable($this->resolve('project_root'))->load();
 
         $this->instantiateCoreClasses(php_sapi_name() === 'cli');
+
+        $this->request->parse();
     }
 
     public function coreAliases(): array
@@ -83,9 +85,11 @@ final class Application
             foreach ($console_commands as $command) {
                 $this->console->add($this->resolve($command));
             }
-        } else {
-            $this->resolve($core_aliases['request'], share: true);
+
+            return;
         }
+
+        $this->resolve($core_aliases['request'], share: true);
     }
 
     public function __get(string $alias): mixed
