@@ -62,12 +62,16 @@ class DecodeCommand extends Command
             $result = Encoder::decode($target, $as);
 
             if ($result) {
-                $output->writeLn([
-                    "<info>Data decoded as \"{$as}\" successfully!</info>",
-                    str_repeat("=", 32),
-                    $result,
-                    str_repeat("=", 32)
-                ]);
+                $output->writeLn("<info>Data decoded as \"{$as}\" successfully!</info>");
+                $output->writeLn(str_repeat("=", 32));
+
+                if ($object = Encoder::getDecodedJson()) {
+                    dump($object);
+                } else {
+                    $output->writeLn($result);
+                }
+
+                $output->writeLn(str_repeat("=", 32));
 
                 return Command::SUCCESS;
             }
