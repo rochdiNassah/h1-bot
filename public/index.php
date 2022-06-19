@@ -2,12 +2,10 @@
 
 require '../vendor/autoload.php';
 
-use Automation\Core\Facades\{Request, Filesystem, Router};
+use Automation\Core\Facades\{Request, Filesystem, Router, Encoder};
 
 $app = Automation\Core\Application::instance();
 
 $app->run();
 
-Router::get('/person/{name}/{ag+e}/name', function (): string {
-    return 'foo';
-});
+dump(Encoder::foo());
