@@ -77,6 +77,7 @@ final class Application
             \Automation\App\Commands\Encoding\DecodeCommand::class,
             \Automation\App\Commands\Encoding\DetectEncodingCommand::class,
             \Automation\App\Commands\Encoding\SplitJWTCommand::class,
+            \Automation\App\Commands\Misc\StrlenCommand::class,
         ];
     }
 

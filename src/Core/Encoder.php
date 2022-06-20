@@ -86,7 +86,7 @@ class Encoder implements EncoderInterface
     public function detect(string $string): string|false
     {
         $patterns = [
-            'base64' => '/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/',
+            'base64' => '/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=?)?$/',
             'html'    => '/\&\#x[a-z0-9]{2}\;/',
             'url'   => '/\%[a-z0-9]{2}/'
         ];
