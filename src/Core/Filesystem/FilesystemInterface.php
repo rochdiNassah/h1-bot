@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Automation\Interfaces;
+namespace Automation\Core\Filesystem;
 
 interface FilesystemInterface
 {

@@ -3,7 +3,6 @@
 namespace Automation\Core\Http;
 
 use Automation\Core\Application;
-use Automation\Interfaces\RequestInterface;
 use Automation\Core\Http\Bags\ServerBag;
 
 class Request implements RequestInterface

@@ -6,6 +6,6 @@ class Encoder extends Facade
 {
     protected static function accessor(): string
     {
-        return \Automation\Core\Encoder::class;
+        return app()->coreAliases('encoder');
     }
 }

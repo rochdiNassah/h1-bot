@@ -6,6 +6,6 @@ class Console extends Facade
 {
     protected static function accessor(): string
     {
-        return \Symfony\Component\Console\Application::class;
+        return app()->coreAliases('console');
     }
 }

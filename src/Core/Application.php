@@ -43,31 +43,37 @@ final class Application
         $this->bind('project_root', dirname(__DIR__, 2));
 
         Dotenv::createImmutable($this->resolve('project_root'))->load();
-
+        
         $in_cli_mode = php_sapi_name() === 'cli';
-
+        
         $this->instantiateCoreClasses($in_cli_mode);
 
         if ($in_cli_mode) {
             return;
         }
-
+        
         $this->request->parse();
     }
 
-    public function coreAliases(): array
+    public function coreAliases(string $key = null): array|string
     {
-        return [
-            'filesystem' => \Automation\Core\Filesystem::class,
+        $aliases = [
+            'filesystem' => \Automation\Core\Filesystem\Filesystem::class,
             'request'    => \Automation\Core\Http\Request::class,
-            'database'   => \Automation\Core\Database::class,
-            'router'     => \Automation\Core\Router::class,
+            'database'   => \Automation\Core\Database\Database::class,
+            'router'     => \Automation\Core\Routing\Router::class,
             'cookie'     => \Automation\Core\Http\Cookie::class,
             'session'    => \Automation\Core\Http\Session::class,
-            'view'       => \Automation\Core\View::class,
+            'view'       => \Automation\Core\View\View::class,
             'console'    => \Symfony\Component\Console\Application::class,
-            'encoder'    => \Automation\Core\Encoder::class,
+            'encoder'    => \Automation\Core\Encoding\Encoder::class,
         ];
+        
+        if (!is_null($key)) {
+            return $aliases[$key];
+        }
+
+        return $aliases;
     }
 
     private function instantiateCoreClasses($running_in_cli_mode = false): void
@@ -134,7 +140,7 @@ final class Application
             $parameters = $reflector?->getParameters();
         }
 
-        $dependencies = array_merge($params, $this->resolveDependencies($parameters ?? []));
+        $dependencies = array_merge($params, $this->resolveDependencies($abstract, $parameters ?? []));
 
         $resolved = is_callable($abstract) ? call_user_func($abstract, ...$dependencies) : new $abstract(...$dependencies);
 
@@ -147,7 +153,7 @@ final class Application
         return $resolved;
     }
 
-    private function resolveDependencies(array $params): array
+    private function resolveDependencies($abstract, array $params): array
     {
         $results = [];
 
@@ -162,7 +168,7 @@ final class Application
                             $type_name = $param_type->getName();
     
                             if (!class_exists($type_name)) {
-                                throw new DependencyNotFoundException($type_name);
+                                throw new DependencyNotFoundException($abstract, $type_name);
                             }
     
                             $results[$param_name] = $this->resolve($type_name);

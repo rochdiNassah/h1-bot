@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Automation\Core;
+namespace Automation\Core\Routing;
 
 use Automation\Exceptions\UnsupportedHttpMethodException;
+use Automation\Core\Application;
 
 class Router
 {

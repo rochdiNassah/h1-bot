@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace Automation\Core;
+namespace Automation\Core\Filesystem;
 
-use Automation\Interfaces\FilesystemInterface;
 use Automation\Core\Application;
 
 class Filesystem implements FilesystemInterface

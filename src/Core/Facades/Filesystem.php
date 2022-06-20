@@ -6,6 +6,6 @@ class Filesystem extends Facade
 {
     protected static function accessor(): string
     {
-        return \Automation\Core\Filesystem::class;
+        return app()->coreAliases('filesystem');
     }
 }

@@ -6,6 +6,6 @@ class Router extends Facade
 {
     protected static function accessor(): string
     {
-        return \Automation\Core\Router::class;
+        return app()->coreAliases('router');
     }
 }

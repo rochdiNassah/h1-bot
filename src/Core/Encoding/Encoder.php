@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Automation\Core;
+namespace Automation\Core\Encoding;
 
-use Automation\Interfaces\EncoderInterface;
+use Automation\Core\Application;
 
 class Encoder implements EncoderInterface
 {

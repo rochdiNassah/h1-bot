@@ -2,7 +2,7 @@
 
 namespace Tests\Core;
 
-use Automation\Core\Filesystem;
+use Automation\Core\Filesystem\Filesystem;
 
 final class FilesystemTest extends TestCase
 {
