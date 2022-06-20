@@ -66,7 +66,7 @@ final class Application
             'session'    => \Automation\Core\Http\Session::class,
             'view'       => \Automation\Core\View::class,
             'console'    => \Symfony\Component\Console\Application::class,
-            'encoder'    => \Automation\Core\Encoder::class
+            'encoder'    => \Automation\Core\Encoder::class,
         ];
     }
 
@@ -75,6 +75,7 @@ final class Application
         return [
             \Automation\App\Commands\EncodeCommand::class,
             \Automation\App\Commands\DecodeCommand::class,
+            \Automation\App\Commands\DetectEncodingCommand::class,
         ];
     }
 
