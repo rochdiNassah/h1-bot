@@ -70,17 +70,6 @@ final class Application
         ];
     }
 
-    private function consoleCommands(): array
-    {
-        return [
-            \Automation\App\Commands\Encoding\EncodeCommand::class,
-            \Automation\App\Commands\Encoding\DecodeCommand::class,
-            \Automation\App\Commands\Encoding\DetectEncodingCommand::class,
-            \Automation\App\Commands\Encoding\SplitJWTCommand::class,
-            \Automation\App\Commands\Misc\StrlenCommand::class,
-        ];
-    }
-
     private function instantiateCoreClasses($running_in_cli_mode = false): void
     {
         $core_aliases = $this->coreAliases();
@@ -90,12 +79,8 @@ final class Application
 
         if ($running_in_cli_mode) {
             $this->resolve($core_aliases['console'], share: true);
-
-            $console_commands = $this->consoleCommands();
-
-            foreach ($console_commands as $command) {
-                $this->console->add($this->resolve($command));
-            }
+            
+            require (string) $this->filesystem->to('commands.php');
 
             return;
         }
