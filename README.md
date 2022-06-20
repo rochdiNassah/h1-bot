@@ -11,3 +11,4 @@ This is a framework that consists of many ready-to-use tools and scripts.
 ### Available commands
 * `encode` Encode a text or file.
 * `decode` Decode a text or file.
+* `detect-encoding` Detect the encoding of a string.
