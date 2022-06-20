@@ -2,7 +2,6 @@
 
 namespace Automation\Core\Routing;
 
-use Automation\Exceptions\UnsupportedHttpMethodException;
 use Automation\Core\Application;
 
 class Router
@@ -25,6 +24,10 @@ class Router
     {
         $method = strtoupper($method);
 
+        if (!in_array($method, self::SUPPORTED_HTTP_METHODS)) {
+            throw new UnsupportedHttpMethodException($method);
+        }
+
         list($path, $action) = $params;
 
         $this->register($method, $path, $action);
@@ -32,10 +35,6 @@ class Router
 
     private function register(string $method, string $path, array|callable $action): void
     {
-        if (!in_array($method, self::SUPPORTED_HTTP_METHODS)) {
-            throw new UnsupportedHttpMethodException($method);
-        }
-
         $route = $this->app->resolve(Route::class, [$method, $path, $action]);
 
         $this->routes[] = $route;

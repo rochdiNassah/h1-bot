@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Automation\Exceptions;
+namespace Automation\Core\Routing;
 
-class UnsupportedHttpMethodException extends Exception
+class UnsupportedHttpMethodException extends \Exception
 {
     public function __construct(string $method)
     {
