@@ -23,7 +23,39 @@ class DetectEncodingCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        
-        return Command::FAILURE;
+        $target = $input->getArgument('target');
+
+        if (is_null($target)) {
+            $target = $this->getHelper('question')
+                ->ask(
+                    $input,
+                    $output,
+                    app(Question::class, ['<comment>Enter the text you want to detect its encoding: </comment>'])
+                );
+            
+            $output->writeLn('');
+        }
+
+        if (is_null($target)) {
+            $output->writeLn('<error>Target text mustn\'t be empty.</error>');
+
+            return Command::FAILURE;
+        }
+
+        $result = Encoder::detect($target);
+
+        if (false === $result) {
+            $output->writeLn('<error>Failed to detect the encoding.</error>');
+
+            return Command::FAILURE;
+        }
+
+        $output->writeLn([
+            str_repeat('=', 32),
+            $result,
+            str_repeat('=', 32)
+        ]);
+
+        return Command::SUCCESS;
     }
 }
