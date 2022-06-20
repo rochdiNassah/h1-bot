@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Automation\App\Commands;
+namespace Automation\App\Commands\Encoding;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +17,7 @@ class DetectEncodingCommand extends Command
 {
     protected function configure(): void
     {
-        $this->setHelp('Detect the encoding of a text.');
+        $this->setHelp('Detect the encoding of a string.');
         $this->addArgument('target', InputArgument::OPTIONAL);
     }
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Automation\App\Commands;
+namespace Automation\App\Commands\Encoding;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

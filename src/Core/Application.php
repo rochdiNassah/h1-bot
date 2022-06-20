@@ -73,9 +73,9 @@ final class Application
     private function consoleCommands(): array
     {
         return [
-            \Automation\App\Commands\EncodeCommand::class,
-            \Automation\App\Commands\DecodeCommand::class,
-            \Automation\App\Commands\DetectEncodingCommand::class,
+            \Automation\App\Commands\Encoding\EncodeCommand::class,
+            \Automation\App\Commands\Encoding\DecodeCommand::class,
+            \Automation\App\Commands\Encoding\DetectEncodingCommand::class,
         ];
     }
 
