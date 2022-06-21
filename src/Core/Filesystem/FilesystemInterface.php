@@ -68,4 +68,39 @@ interface FilesystemInterface
      * @return void
      */
     public function update_root(string $path): void;
+
+    /**
+     * Resets the root to the old root.
+     * 
+     * @return void
+     */
+    public function reset_root(): void;
+
+    /**
+     * Get the new root.
+     * 
+     * @return string
+     */
+    public function new_root(): string;
+
+    /**
+     * Get the previous root.
+     * 
+     * @return string
+     */
+    public function previous_root(): string;
+
+    /**
+     * Get the old root.
+     * 
+     * @return string
+     */
+    public function old_root(): string;
+
+    /**
+     * Get the current path.
+     * 
+     * @return string
+     */
+    public function current_path(): string;
 }

@@ -38,8 +38,32 @@ final class FilesystemTest extends TestCase
     {
         $fs = app(Filesystem::class);
 
+        $current_root = (string) $fs;
+
         $fs->update_root('/path/to');
 
         $this->assertSame('/path/to', (string) $fs);
+
+        $fs->reset_root($current_root);
+
+        $this->assertSame($current_root, $fs->old_root());
+    }
+
+    public function test_path_renaming(): void
+    {
+        $fs = app(Filesystem::class);
+
+        $fs->update_root((string) $fs->to('tests/Unit'));
+
+        $file_path = (string) $fs->to('foo');
+        $dir_path  = (string) $fs->to('bar');
+
+        fopen($file_path, 'w+');
+        mkdir($dir_path);
+
+        dump((string) $fs);
+
+        unlink($file_path);
+        rmdir($file_path);
     }
 }
