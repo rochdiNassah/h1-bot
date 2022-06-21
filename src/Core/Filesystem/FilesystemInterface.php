@@ -70,7 +70,7 @@ interface FilesystemInterface
     public function update_root(string $path): void;
 
     /**
-     * Resets the root to the old root.
+     * Resets the root to the old one.
      * 
      * @return void
      */
