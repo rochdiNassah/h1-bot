@@ -5,7 +5,7 @@ namespace Automation\Core\Filesystem;
 interface FilesystemInterface
 {
     /**
-     * Determines if the given path is exists.
+     * Determines if the given path(s) is exists.
      * 
      * @param  string|array  $path
      * @return bool
@@ -13,7 +13,7 @@ interface FilesystemInterface
     public function exists(string|array $path = ''): bool;
 
     /**
-     * Determines if the given path is missing.
+     * Determines if the given path(s) is missing.
      * 
      * @param  string|array  $path
      * @return bool
