@@ -31,12 +31,12 @@ interface FilesystemInterface
     public function to(string $path): self;
 
     /**
-     * Removes the given path.
+     * Removes the given path(s).
      * 
-     * @param  string  $path
+     * @param  string  $paths
      * @return bool
      */
-    public function remove(string $path): bool;
+    public function remove(string|array $paths): bool;
 
     /**
      * Renames the given path.

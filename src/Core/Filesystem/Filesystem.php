@@ -64,13 +64,27 @@ class Filesystem implements FilesystemInterface
         return $this;
     }
 
-    public function remove(string $path): bool
+    public function remove(string|array $paths): bool
     {
+        $paths = is_array($paths) ? $paths : func_get_args();
+
+        foreach ($paths as $path):
+            $path = (string) $this->to($path);
+
+            if (is_dir($path)):
+                @rmdir($path);
+            else:
+                @unlink($path);
+            endif;
+        endforeach;
+
         return true;
     }
 
     public function rename(string $path, string $new_name): bool
     {
+        rename((string) $this->to($path), (string) $this->to($new_name));
+
         return true;
     }
 

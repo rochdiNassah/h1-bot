@@ -55,15 +55,18 @@ final class FilesystemTest extends TestCase
 
         $fs->update_root((string) $fs->to('tests/Unit'));
 
-        $file_path = (string) $fs->to('foo');
-        $dir_path  = (string) $fs->to('bar');
+        fopen((string) $fs->to('foo'), 'w+');
+        mkdir((string) $fs->to('bar'));
 
-        fopen($file_path, 'w+');
-        mkdir($dir_path);
+        $this->assertTrue($fs->exists(['foo', 'bar']));
 
-        dump((string) $fs);
+        $this->assertTrue($fs->rename('foo', 'baz'));
+        $this->assertTrue($fs->rename('bar', 'qux'));
 
-        unlink($file_path);
-        rmdir($file_path);
+        $this->assertTrue($fs->missing(['foo', 'bar']));
+
+        $this->assertTrue($fs->exists(['baz', 'qux']));
+
+        $fs->remove(['baz', 'qux']);
     }
 }
