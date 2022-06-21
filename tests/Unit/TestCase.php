@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Core;
+namespace Tests\Unit;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
