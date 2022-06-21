@@ -14,6 +14,7 @@ final class FilesystemTest extends TestCase
         $dir_path  = 'tests/Unit/bar';
 
         fopen((string) $fs->to($file_path), 'w+');
+
         if (!file_exists((string) $fs->to($dir_path))) mkdir((string) $fs->to($dir_path));
 
         $this->assertTrue($fs->exists([$file_path, $dir_path]));
@@ -31,5 +32,14 @@ final class FilesystemTest extends TestCase
         $this->assertFalse($fs->exists([$file_path, $dir_path]));
         $this->assertTrue($fs->missing([$file_path, $dir_path]));
         $this->assertTrue($fs->to('tests/Unit')->missing(['foo', 'bar']));
+    }
+
+    public function test_root_path_is_updatable(): void
+    {
+        $fs = app(Filesystem::class);
+
+        $fs->update_root('/path/to');
+
+        $this->assertSame('/path/to', (string) $fs);
     }
 }
