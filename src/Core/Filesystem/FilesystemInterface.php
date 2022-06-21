@@ -50,7 +50,7 @@ interface FilesystemInterface
     /**
      * Search and replace from inside a file.
      * 
-     * This method return the new contents on success and false on failure.
+     * This method returns the new contents on success and false on failure.
      * If $save param evaluates to true, it saves the file with the new contents and returns true on success.
      * 
      * @param  string|array  $search
