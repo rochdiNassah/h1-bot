@@ -37,7 +37,7 @@ class Filesystem implements FilesystemInterface
     {
         $root = (string) $this;
 
-        $paths = is_array($path) ? $path : [$path];
+        $paths = is_array($path) ? $path : func_get_args();
 
         foreach ($paths as $path) {
             $path = rtrim($root.DIRECTORY_SEPARATOR.$path, '\\/');
