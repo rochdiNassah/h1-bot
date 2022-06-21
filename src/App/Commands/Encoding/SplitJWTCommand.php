@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputInterface, InputArgument};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Automation\Core\Facades\Encoder;
 
 #[AsCommand(
@@ -23,6 +24,12 @@ class SplitJWTCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->getFormatter()->setStyle('red', app(OutputFormatterStyle::class, ['red']));
+        $output->getFormatter()->setStyle('green', app(OutputFormatterStyle::class, ['green']));
+        $output->getFormatter()->setStyle('yellow', app(OutputFormatterStyle::class, ['yellow']));
+        $output->getFormatter()->setStyle('bright-magenta', app(OutputFormatterStyle::class, ['bright-magenta']));
+        $output->getFormatter()->setStyle('cyan', app(OutputFormatterStyle::class, ['cyan']));
+
         $string = $input->getArgument('string');
 
         if (is_null($string)) {
@@ -49,6 +56,10 @@ class SplitJWTCommand extends Command
 
             return Command::FAILURE;
         }
+
+        $result[0] = sprintf('Header: <red>%s</red>', $result[0]);
+        $result[1] = sprintf('Payload: <bright-magenta>%s</bright-magenta>', $result[1]);
+        $result[2] = sprintf('Signature: <cyan>%s</cyan>', $result[2]);
 
         $output->writeLn([
             str_repeat('=', 32),
