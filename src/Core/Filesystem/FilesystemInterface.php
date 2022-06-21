@@ -60,4 +60,12 @@ interface FilesystemInterface
      * @return string|bool
      */
     public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save): string|bool;
+
+    /**
+     * Updates the $root path to the given one.
+     * 
+     * @param  string  $path
+     * @return void
+     */
+    public function update_root(string $path): void;
 }

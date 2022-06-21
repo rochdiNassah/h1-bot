@@ -9,17 +9,17 @@ class Filesystem implements FilesystemInterface
     private string $current_path;
 
     public function __construct(
-        private string $project_root,
+        private string $root,
         private Application $app
     ) {
-        $this->current_path = $project_root;
+        $this->current_path = $root;
     }
 
     public function __toString(): string
     {
         $current_path = $this->current_path;
 
-        $this->current_path = $this->project_root;
+        $this->current_path = $this->root;
 
         return $current_path;
     }
@@ -46,11 +46,6 @@ class Filesystem implements FilesystemInterface
         return !$this->exists($path);
     }
 
-    public function remove(string $path, bool|int $recursive = false): bool
-    {
-        return true;
-    }
-
     public function to(string $path): self
     {
         $path = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->current_path, $path));
@@ -60,8 +55,24 @@ class Filesystem implements FilesystemInterface
         return $this;
     }
 
-    public function rename(string $path): bool
+    public function remove(string $path): bool
     {
         return true;
+    }
+
+    public function rename(string $path, string $new_name): bool
+    {
+        return true;
+    }
+
+    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save): string|bool
+    {
+        return true;
+    }
+
+    public function update_root(string $path): void
+    {
+        $this->root = $path;
+        $this->current_path = $path;
     }
 }
