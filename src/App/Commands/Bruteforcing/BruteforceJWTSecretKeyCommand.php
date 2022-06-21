@@ -42,6 +42,18 @@ class BruteforceJWTSecretKeyCommand extends Command
             return Command::FAILURE;
         }
 
+        $secret_key = '';
+
+        $jwt_parts = explode('.', $string);
+
+        $header    = base64_decode($jwt_parts[0]);
+        $payload   = base64_decode($jwt_parts[1]);
+        $signature = $jwt_parts[2];
+
+        $new_signature = hash_hmac('sha'.substr(json_decode($header)->alg, 2), base64_encode($header).base64_encode($payload), $secret_key);
+
+
+
         return Command::SUCCESS;
     }
 }
