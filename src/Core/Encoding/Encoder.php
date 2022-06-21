@@ -78,7 +78,7 @@ class Encoder implements EncoderInterface
     }
 
     /**
-     * Detect the encoding type of an encoded string.
+     * Detect the encoding type of a string.
      * 
      * @param  string  $string
      * @return string
