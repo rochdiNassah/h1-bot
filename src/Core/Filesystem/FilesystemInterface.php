@@ -21,7 +21,7 @@ interface FilesystemInterface
     public function missing(string|array $path = ''): bool;
 
     /**
-     * Generates a path to the given path.
+     * Generates a path to the given path and saves it to $current_path property.
      * 
      * @param  string  $path
      * @return self
