@@ -59,7 +59,7 @@ interface FilesystemInterface
      * @param  bool|int  $save If evaluates to true, save the file with the new contents.
      * @return string|bool
      */
-    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save): string|bool;
+    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save = true): string|bool;
 
     /**
      * Updates the $root path to the given one.
