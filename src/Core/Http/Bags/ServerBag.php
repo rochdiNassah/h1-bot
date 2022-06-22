@@ -2,9 +2,7 @@
 
 namespace Automation\Core\Http\Bags;
 
-use Automation\Interfaces\BagInterface;
-
-class ServerBag implements BagInterface
+class ServerBag
 {
     private array $server;
 
