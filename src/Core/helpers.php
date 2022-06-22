@@ -1,5 +1,28 @@
 <?php declare(strict_types=1);
 
+use Automation\Core\Facades\Filesystem;
+use Automation\Core\Filesystem\FileDoesNotExistException;
+
+if (!function_exists('play_audio')) {
+    function play_audio(string $audio, int $times = 1): void
+    {
+        if ('cli' !== php_sapi_name()) {
+            return;
+        }
+
+        $path = (string) Filesystem::to('resources/audio')->to($audio);
+
+        if (!file_exists($path)) {
+            throw new FileDoesNotExistException($path);
+        }
+
+        for ($i=0; $i<$times; $i++):
+            system(sprintf('cvlc --play-and-exit %s 2>/dev/null', $path));
+        endfor;
+
+        return;
+    }
+}
 if (!function_exists('app')) {
     function app(): mixed
     {

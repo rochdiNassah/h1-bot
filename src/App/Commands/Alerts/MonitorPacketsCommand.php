@@ -21,6 +21,7 @@ class MonitorPacketsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        play_audio('notification2.mp3');
 
         return Command::SUCCESS;
     }
