@@ -11,6 +11,6 @@ Console::add(app(DecodeCommand::class));
 Console::add(app(DetectEncodingCommand::class));
 Console::add(app(SplitJWTCommand::class));
 Console::add(app(StrlenCommand::class));
-console::add(app(BruteforceJWTSecretKeyCommand::class));
+Console::add(app(BruteforceJWTSecretKeyCommand::class));
 Console::add(app(MonitorPacketsCommand::class));
 Console::add(app(ShellServerCommand::class));
