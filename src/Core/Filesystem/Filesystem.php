@@ -88,8 +88,29 @@ class Filesystem implements FilesystemInterface
         return true;
     }
 
-    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save): string|bool
+    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save = true): bool|string
     {
+        if ($this->to($path)->missing()) {
+            throw new FileDoesNotExistException($path);
+        }
+
+        $path = (string) $this->to($path);
+
+        if (!is_writable($path)) {
+            throw new PathIsNotWritableException($path);
+        }
+        if (!is_readable($path)) {
+            throw new PathIsNotReadableException($path);
+        }
+        
+        $contents = str_replace($search, $replace, file_get_contents($path));
+
+        if (!$save) {
+            return $contents;
+        }
+
+        file_put_contents($path, $contents);
+
         return true;
     }
 

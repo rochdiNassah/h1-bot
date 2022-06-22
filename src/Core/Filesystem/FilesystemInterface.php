@@ -50,16 +50,13 @@ interface FilesystemInterface
     /**
      * Search and replace from inside a file.
      * 
-     * This method returns the new contents on success and false on failure.
-     * If the $save parameter evaluates to true, it saves the file with the new contents and returns true on success.
-     * 
      * @param  string|array  $search
      * @param  string|array  $replace
      * @param  string  $path
      * @param  bool|int  $save
-     * @return string|bool
+     * @return bool|string
      */
-    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save = true): string|bool;
+    public function replace_in_file(string|array $search, string|array $replace, string $path, bool|int $save = true): bool|string;
 
     /**
      * Updates the $root path to the given one.
