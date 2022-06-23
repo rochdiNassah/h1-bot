@@ -67,6 +67,6 @@ class Router
             }
         }
 
-        throw new Exception('404 Not Found!');
+        throw new \Exception('404 Not Found!');
     }
 }
