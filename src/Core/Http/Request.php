@@ -60,6 +60,11 @@ class Request implements RequestInterface
         return $this->uri;
     }
 
+    public function base_uri(): string
+    {
+        return $this->base_uri;
+    }
+
     public function path(): string
     {
         return $this->path;

@@ -1,5 +1,13 @@
 <?php declare(strict_types=1);
 
+use Automation\Core\Facades\Request;
+
+if (!function_exists('asset')) {
+    function asset(string $to): string
+    {
+        return sprintf('%s/%s', Request::base_uri(), $to);
+    }
+}
 if (!function_exists('escape')) {
     function escape(string $string): string
     {
