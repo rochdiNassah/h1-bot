@@ -17,7 +17,7 @@ class Response implements ResponseInterface
 
     public function add_header(string $key, string $value): void
     {
-
+        $this->headers[$key] = $value;
     }
 
     public function headers(): array
