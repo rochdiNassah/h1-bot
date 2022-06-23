@@ -61,11 +61,7 @@ class Router
 
                 $route->setParameters($params);
 
-                $result = $this->app->resolve($route->action(), $route->parameters());
-
-                $route->setResult($result);
-
-                $this->app->share(Route::class, $route);
+                $route->run();
 
                 return;
             }

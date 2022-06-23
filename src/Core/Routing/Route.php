@@ -51,6 +51,17 @@ class Route
         $this->pattern = $pattern;
     }
 
+    public function run(): void
+    {
+        if (is_array($this->action)) {
+            $this->action[0] = $this->app->resolve($this->action[0]);
+        }
+
+        $this->result = $this->app->resolve($this->action, $this->parameters);
+
+        $this->app->share(Route::class, $this);
+    }
+
     public function path(): string
     {
         return $this->path;
@@ -63,10 +74,6 @@ class Route
 
     public function action(): mixed
     {
-        if (is_array($this->action)) {
-            $this->action[0] = $this->app->resolve($this->action[0]);
-        }
-
         return $this->action;
     }
 
