@@ -6,6 +6,6 @@
         <title>Users</title>
     </head>
     <body>
-        <?php echo app()->view->child(); ?>
+        <?php echo app('view')->child(); ?>
     </body>
 </html>

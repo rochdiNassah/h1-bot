@@ -129,6 +129,8 @@ final class Application
 
                 if (is_string($abstract)) {
                     return $abstract;
+                } else if (is_object($abstract)) {
+                    return $abstract;
                 } else {
                     return $this->resolve($abstract);
                 }
