@@ -44,7 +44,7 @@ final class FilesystemTest extends TestCase
 
         $this->assertSame('/path/to', (string) $fs);
 
-        $fs->reset_root($current_root);
+        $fs->reset_root();
 
         $this->assertSame($current_root, $fs->old_root());
     }

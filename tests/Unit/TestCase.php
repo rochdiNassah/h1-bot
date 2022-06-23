@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+use Tests\TestCase as BaseTestCase;
+
+class TestCase extends BaseTestCase
 {
-    public function setUp(): void
-    {
-        \Automation\Core\Application::instance()->run();
-    }
+    
 }
