@@ -6,6 +6,7 @@
         <title>Users</title>
     </head>
     <body>
+        This is from parent
         <?php echo app('view')->child(); ?>
     </body>
 </html>

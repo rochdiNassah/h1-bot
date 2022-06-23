@@ -29,7 +29,6 @@ class View
         return $this->content;
     }
 
-    /** [TODO] Must be refactored! */
     public function render(): void
     {
         Filesystem::update_root('views');
@@ -58,21 +57,11 @@ class View
 
         $this->child = ob_get_clean();
 
-        Filesystem::update_root('views');
+        $this->view = $this->parent;
 
-        $parent_view_path = Filesystem::to(sprintf('%s.php', $this->parent));
+        $this->is_extending = false;
 
-        if (Filesystem::missing($parent_view_path)) {
-            throw new ViewNotFoundException($this->parent);
-        }
-
-        Filesystem::reset_root();
-
-        ob_start();
-
-        require $parent_view_path;
-
-        $this->content = ob_get_clean();
+        $this->render();
     }
 
     public function extends(string $view): void
