@@ -10,7 +10,7 @@ interface FilesystemInterface
      * @param  string|array  $path
      * @return bool
      */
-    public function exists(string|array $path = ''): bool;
+    public function exists(string|array $path): bool;
 
     /**
      * Determines if the given path(s) is missing.
@@ -18,17 +18,15 @@ interface FilesystemInterface
      * @param  string|array  $path
      * @return bool
      */
-    public function missing(string|array $path = ''): bool;
+    public function missing(string|array $path): bool;
 
     /**
      * Generates a path to the given path.
      * 
-     * This method saves the generated path in the $current_path property.
-     * 
      * @param  string  $path
-     * @return self
+     * @return string
      */
-    public function to(string $path): self;
+    public function to(string $path): string;
 
     /**
      * Removes the given path(s).

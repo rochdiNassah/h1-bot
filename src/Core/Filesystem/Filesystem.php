@@ -4,7 +4,7 @@ namespace Automation\Core\Filesystem;
 
 use Automation\Core\Application;
 
-class Filesystem //implements FilesystemInterface
+class Filesystem implements FilesystemInterface
 {
     private string $old_root;
 
@@ -25,6 +25,8 @@ class Filesystem //implements FilesystemInterface
         $paths = is_array($path) ? $path : func_get_args();
 
         foreach ($paths as $path) {
+            $path = str_replace('\\/', DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->root, $path));
+
             if (!file_exists($path)) {
                 return false;
             }

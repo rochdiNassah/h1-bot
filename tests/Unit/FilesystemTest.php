@@ -18,14 +18,14 @@ final class FilesystemTest extends TestCase
         fopen($file_path, 'w+');
         @mkdir($dir_path);
 
-        $this->assertTrue($fs->exists([$file_path, $dir_path]));
-        $this->assertFalse($fs->missing([$file_path, $dir_path]));
+        $this->assertTrue($fs->exists(['foo', 'bar']));
+        $this->assertFalse($fs->missing(['foo', 'bar']));
 
         @unlink($file_path);
         @rmdir($dir_path);
 
-        $this->assertFalse($fs->exists([$file_path, $dir_path]));
-        $this->assertTrue($fs->missing([$file_path, $dir_path]));
+        $this->assertFalse($fs->exists(['foo', 'bar']));
+        $this->assertTrue($fs->missing(['foo', 'bar']));
 
         $fs->reset_root();
     }
@@ -57,17 +57,17 @@ final class FilesystemTest extends TestCase
         fopen($file_path, 'w+');
         @mkdir($dir_path);
 
-        $this->assertTrue($fs->exists([$file_path, $dir_path]));
+        $this->assertTrue($fs->exists(['foo', 'bar']));
 
         $this->assertTrue($fs->rename('foo', 'baz'));
         $this->assertTrue($fs->rename('bar', 'qux'));
 
-        $this->assertTrue($fs->missing([$file_path, $dir_path]));
+        $this->assertTrue($fs->missing(['foo', 'bar']));
 
         $file_path = $fs->to('baz');
         $dir_path  = $fs->to('qux');
 
-        $this->assertTrue($fs->exists([$file_path, $dir_path]));
+        $this->assertTrue($fs->exists(['baz', 'qux']));
 
         $fs->remove(['baz', 'qux']);
 
