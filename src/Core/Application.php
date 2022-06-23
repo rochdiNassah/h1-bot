@@ -86,7 +86,7 @@ final class Application
         if ($running_in_cli_mode) {
             $this->resolve($core_aliases['console'], share: true);
             
-            require (string) $this->filesystem->to('commands.php');
+            require $this->filesystem->to('commands.php');
 
             return;
         }

@@ -10,28 +10,24 @@ final class FilesystemTest extends TestCase
     {
         $fs = app(Filesystem::class);
 
-        $file_path = 'tests/Unit/foo';
-        $dir_path  = 'tests/Unit/bar';
+        $fs->update_root('tests/Unit');
 
-        fopen((string) $fs->to($file_path), 'w+');
+        $file_path = $fs->to('foo');
+        $dir_path  = $fs->to('bar');
 
-        if (!file_exists((string) $fs->to($dir_path))) mkdir((string) $fs->to($dir_path));
+        fopen($file_path, 'w+');
+        @mkdir($dir_path);
 
         $this->assertTrue($fs->exists([$file_path, $dir_path]));
-        $this->assertTrue($fs->to($file_path)->exists());
-        $this->assertTrue($fs->to($dir_path)->exists());
         $this->assertFalse($fs->missing([$file_path, $dir_path]));
-        $this->assertFalse($fs->to('tests/Unit')->missing(['foo', 'bar']));
-        $this->assertFalse($fs->to($file_path)->missing());
-        $this->assertFalse($fs->to($dir_path)->missing());
 
-        unlink($file_path);
-        
-        if (is_dir($dir_path)) rmdir($dir_path);
+        @unlink($file_path);
+        @rmdir($dir_path);
 
         $this->assertFalse($fs->exists([$file_path, $dir_path]));
         $this->assertTrue($fs->missing([$file_path, $dir_path]));
-        $this->assertTrue($fs->to('tests/Unit')->missing(['foo', 'bar']));
+
+        $fs->reset_root();
     }
 
     public function test_root_path_is_updatable(): void
@@ -53,20 +49,28 @@ final class FilesystemTest extends TestCase
     {
         $fs = app(Filesystem::class);
 
-        $fs->update_root((string) $fs->to('tests/Unit'));
+        $fs->update_root('tests/Unit');
 
-        fopen((string) $fs->to('foo'), 'w+');
-        mkdir((string) $fs->to('bar'));
+        $file_path = $fs->to('foo');
+        $dir_path  = $fs->to('bar');
 
-        $this->assertTrue($fs->exists(['foo', 'bar']));
+        fopen($file_path, 'w+');
+        @mkdir($dir_path);
+
+        $this->assertTrue($fs->exists([$file_path, $dir_path]));
 
         $this->assertTrue($fs->rename('foo', 'baz'));
         $this->assertTrue($fs->rename('bar', 'qux'));
 
-        $this->assertTrue($fs->missing(['foo', 'bar']));
+        $this->assertTrue($fs->missing([$file_path, $dir_path]));
 
-        $this->assertTrue($fs->exists(['baz', 'qux']));
+        $file_path = $fs->to('baz');
+        $dir_path  = $fs->to('qux');
+
+        $this->assertTrue($fs->exists([$file_path, $dir_path]));
 
         $fs->remove(['baz', 'qux']);
+
+        $fs->reset_root();
     }
 }

@@ -79,11 +79,4 @@ interface FilesystemInterface
      * @return string
      */
     public function old_root(): string;
-
-    /**
-     * Get the current path.
-     * 
-     * @return string
-     */
-    public function current_path(): string;
 }

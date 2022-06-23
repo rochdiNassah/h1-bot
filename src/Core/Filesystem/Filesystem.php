@@ -4,38 +4,27 @@ namespace Automation\Core\Filesystem;
 
 use Automation\Core\Application;
 
-class Filesystem implements FilesystemInterface
+class Filesystem //implements FilesystemInterface
 {
     private string $old_root;
-
-    private string $current_path;
 
     public function __construct(
         private string $root,
         private Application $app
     ) {
         $this->old_root      = $root;
-        $this->current_path  = $root;
     }
 
     public function __toString(): string
     {
-        $current_path = $this->current_path;
-
-        $this->current_path = $this->root;
-
-        return $current_path;
+        return $this->root;
     }
 
-    public function exists(string|array $path = ''): bool
+    public function exists(string|array $path): bool
     {
-        $root = (string) $this;
-
         $paths = is_array($path) ? $path : func_get_args();
 
         foreach ($paths as $path) {
-            $path = rtrim($root.DIRECTORY_SEPARATOR.$path, '\\/');
-
             if (!file_exists($path)) {
                 return false;
             }
@@ -44,18 +33,16 @@ class Filesystem implements FilesystemInterface
         return true;
     }
 
-    public function missing(string|array $path = ''): bool
+    public function missing(string|array $path): bool
     {
         return !$this->exists($path);
     }
 
-    public function to(string $path): self
+    public function to(string $path): string
     {
-        $path = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->current_path, $path));
+        $path = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->root, $path));
 
-        $this->current_path = $path;
-
-        return $this;
+        return $path;
     }
 
     public function remove(string|array $paths): bool
@@ -77,7 +64,7 @@ class Filesystem implements FilesystemInterface
 
     public function rename(string $path, string $new_name): bool
     {
-        rename((string) $this->to($path), (string) $this->to($new_name));
+        rename($this->to($path), $this->to($new_name));
 
         return true;
     }
@@ -111,22 +98,15 @@ class Filesystem implements FilesystemInterface
     public function update_root(string $path): void
     {
         $this->root = $path;
-        $this->current_path = $path;
     }
 
     public function reset_root(): void
     {
-        $this->current_path  = $this->old_root;
-        $this->root          = $this->old_root;
+        $this->root = $this->old_root;
     }
 
     public function old_root(): string
     {
         return $this->old_root;
-    }
-
-    public function current_path(): string
-    {
-        return $this->current_path;
     }
 }
