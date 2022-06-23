@@ -25,7 +25,9 @@ class Filesystem implements FilesystemInterface
         $paths = is_array($path) ? $path : func_get_args();
 
         foreach ($paths as $path) {
-            $path = str_replace('\\/', DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->root, $path));
+            if (!in_array($path[0], ['/', '\\'])) {
+                $path = str_replace('\\/', DIRECTORY_SEPARATOR, sprintf('%s/%s', $this->root, $path));
+            }
 
             if (!file_exists($path)) {
                 return false;
@@ -99,6 +101,12 @@ class Filesystem implements FilesystemInterface
 
     public function update_root(string $path): void
     {
+        if (!in_array($path[0], ['\\', '/'])) {
+            $this->root = $this->root.DIRECTORY_SEPARATOR.$path;
+
+            return;
+        }
+
         $this->root = $path;
     }
 

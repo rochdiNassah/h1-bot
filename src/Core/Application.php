@@ -62,16 +62,17 @@ final class Application
     public function coreAliases(string $key = null): array|string
     {
         $aliases = [
-            'filesystem' => \Automation\Core\Filesystem\Filesystem::class,
-            'request'    => \Automation\Core\Http\Request::class,
-            'response'   => \Automation\Core\Http\Response::class,
-            'database'   => \Automation\Core\Database\Database::class,
-            'router'     => \Automation\Core\Routing\Router::class,
-            'cookie'     => \Automation\Core\Http\Cookie::class,
-            'session'    => \Automation\Core\Http\Session::class,
-            'view'       => \Automation\Core\View\View::class,
-            'console'    => \Symfony\Component\Console\Application::class,
-            'encoder'    => \Automation\Core\Encoding\Encoder::class,
+            'filesystem'  => \Automation\Core\Filesystem\Filesystem::class,
+            'request'     => \Automation\Core\Http\Request::class,
+            'response'    => \Automation\Core\Http\Response::class,
+            'database'    => \Automation\Core\Database\Database::class,
+            'router'      => \Automation\Core\Routing\Router::class,
+            'cookie'      => \Automation\Core\Http\Cookie::class,
+            'session'     => \Automation\Core\Http\Session::class,
+            'view'        => \Automation\Core\View\ViewFactory::class,
+            'console'     => \Symfony\Component\Console\Application::class,
+            'encoder'     => \Automation\Core\Encoding\Encoder::class,
+            'application' => \Automation\Core\Application::class,
         ];
         
         if (!is_null($key)) {
