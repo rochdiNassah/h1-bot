@@ -46,4 +46,31 @@ class Router
     {
         return $this->current_route;
     }
+
+    public function run(): void
+    {
+        $request = $this->app->request;
+
+        foreach ($this->routes as $route) {
+            preg_match($route->pattern(), $request->path(), $match);
+
+            if (isset($match[0]) && array_shift($match) === $request->path()) {
+                $this->current_route = $route;
+
+                $params = array_combine($route->paramNames(), $match);
+
+                $route->setParameters($params);
+
+                $result = $this->app->resolve($route->action(), $route->parameters());
+
+                $route->setResult($result);
+
+                $this->app->share(Route::class, $route);
+
+                return;
+            }
+        }
+
+        throw new Exception('404 Not Found!');
+    }
 }

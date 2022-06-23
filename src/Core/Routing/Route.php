@@ -12,7 +12,7 @@ class Route
 
     private array $param_values;
 
-    private array $params;
+    private array $parameters;
 
     public function __construct(
         private string $method,
@@ -23,15 +23,32 @@ class Route
 
     }
 
+    public function __toString(): string
+    {
+        $result = $this->result;
+
+        if (is_array($result)) {
+            $result = json_encode($result);
+        }
+
+        return $result;
+    }
+
     public function parse(): void
     {
         $this->path = trim($this->path, '\\/');
 
-        $wild_cards = preg_match_all('/\{(.*?)\}/', $this->path, $match);
+        preg_match_all('/\{(.*?)\}/', $this->path, $param_names);
 
-        if ($match) {
-            
+        $pattern = sprintf('/%s/', str_replace(['\\', '/'], ['\\\\', '\/'], $this->path));
+
+        if ($param_names) {
+            $this->param_names = $param_names[1];
+
+            $pattern = str_replace($param_names[0], '(\/\/|[^\/?]*)', $pattern);
         }
+
+        $this->pattern = $pattern;
     }
 
     public function path(): string
@@ -44,8 +61,12 @@ class Route
         return $this->method;
     }
 
-    public function action(): array|callable
+    public function action(): mixed
     {
+        if (is_array($this->action)) {
+            $this->action[0] = $this->app->resolve($this->action[0]);
+        }
+
         return $this->action;
     }
 
@@ -64,8 +85,18 @@ class Route
         return $this->param_values;
     }
 
-    public function params(): array
+    public function parameters(): array
     {
-        return $this->params;
+        return $this->parameters;
+    }
+
+    public function setParameters(array $params): void
+    {
+        $this->parameters = $params;
+    }
+
+    public function setResult(mixed $result): void
+    {
+        $this->result = $result;
     }
 }

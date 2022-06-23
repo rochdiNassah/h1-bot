@@ -51,8 +51,11 @@ final class Application
         if ($in_cli_mode) {
             return;
         }
+
+        require $this->filesystem->to('routes.php');
         
         $this->request->parse();
+        $this->router->run();
     }
 
     public function coreAliases(string $key = null): array|string
@@ -142,7 +145,7 @@ final class Application
 
         $dependencies = array_merge($params, $this->resolveDependencies($abstract, $parameters ?? []));
 
-        $resolved = is_callable($abstract) ? call_user_func($abstract, ...$dependencies) : new $abstract(...$dependencies);
+        $resolved = is_callable($abstract) || is_array($abstract) ? call_user_func($abstract, ...$dependencies) : new $abstract(...$dependencies);
 
         if (is_string($abstract)) {
             $this->instances[] = $resolved;
@@ -181,5 +184,10 @@ final class Application
         endforeach;
 
         return $results;
+    }
+
+    public function share(string $abstract, object $concrete): void
+    {
+        $this->shared[$abstract] = $concrete;
     }
 }
