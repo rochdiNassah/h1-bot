@@ -4,9 +4,11 @@
         <meta charset="utf8">
         <meta name="viewport" content="initial-scale=1.0, width=device-width">
         <title><?= escape($this->getTitle()) ?></title>
-        <link rel="stylesheet" href="<?= asset('tailwind.css') ?>">
+        <script src="<?= asset('tailwind.js') ?>"></script>
     </head>
-    <body>
-        <?= $this->child() ?>
+    <body class="bg-gray-800">
+        <div class="px-2 sm:px-4 h-14 flex justify-between container mx-auto lg:max-w-5xl">
+            <?= $this->child() ?>
+        </div>
     </body>
 </html>

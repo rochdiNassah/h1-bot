@@ -54,10 +54,15 @@ class Router
         foreach ($this->routes as $route) {
             preg_match($route->pattern(), $request->path(), $match);
 
-            if (isset($match[0]) && array_shift($match) === $request->path()) {
+            if (isset($match[0]) && array_shift($match) === $request->path() && $route->method() === $request->method()) {
                 $this->current_route = $route;
 
-                $params = array_combine($route->paramNames(), $match);
+                if ('GET' === $route->method()) {
+                    $params = array_combine($route->paramNames(), $match);
+                }
+                if ('POST' === $route->method()) {
+                    $params = $_POST;
+                }
 
                 $route->setParameters($params);
 

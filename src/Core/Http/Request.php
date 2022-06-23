@@ -43,6 +43,8 @@ class Request implements RequestInterface
         $this->uri       = sprintf('%s/%s', $this->base_uri, $request_uri);
         $this->base_path = substr($script_name, 0, -strlen(basename($script_name)));
         $this->path      = substr($this->uri, strlen($this->base_path) + strlen($this->base_uri));
+
+        $this->method    = $this->server->get('REQUEST_METHOD');
     }
 
     public function method(): string

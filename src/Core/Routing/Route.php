@@ -31,7 +31,7 @@ class Route
             $result = json_encode($result);
         }
 
-        return $result;
+        return (string) $result;
     }
 
     public function parse(): void
