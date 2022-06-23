@@ -74,20 +74,6 @@ interface FilesystemInterface
     public function reset_root(): void;
 
     /**
-     * Get the new root.
-     * 
-     * @return string
-     */
-    public function new_root(): string;
-
-    /**
-     * Get the previous root.
-     * 
-     * @return string
-     */
-    public function previous_root(): string;
-
-    /**
      * Get the old root.
      * 
      * @return string

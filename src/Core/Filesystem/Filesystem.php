@@ -8,10 +8,6 @@ class Filesystem implements FilesystemInterface
 {
     private string $old_root;
 
-    private string $previous_root;
-
-    private string $new_root;
-
     private string $current_path;
 
     public function __construct(
@@ -19,9 +15,7 @@ class Filesystem implements FilesystemInterface
         private Application $app
     ) {
         $this->old_root      = $root;
-        $this->previous_root = $root;
         $this->current_path  = $root;
-        $this->new_root      = $root;
     }
 
     public function __toString(): string
@@ -116,29 +110,14 @@ class Filesystem implements FilesystemInterface
 
     public function update_root(string $path): void
     {
-        $this->previous_root = $this->new_root;
-
         $this->root = $path;
         $this->current_path = $path;
-        $this->new_root = $path;
     }
 
     public function reset_root(): void
     {
-        $this->previous_root = $this->root;
-        $this->new_root      = $this->old_root;
         $this->current_path  = $this->old_root;
         $this->root          = $this->old_root;
-    }
-
-    public function new_root(): string
-    {
-        return $this->new_root;
-    }
-
-    public function previous_root(): string
-    {
-        return $this->previous_root;
     }
 
     public function old_root(): string
