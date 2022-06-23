@@ -1,3 +1,1 @@
-<?php app('view')->extends('layouts/main'); ?>
-
-<?php echo $name; ?>
+<?php $this->extends('layouts/main')->setTitle('Users view!') ?>

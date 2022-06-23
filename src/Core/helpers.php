@@ -1,5 +1,11 @@
 <?php declare(strict_types=1);
 
+if (!function_exists('escape')) {
+    function escape(string $string): string
+    {
+        return htmlspecialchars($string);
+    }
+}
 if (!function_exists('app')) {
     function app(): mixed
     {

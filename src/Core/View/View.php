@@ -10,11 +10,13 @@ class View
 {
     private string $content;
 
+    private string $parent;
+
     private string $child;
 
     private bool $is_extending = false;
 
-    private string $parent;
+    private string $title;
 
     public function __construct(
         private string $view,
@@ -64,15 +66,29 @@ class View
         $this->render();
     }
 
-    public function extends(string $view): void
+    public function extends(string $view): self
     {
         $this->is_extending = true;
 
         $this->parent = $view;
+
+        return $this;
     }
 
     public function child(): string
     {
         return $this->child;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 }

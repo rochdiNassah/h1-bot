@@ -3,10 +3,9 @@
     <head>
         <meta charset="utf8">
         <meta name="viewport" content="initial-scale=1.0, width=device-width">
-        <title>Users</title>
+        <title><?php echo escape($this->getTitle()); ?></title>
     </head>
     <body>
-        This is from parent
-        <?php echo app('view')->child(); ?>
+        <?php echo $this->child(); ?>
     </body>
 </html>
