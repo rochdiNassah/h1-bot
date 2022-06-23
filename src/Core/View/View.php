@@ -42,4 +42,14 @@ class View
 
         $this->content = $content;
     }
+
+    public function extends(): void
+    {
+
+    }
+
+    public function child(): string
+    {
+        return $this->child;
+    }
 }
