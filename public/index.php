@@ -7,5 +7,3 @@ use Automation\Core\Facades\{Request, Filesystem, Router, Encoder};
 $app = Automation\Core\Application::instance();
 
 $app->run();
-
-echo (app(Automation\Core\Routing\Route::class));

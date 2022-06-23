@@ -56,6 +56,7 @@ final class Application
         
         $this->request->parse();
         $this->router->run();
+        $this->response->send();
     }
 
     public function coreAliases(string $key = null): array|string
@@ -63,6 +64,7 @@ final class Application
         $aliases = [
             'filesystem' => \Automation\Core\Filesystem\Filesystem::class,
             'request'    => \Automation\Core\Http\Request::class,
+            'response'   => \Automation\Core\Http\Response::class,
             'database'   => \Automation\Core\Database\Database::class,
             'router'     => \Automation\Core\Routing\Router::class,
             'cookie'     => \Automation\Core\Http\Cookie::class,
@@ -95,6 +97,7 @@ final class Application
         }
 
         $this->resolve($core_aliases['request'], share: true);
+        $this->resolve($core_aliases['response'], share: true);
         $this->resolve($core_aliases['router'], share: true);
     }
 
