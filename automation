@@ -3,10 +3,8 @@
 
 require sprintf('%s/vendor/autoload.php', substr(__FILE__, 0, -strlen(basename(__FILE__))));
 
-use Automation\Core\Facades\Console;
-
 $app = Automation\Core\Application::instance();
 
 $app->run();
 
-Console::run();
+echo 'FOO';

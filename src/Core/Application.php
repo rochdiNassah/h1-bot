@@ -71,7 +71,6 @@ final class Application
             'cookie'      => \Automation\Core\Http\Cookie::class,
             'session'     => \Automation\Core\Http\Session::class,
             'view'        => \Automation\Core\View\ViewFactory::class,
-            'console'     => \Symfony\Component\Console\Application::class,
             'encoder'     => \Automation\Core\Encoding\Encoder::class,
             'application' => \Automation\Core\Application::class,
         ];
@@ -91,10 +90,6 @@ final class Application
         $this->resolve($core_aliases['encoder'], share: true);
 
         if ($running_in_cli_mode) {
-            $this->resolve($core_aliases['console'], share: true);
-            
-            require $this->filesystem->to('commands.php');
-
             return;
         }
 
