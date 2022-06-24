@@ -3,5 +3,5 @@
 use Automation\Core\Facades\Router;
 use Automation\App\Controllers\StringController;
 
-Router::get('/string', [StringController::class, 'index']);
+Router::get('/', [StringController::class, 'index']);
 Router::post('/string', [StringController::class, 'eval']);
