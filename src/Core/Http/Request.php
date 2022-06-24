@@ -19,6 +19,8 @@ class Request
 
     private string $method;
 
+    private array $post;
+
     private string|null $old = null;
 
     public function __construct(
@@ -47,6 +49,7 @@ class Request
         $this->path      = substr($this->uri, strlen($this->base_path) + strlen($this->base_uri));
 
         $this->method    = $this->server->get('REQUEST_METHOD');
+        $this->post      = $_POST;
     }
 
     public function method(): string
@@ -76,7 +79,7 @@ class Request
 
     public function flash(): void
     {
-        foreach ($_POST as $key => $value) {
+        foreach ($this->post as $key => $value) {
             $this->app->session->set($key, $value);
         }
     }
@@ -87,11 +90,11 @@ class Request
 
         $key = array_map(function ($key) use ($except) {
             if (in_array($key, $except)) return $key;
-        }, array_keys($_POST));
+        }, array_keys($this->post));
 
         $except = reset($key);
 
-        unset($_POST[$except]);
+        unset($this->post[$except]);
 
         $this->flash();
     }
