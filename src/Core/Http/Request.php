@@ -52,6 +52,13 @@ class Request
         $this->post      = $_POST;
     }
 
+    public function simulate(string $method, string $path, array $headers = []): void
+    {
+        $this->method  = strtoupper($method);
+        $this->path    = trim($path, '\\/');
+        $this->headers = $headers;
+    }
+
     public function method(): string
     {
         return $this->method;

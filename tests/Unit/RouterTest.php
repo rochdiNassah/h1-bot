@@ -2,17 +2,36 @@
 
 namespace Tests\Unit;
 
-use Automation\Core\Routing\Router;
+use Automation\Core\Routing\{Router, Route, NotFoundException};
 use Automation\Core\Http\Request;
 
 final class RouterTest extends TestCase
 {
-    public function testFoo(): void
+    public function test_route_matching(): void
     {
-        $request = self::make_accessible(app(Request::class));
-        $router  = self::make_accessible(app(Router::class));
+        $request = app()->resolve(Request::class, share: true);
+        $router  = app(Router::class);
 
+        $router->get('/posts/{pid}/comments/{cid}', [Controller::class, 'echo']);
 
-        $this->assertTrue(true);
+        $request->simulate('GET', "/posts/32/comments/64");
+
+        $router->run();
+
+        $this->assertEquals([32, 64], app(Route::class)->result());
+
+        $this->expectException(NotFoundException::class);
+
+        $request->simulate('GET', "/posts//comments/128");
+
+        $router->run();
+    }
+}
+
+class Controller
+{
+    public function echo(...$args): array
+    {
+        return array_values($args);
     }
 }

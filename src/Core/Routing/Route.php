@@ -45,7 +45,7 @@ class Route
         if ($param_names) {
             $this->param_names = $param_names[1];
 
-            $pattern = str_replace($param_names[0], '(\/\/|[^\/?]*)', $pattern);
+            $pattern = str_replace($param_names[0], '(\/\/|[^\/?].*){1,}', $pattern);
         }
 
         $this->pattern = $pattern;
@@ -105,5 +105,10 @@ class Route
     public function setResult(mixed $result): void
     {
         $this->result = $result;
+    }
+
+    public function result(): mixed
+    {
+        return $this->result;
     }
 }
