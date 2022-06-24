@@ -1,0 +1,6 @@
+#!/usr/local/bin/php
+<?php declare(strict_types=1);
+
+require './vendor/autoload.php';
+
+app()->run();

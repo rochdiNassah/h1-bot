@@ -1,8 +1,0 @@
-#!/usr/local/bin/php
-<?php declare(strict_types=1);
-
-require sprintf('%s/vendor/autoload.php', substr(__FILE__, 0, -strlen(basename(__FILE__))));
-
-$app = Automation\Core\Application::instance();
-
-$app->run();
