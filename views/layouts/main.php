@@ -6,7 +6,7 @@
         <title><?= escape($this->getTitle()) ?></title>
         <script src="<?= asset('tailwind.js') ?>"></script>
     </head>
-    <body class="bg-gray-800">
+    <body>
         <div class="px-2 sm:px-4 flex justify-between container mx-auto lg:max-w-5xl">
             <?= $this->child() ?>
         </div>
