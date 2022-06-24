@@ -54,6 +54,7 @@ final class Application
 
         require $this->filesystem->to('routes.php');
         
+        $this->session->start();
         $this->request->parse();
         $this->router->run();
         $this->response->send();
@@ -97,6 +98,7 @@ final class Application
             return;
         }
 
+        $this->resolve($core_aliases['session'], share: true);
         $this->resolve($core_aliases['request'], share: true);
         $this->resolve($core_aliases['response'], share: true);
         $this->resolve($core_aliases['router'], share: true);

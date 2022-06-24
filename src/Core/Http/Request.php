@@ -5,7 +5,7 @@ namespace Automation\Core\Http;
 use Automation\Core\Application;
 use Automation\Core\Http\Bags\ServerBag;
 
-class Request implements RequestInterface
+class Request
 {
     private array $headers;
 
@@ -18,6 +18,8 @@ class Request implements RequestInterface
     private string $base_path;
 
     private string $method;
+
+    private string|null $old = null;
 
     public function __construct(
         private Application $app,
@@ -70,5 +72,38 @@ class Request implements RequestInterface
     public function path(): string
     {
         return $this->path;
+    }
+
+    public function flash(): void
+    {
+        foreach ($_POST as $key => $value) {
+            $this->app->session->set($key, $value);
+        }
+    }
+
+    public function flash_except($except): void
+    {
+        $except = is_array($except) ? $except : func_get_args();
+
+        $key = array_map(function ($key) use ($except) {
+            if (in_array($key, $except)) return $key;
+        }, array_keys($_POST));
+
+        $except = reset($key);
+
+        unset($_POST[$except]);
+
+        $this->flash();
+    }
+
+    public function old(string $key): string|null
+    {
+        if ($this->app->session->missing($key)) {
+            return $this->old;
+        }
+
+        $this->old = $this->app->session->pull($key);
+
+        return $this->old;
     }
 }

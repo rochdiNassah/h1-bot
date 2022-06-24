@@ -17,4 +17,9 @@ class StringUtility
     {
         return strlen($this->string);
     }
+
+    public function reverse(): string
+    {
+        return strrev($this->string);
+    }
 }

@@ -2,6 +2,18 @@
 
 use Automation\Core\Facades\Request;
 
+if (!function_exists('old')) {
+    function old(string $key): string
+    {
+        return Request::old($key) ?? '';
+    }
+}
+if (!function_exists('config')) {
+    function config(string $key): string
+    {
+        return $_ENV[$key];
+    }
+}
 if (!function_exists('asset')) {
     function asset(string $to): string
     {
