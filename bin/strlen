@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+app()->run();
+
+if (isset($argv[1])) {
+    echo PHP_EOL;
+    echo strlen($argv[1]);
+    echo PHP_EOL;
+
+    die;
+} else {
+    echo PHP_EOL;
+    echo 'Usage: strlen <string>';
+    echo PHP_EOL;
+
+    exit;
+}

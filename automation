@@ -6,5 +6,3 @@ require sprintf('%s/vendor/autoload.php', substr(__FILE__, 0, -strlen(basename(_
 $app = Automation\Core\Application::instance();
 
 $app->run();
-
-echo 'FOO';
