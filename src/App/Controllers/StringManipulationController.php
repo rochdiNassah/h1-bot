@@ -5,11 +5,11 @@ namespace Automation\App\Controllers;
 use Automation\Core\Facades\{View, Request};
 use Automation\Core\Utilities\StringUtility;
 
-class StringController
+class StringManipulationController
 {
     public function index()
     {
-        return View::make('string');
+        return View::make('string-manipulation');
     }
 
     public function eval(string $target, string $operation)
@@ -18,6 +18,6 @@ class StringController
 
         Request::flash();
 
-        return View::make('string', ['result' => $result]);
+        return View::make('string-manipulation', ['result' => $result]);
     }
 }
