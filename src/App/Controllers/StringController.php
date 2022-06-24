@@ -16,7 +16,7 @@ class StringController
     {
         $result = app(StringUtility::class, [$target])->{$operation}();
 
-        Request::flash('target');
+        Request::flash();
 
         return View::make('string', ['result' => $result]);
     }
