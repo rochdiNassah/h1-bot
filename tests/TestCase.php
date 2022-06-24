@@ -8,4 +8,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         \Automation\Core\Application::instance()->run();
     }
+
+    protected static function make_accessible(object $object): object
+    {
+        return $object;
+    }
 }
