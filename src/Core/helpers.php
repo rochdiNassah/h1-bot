@@ -45,7 +45,6 @@ if (!function_exists('exception_handler')) {
         if ($e instanceof Automation\Core\Routing\NotFoundException) {
             try {
                 Response::setContent(View::make('404'));
-
                 Response::send();
             } catch (Exception $e) {
                 exception_handler($e);
