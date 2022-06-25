@@ -26,4 +26,13 @@ interface ResponseInterface
      * @return void
      */
     public function send(): void;
+
+    /**
+     * Set content manually.
+     * 
+     * @param  string  $content
+     * 
+     * @return void
+     */
+    public function setContent(string $content): void;
 }

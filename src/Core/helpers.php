@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Automation\Core\Facades\Request;
+use Automation\Core\Facades\{Request, View, Response};
 
 if (!function_exists('old')) {
     function old(string $key): string
@@ -23,7 +23,7 @@ if (!function_exists('asset')) {
 if (!function_exists('escape')) {
     function escape(string $string): string
     {
-        return htmlspecialchars($string);
+        return app()->encoder->encode($string, 'html');
     }
 }
 if (!function_exists('app')) {
@@ -42,6 +42,18 @@ if (!function_exists('app')) {
 if (!function_exists('exception_handler')) {
     function exception_handler($e): void
     {
+        if ($e instanceof Automation\Core\Routing\NotFoundException) {
+            try {
+                Response::setContent(View::make('404'));
+
+                Response::send();
+            } catch (Exception $e) {
+                exception_handler($e);
+            }
+
+            return;
+        }
+
         dump((new ReflectionObject($e))->getshortName());
         dump("Message: {$e->getMessage()}");
         dump("File: {$e->getFile()}");

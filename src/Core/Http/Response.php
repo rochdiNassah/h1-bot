@@ -9,6 +9,8 @@ class Response implements ResponseInterface
 {
     private array $headers = [];
 
+    private $content = null;
+
     public function __construct(
         private Application $app
     ) {
@@ -34,12 +36,17 @@ class Response implements ResponseInterface
 
     private function send_content(): void
     {
-        print(app(Route::class));
+        print($this->content ?? app(Route::class));
     }
 
     public function send(): void
     {
         $this->send_headers();
         $this->send_content();
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
     }
 }

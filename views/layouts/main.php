@@ -7,8 +7,6 @@
         <script src="<?= asset('tailwind.js') ?>"></script>
     </head>
     <body>
-        <div class="px-2 sm:px-4 flex justify-between container mx-auto lg:max-w-5xl">
-            <?= $this->child() ?>
-        </div>
+        <?= $this->child() ?>
     </body>
 </html>
