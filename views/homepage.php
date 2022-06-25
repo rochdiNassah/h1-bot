@@ -1,7 +1,7 @@
 <?php $this->extends('layouts/main')->setTitle('Homepage') ?>
 
 <div class="w-full mx-auto md:px-32">
-    <div class="pt-32 space-y-8">
+    <div class="pt-24 space-y-8">
         <div class="w-full mx-auto">
             <img class="w-1/2 sm:w-52 mx-auto" src="<?= asset('logo.svg') ?>" />
         </div>
