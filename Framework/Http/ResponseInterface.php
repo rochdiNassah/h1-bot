@@ -11,7 +11,7 @@ interface ResponseInterface
      * @param  string  $value
      * @return void
      */
-    public function add_header(string $key, string $value): void;
+    public function addHeader(string $key, string $value): void;
 
     /**
      * Get all the headers that will be sent with the current response.
@@ -35,4 +35,12 @@ interface ResponseInterface
      * @return void
      */
     public function setContent(string $content): void;
+
+    /**
+     * Send back a redirect response.
+     * 
+     * @param  string  $to
+     * @return void
+     */
+    public function redirect(string $to): void;
 }

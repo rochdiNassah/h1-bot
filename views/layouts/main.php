@@ -4,6 +4,7 @@
         <meta charset="utf8">
         <meta name="viewport" content="initial-scale=1.0, width=device-width">
         <title><?= escape($this->getTitle()) ?></title>
+        <link rel="icon" href="<?= url('logo.svg') ?>">
         <script src="<?= url('js/tailwind.js') ?>"></script>
         <script src="<?= url('js/flowbite.js') ?>"></script>
     </head>

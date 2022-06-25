@@ -17,7 +17,7 @@ class Response implements ResponseInterface
 
     }
 
-    public function add_header(string $key, string $value): void
+    public function addHeader(string $key, string $value): void
     {
         $this->headers[$key] = $value;
     }
@@ -27,26 +27,33 @@ class Response implements ResponseInterface
         return $this->headers;
     }
 
-    private function send_headers(): void
+    private function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {
             header(sprintf('%s: %s', $key, $value));
         }
     }
 
-    private function send_content(): void
+    private function sendContent(): void
     {
         print($this->content ?? app(Route::class));
     }
 
     public function send(): void
     {
-        $this->send_headers();
-        $this->send_content();
+        $this->sendHeaders();
+        $this->sendContent();
     }
 
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+    public function redirect(string $to): void
+    {
+        $this->sendHeaders();
+
+        header(sprintf('Location: %s', url($to)));
     }
 }
