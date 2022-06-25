@@ -65,12 +65,7 @@ class Router
             if (isset($match[0]) && array_shift($match) === $request->path() && $route->method() === $request->method()) {
                 $this->current_route = $route;
 
-                if ('GET' === $route->method()) {
-                    $params = array_combine($route->paramNames(), $match);
-                }
-                if ('POST' === $route->method()) {
-                    $params = $_POST;
-                }
+                $params = array_combine($route->paramNames(), $match);
 
                 $route->setParameters($params);
 

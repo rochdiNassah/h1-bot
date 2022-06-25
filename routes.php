@@ -5,6 +5,6 @@ use Automation\Framework\Facades\{Router, View, Request};
 Router::view('/', 'homepage');
 Router::view('/program/add', 'program.add');
 
-Router::post('/foo', function () {
-    return Request::input('foo');
+Router::post('/foo', function ($age) {
+    return $age;
 });
