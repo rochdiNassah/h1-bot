@@ -17,7 +17,7 @@ if (!function_exists('config')) {
 if (!function_exists('asset')) {
     function asset(string $to): string
     {
-        return sprintf('%s/%s', Request::base_uri(), $to);
+        return sprintf('%s/%s', Request::uri(), $to);
     }
 }
 if (!function_exists('escape')) {
