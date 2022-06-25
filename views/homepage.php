@@ -3,7 +3,7 @@
 <div class="w-full mx-auto md:px-32">
     <div class="pt-24 space-y-8">
         <div class="w-full mx-auto">
-            <img class="w-1/2 sm:w-52 mx-auto" src="<?= asset('logo.svg') ?>" />
+            <img class="w-1/2 sm:w-52 mx-auto" src="<?= url('logo.svg') ?>" />
         </div>
 
         <h1 class="w-full sm:w-2/4 mx-auto text-lg sm:text-2xl text-gray-800 font-bold text-center">Maintain bug-bounty targets automatically!</h1>

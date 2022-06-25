@@ -17,12 +17,6 @@ if (!function_exists('config')) {
 if (!function_exists('url')) {
     function url(string $to): string
     {
-        return asset($to);
-    }
-}
-if (!function_exists('asset')) {
-    function asset(string $to): string
-    {
         return sprintf('%s/%s', trim(Request::base_uri(), '\\/'), trim($to, '\\/'));
     }
 }
