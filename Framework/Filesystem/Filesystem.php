@@ -12,7 +12,7 @@ class Filesystem implements FilesystemInterface
         private string $root,
         private Application $app
     ) {
-        $this->old_root      = $root;
+        $this->old_root = $root;
     }
 
     public function __toString(): string

@@ -6,8 +6,8 @@ use ReflectionObject;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        \Automation\Framework\Application::instance()->run();
+        \Automation\Framework\Application::instance(recreate: true)->run();
     }
 }

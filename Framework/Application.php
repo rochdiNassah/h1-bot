@@ -107,6 +107,10 @@ final class Application
 
     public function bind(string $abstract, mixed $concrete): void
     {
+        if (array_key_exists($abstract, $this->bindings)) {
+            throw new Exception(sprintf('"%s" is already bound!', $abstract));
+        }
+
         $this->bindings[$abstract] = $concrete;
     }
 

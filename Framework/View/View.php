@@ -43,8 +43,6 @@ class View
 
         Filesystem::reset_root();
 
-        $this->app->bind('view', $this);
-
         extract($this->data);
 
         ob_start();
@@ -62,7 +60,6 @@ class View
         $this->view = $this->parent;
 
         $this->is_extending = false;
-        $this->include = false;
 
         $this->render();
     }
