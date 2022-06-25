@@ -72,6 +72,6 @@ class Router
             }
         }
 
-        throw new NotFoundException($request->path());
+        throw new NotFoundHttpException($request->path());
     }
 }

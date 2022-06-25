@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Automation\Framework\Routing\{Router, Route, NotFoundException};
+use Automation\Framework\Routing\{Router, Route, NotFoundHttpException};
 use Automation\Framework\Http\Request;
 
 final class RouterTest extends TestCase
@@ -20,7 +20,7 @@ final class RouterTest extends TestCase
 
         $this->assertEquals([32, 64], app(Route::class)->result());
 
-        $this->expectException(NotFoundException::class);
+        $this->expectException(NotFoundHttpException::class);
 
         $request->simulate('GET', "/posts//comments/128");
 

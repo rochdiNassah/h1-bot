@@ -38,7 +38,7 @@ class View
         $view_path = Filesystem::to(sprintf('%s.php', $this->view));
 
         if (Filesystem::missing($view_path)) {
-            throw new ViewNotFoundException($this->view);
+            throw new ViewNotFoundHttpException($this->view);
         }
 
         Filesystem::reset_root();

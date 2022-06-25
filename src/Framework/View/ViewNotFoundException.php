@@ -2,7 +2,7 @@
 
 namespace Automation\Framework\View;
 
-class ViewNotFoundException extends \Exception
+class ViewNotFoundHttpException extends \Exception
 {
     public function __construct(string $view)
     {

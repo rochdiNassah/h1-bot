@@ -4,7 +4,7 @@ namespace Automation\Framework\Routing;
 
 use Automation\Framework\Exceptions\RendableInterface;
 
-class NotFoundException extends \Exception implements RendableInterface
+class NotFoundHttpException extends \Exception implements RendableInterface
 {
     public function __construct(string $path)
     {
