@@ -32,7 +32,7 @@ final class Application
         set_error_handler('error_handler');
         set_exception_handler('exception_handler');
 
-        $this->bind('project_root', dirname(__DIR__, 2));
+        $this->bind('project_root', dirname(__DIR__, 1));
 
         Dotenv::createImmutable($this->resolve('project_root'))->load();
         
