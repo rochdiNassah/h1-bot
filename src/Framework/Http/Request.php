@@ -19,9 +19,7 @@ class Request
 
     private string $method;
 
-    private array $post;
-
-    private string|null $old = null;
+    private array $inputs;
 
     public function __construct(
         private Application $app,
@@ -46,10 +44,11 @@ class Request
         $this->base_path = substr($script_name, 0, -strlen(basename($script_name)));
         $this->base_uri  = sprintf('%s://%s%s', $request_scheme, $server_name, $this->base_path);
         $this->uri       = sprintf('%s/%s', $this->base_uri, $request_uri);
-        $this->path      = substr($this->uri, strlen($this->base_path) + strlen($this->base_uri));
+        $this->path      = parse_url(substr($this->uri, strlen($this->base_path) + strlen($this->base_uri)), PHP_URL_PATH);
 
         $this->method    = $this->server->get('REQUEST_METHOD');
-        $this->post      = $_POST;
+
+        $this->inputs    = $_REQUEST;
     }
 
     public function simulate(string $method, string $path, array $headers = []): void
@@ -84,11 +83,27 @@ class Request
         return $this->path;
     }
 
+    public function inputs(): array
+    {
+        return $this->inputs;
+    }
+
+    public function input(string $name): string
+    {
+        return $this->inputs[$name];
+    }
+
     public function flash(): void
     {
-        foreach ($this->post as $key => $value) {
+        foreach ($this->inputs as $key => $value) {
             $this->app->session->set($key, $value);
         }
+
+        return;
+
+        app('after-request-hooks')->push(function (Session $session) {
+            $session->forget($this->inputs);
+        });
     }
 
     public function flash_except($except): void
@@ -97,23 +112,17 @@ class Request
 
         $key = array_map(function ($key) use ($except) {
             if (in_array($key, $except)) return $key;
-        }, array_keys($this->post));
+        }, array_keys($this->inputs));
 
         $except = reset($key);
 
-        unset($this->post[$except]);
+        unset($this->inputs[$except]);
 
         $this->flash();
     }
 
     public function old(string $key): string|null
     {
-        if ($this->app->session->missing($key)) {
-            return $this->old;
-        }
-
-        $this->old = $this->app->session->pull($key);
-
-        return $this->old;
+        return app('session')->get($key);
     }
 }
