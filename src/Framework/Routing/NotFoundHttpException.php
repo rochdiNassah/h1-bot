@@ -15,6 +15,6 @@ class NotFoundHttpException extends \Exception implements RendableInterface
 
     public function getView(): string
     {
-        return app()->exceptionViews(__CLASS__);
+        return '404';
     }
 }

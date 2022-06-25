@@ -201,19 +201,6 @@ final class Application
         return $results;
     }
 
-    public function exceptionViews(string $key = null): array|string
-    {
-        $views = [
-            \Automation\Framework\Routing\NotFoundHttpException::class => '404',
-        ];
-
-        if (!is_null($key)) {
-            return $views[$key];
-        }
-
-        return $aliases;
-    }
-
     private function __construct(
 
     ) {
