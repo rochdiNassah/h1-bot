@@ -1,11 +1,11 @@
 {
     "autoload": {
         "psr-4": {
-            "Automation\\": "src/",
+            "Automation\\": "./",
             "Tests\\": "tests/"
         },
         "files": [
-            "src/Framework/helpers.php"
+            "Framework/helpers.php"
         ]
     },
     "require": {
