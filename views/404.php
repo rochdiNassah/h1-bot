@@ -1,4 +1,4 @@
-<?php $this->extends('layouts/main')->setTitle('Not Found!') ?>
+<?php $this->extends('layouts.main')->setTitle('Not Found!') ?>
 
 <section class="mt-16 flex items-center sm:p-16 dark:bg-gray-900 dark:text-gray-100">
 	<div class="container flex flex-col items-center justify-center px-5 mx-auto space-y-8 text-center sm:max-w-md">

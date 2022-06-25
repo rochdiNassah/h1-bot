@@ -2,7 +2,7 @@
 
 $nav_links = [
     ['name' => 'Home', 'path' => url('/'), 'is_current'],
-    ['name' => 'Add target', 'path' => url('/add-target')]
+    ['name' => 'Add program', 'path' => url('/program/add')]
 ];
 
 ?>
@@ -18,7 +18,7 @@ $nav_links = [
     </head>
     <body>
         <div class="h-screen max-w-2xl sm:max-w-5xl container mx-auto">
-            <?= $this->include('layouts/navbar', ['nav_links' => $nav_links]) ?>
+            <?= $this->include('layouts.navbar', ['nav_links' => $nav_links]) ?>
 
             <?= $this->child() ?>
         </div>

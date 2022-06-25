@@ -35,10 +35,10 @@ class View
     {
         Filesystem::update_root('views');
 
-        $view_path = Filesystem::to(sprintf('%s.php', $this->view));
+        $view_path = Filesystem::to(sprintf('%s.php', str_replace(['.', '\\', '/'], DIRECTORY_SEPARATOR, $this->view)));
 
         if (Filesystem::missing($view_path)) {
-            throw new ViewNotFoundHttpException($this->view);
+            throw new ViewNotFoundException($this->view);
         }
 
         Filesystem::reset_root();

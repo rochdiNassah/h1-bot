@@ -3,6 +3,7 @@
 namespace Automation\Framework\Routing;
 
 use Automation\Framework\Application;
+use Automation\Framework\Facades\View;
 
 class Router
 {
@@ -40,6 +41,13 @@ class Router
         $this->routes[] = $route;
 
         $route->parse();
+    }
+
+    public function view(string $path, string $view): void
+    {
+        $this->register('GET', $path, function () use ($view) {
+            return View::make($view);
+        });
     }
 
     public function currentRoute(): Route
