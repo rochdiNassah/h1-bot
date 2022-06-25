@@ -8,6 +8,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
 {
     public function setUp(): void
     {
-        \Automation\Core\Application::instance()->run();
+        \Automation\Framework\Application::instance()->run();
     }
 }

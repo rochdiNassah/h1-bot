@@ -2,8 +2,8 @@
 
 require '../vendor/autoload.php';
 
-use Automation\Core\Facades\{Request, Filesystem, Router, Encoder};
+use Automation\Framework\Facades\{Request, Filesystem, Router, Encoder};
 
-$app = Automation\Core\Application::instance();
+$app = Automation\Framework\Application::instance();
 
 $app->run();

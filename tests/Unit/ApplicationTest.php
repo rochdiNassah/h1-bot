@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Automation\Core\Application;
+use Automation\Framework\Application;
 
 final class ApplicationTest extends TestCase
 {
@@ -14,13 +14,13 @@ final class ApplicationTest extends TestCase
 
         $this->assertSame(app($closure), 'foo');
 
-        $closure = function (int $a, int $b, int|string $c, Dependency $dependency, int|string $d = 64): int {
-            return $a + $b + $c + $d + (string) $dependency;
+        $closure = function (int $a, int $b, int|string $c, Dependency $dependency, int|string $d = 16): int {
+            return $a * $b * $c * $d / (string) $dependency;
         };
 
-        $resolved = app($closure, ['b' => 3, 'a' => 1, 'a' => 2, 'c' => '4']);
+        $resolved = app($closure, ['b' => 4, 'a' => 9999, 'a' => 32, 'c' => '64']);
 
-        $this->assertSame($resolved, 128);
+        $this->assertSame($resolved, 1024);
     }
 
     public function test_class_is_resolvable(): void
@@ -62,7 +62,7 @@ class Dependency
 class DependencyTwo {
     public function __toString(): string
     {
-        return '55';
+        return '128';
     }
 }
 class DependencyThree {}

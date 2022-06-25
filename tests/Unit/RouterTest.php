@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Automation\Core\Routing\{Router, Route, NotFoundException};
-use Automation\Core\Http\Request;
+use Automation\Framework\Routing\{Router, Route, NotFoundException};
+use Automation\Framework\Http\Request;
 
 final class RouterTest extends TestCase
 {

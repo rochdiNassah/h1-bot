@@ -5,7 +5,7 @@
             "Tests\\": "tests/"
         },
         "files": [
-            "src/Core/helpers.php"
+            "src/Framework/helpers.php"
         ]
     },
     "require": {
