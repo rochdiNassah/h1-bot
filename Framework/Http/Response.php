@@ -9,9 +9,11 @@ class Response implements ResponseInterface
 {
     private array $headers = [];
 
-    private $content = null;
+    private string|null $content = null;
 
     private int $status_code = 200;
+
+    private array $after_response_hooks = [];
 
     public function __construct(
         private Application $app
@@ -73,5 +75,17 @@ class Response implements ResponseInterface
     public function getStatusCode(): int
     {
         return $this->status_code;
+    }
+
+    public function registerAfterResponseHook($hook): void
+    {
+        array_push($this->after_response_hooks, $hook);
+    }
+
+    public function runAfterResponseHooks(): void
+    {
+        foreach ($this->after_response_hooks as $hook) {
+            app($hook);
+        }
     }
 }

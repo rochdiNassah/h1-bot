@@ -96,29 +96,33 @@ class Request
     public function flash(): void
     {
         foreach ($this->inputs as $key => $value) {
-            $this->app->session->set($key, $value);
+            app('session')->set($key, $value);
+
+            app('response')->registerAfterResponseHook(function (Session $session) use ($key) {
+                $session->forget($key);
+            });
         }
-
-        return;
-
-        app('after-request-hooks')->push(function (Session $session) {
-            $session->forget($this->inputs);
-        });
     }
 
-    public function flash_except($except): void
+    public function flashExcept($except): void
     {
         $except = is_array($except) ? $except : func_get_args();
 
-        $key = array_map(function ($key) use ($except) {
-            if (in_array($key, $except)) return $key;
-        }, array_keys($this->inputs));
+        $inputs = array_map(function ($key) {
+            if (isset($this->inputs[$key])) {
+                $value = $this->inputs[$key];
 
-        $except = reset($key);
+                unset($this->inputs[$key]);
+    
+                return [$key => $value];
+            }
 
-        unset($this->inputs[$except]);
+            return [];
+        }, $except);
 
         $this->flash();
+
+        $this->inputs = array_merge($this->inputs, reset($inputs));
     }
 
     public function old(string $key): string|null
