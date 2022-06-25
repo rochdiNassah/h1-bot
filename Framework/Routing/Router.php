@@ -75,6 +75,6 @@ class Router
             }
         }
 
-        throw new NotFoundHttpException($request->path());
+        throw app(NotFoundHttpException::class, ['path' => $request->path()]);
     }
 }

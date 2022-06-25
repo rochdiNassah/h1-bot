@@ -13,8 +13,13 @@ class NotFoundHttpException extends \Exception implements RendableInterface
         parent::__construct($message);
     }
 
-    public function getView(): string
+    public function getViewName(): string
     {
         return '404';
+    }
+
+    public function getHttpResponseCode(): int
+    {
+        return 404;
     }
 }

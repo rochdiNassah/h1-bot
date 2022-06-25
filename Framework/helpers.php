@@ -44,8 +44,9 @@ if (!function_exists('exception_handler')) {
     {
         if ($e instanceof Automation\Framework\Exceptions\RendableInterface) {
             try {
-                Response::setContent(View::make($e->getView()));
-                Response::send();
+                Response::setStatusCode($e->getHttpResponseCode())
+                    ->setContent(View::make($e->getViewName()))
+                    ->send();
             } catch (Exception $e) {
                 exception_handler($e);
             }

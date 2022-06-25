@@ -32,9 +32,9 @@ interface ResponseInterface
      * 
      * @param  string  $content
      * 
-     * @return void
+     * @return self
      */
-    public function setContent(string $content): void;
+    public function setContent(string $content): self;
 
     /**
      * Send back a redirect response.

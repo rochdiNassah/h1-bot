@@ -9,5 +9,12 @@ interface RendableInterface
      * 
      * @return string
      */
-    public function getView(): string;
+    public function getViewName(): string;
+
+    /**
+     * Get the exception's associated http response code.
+     * 
+     * @return int
+     */
+    public function getHttpResponseCode(): int;
 }

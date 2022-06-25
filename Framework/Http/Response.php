@@ -11,6 +11,8 @@ class Response implements ResponseInterface
 
     private $content = null;
 
+    private int $status_code = 200;
+
     public function __construct(
         private Application $app
     ) {
@@ -32,6 +34,8 @@ class Response implements ResponseInterface
         foreach ($this->headers as $key => $value) {
             header(sprintf('%s: %s', $key, $value));
         }
+
+        http_response_code($this->status_code);
     }
 
     private function sendContent(): void
@@ -45,9 +49,11 @@ class Response implements ResponseInterface
         $this->sendContent();
     }
 
-    public function setContent(string $content): void
+    public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
     public function redirect(string $to): void
@@ -55,5 +61,17 @@ class Response implements ResponseInterface
         $this->sendHeaders();
 
         header(sprintf('Location: %s', url($to)));
+    }
+
+    public function setStatusCode(int $code): self
+    {
+        $this->status_code = $code;
+
+        return $this;
+    }
+
+    public function getStatusCode(): int
+    {
+        return $this->status_code;
     }
 }
