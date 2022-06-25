@@ -4,7 +4,7 @@ namespace Automation\Framework;
 
 use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType, ReflectionNamedType, ReflectionParameter;
 use Dotenv\Dotenv;
-use Automation\Exceptions\{ClassNotFoundException, DependencyNotFoundException};
+use Automation\Exceptions\Framework\{ClassNotFoundException, DependencyNotFoundException};
 
 final class Application
 {
@@ -15,14 +15,6 @@ final class Application
     private array $shared = [];
 
     private array $bindings = [];
-
-    private function __construct(
-
-    ) {
-        $this->shared[__CLASS__] = $this;
-    }
-
-    private function __clone() {}
 
     public static function instance(bool|int $recreate = false): self
     {
@@ -55,9 +47,23 @@ final class Application
         require $this->filesystem->to('routes.php');
         
         $this->session->start();
+
         $this->request->parse();
+
         $this->router->run();
+
         $this->response->send();
+    }
+
+    public function __get(string $alias): mixed
+    {
+        $aliases = $this->serviceAliases();
+
+        if (array_key_exists($alias, $aliases)) {
+            return $this->shared[$aliases[$alias]];
+        }
+
+        throw new Exception(sprintf('"%s" is not a service.', $alias));
     }
 
     public function serviceAliases(string $key = null): array|string
@@ -86,28 +92,17 @@ final class Application
     {
         $aliases = $this->serviceAliases();
 
-        $this->resolve($aliases['filesystem'], ['root' => app('project_root')], share: true);
-        $this->resolve($aliases['encoder'], share: true);
+        $this->share($aliases['filesystem'], ['root' => app('project_root')]);
+        $this->share($aliases['encoder']);
 
         if ($running_in_cli_mode) {
             return;
         }
 
-        $this->resolve($aliases['session'], share: true);
-        $this->resolve($aliases['request'], share: true);
-        $this->resolve($aliases['response'], share: true);
-        $this->resolve($aliases['router'], share: true);
-    }
-
-    public function __get(string $alias): mixed
-    {
-        $aliases = $this->serviceAliases();
-
-        if (array_key_exists($alias, $aliases)) {
-            return $this->shared[$aliases[$alias]];
-        }
-
-        throw new Exception(sprintf('"%s" is not a service.', $alias));
+        $this->share($aliases['session']);
+        $this->share($aliases['request']);
+        $this->share($aliases['response']);
+        $this->share($aliases['router']);
     }
 
     public function bind(string $abstract, mixed $concrete): void
@@ -131,6 +126,9 @@ final class Application
                 } else {
                     return $this->resolve($abstract);
                 }
+            }
+            if (array_key_exists($abstract, $this->serviceAliases())) {
+                return $this->{$abstract};
             }
             if (!class_exists($abstract)) {
                 throw new ClassNotFoundException($abstract);
@@ -157,6 +155,20 @@ final class Application
         }
 
         return $resolved;
+    }
+
+    public function share(object|string $class, array $params = []): void
+    {
+        if (is_string($class)) {
+            $abstract = $class;
+            $concrete = $this->resolve($abstract, $params, share: true);
+        }
+        if (is_object($class)) {
+            $abstract = get_class($class);
+            $concrete = $class;
+        }
+
+        $this->shared[$abstract] = $concrete;
     }
 
     private function resolveDependencies($abstract, array $params): array
@@ -189,8 +201,24 @@ final class Application
         return $results;
     }
 
-    public function share(string $abstract, object $concrete): void
+    public function exceptionViews(string $key = null): array|string
     {
-        $this->shared[$abstract] = $concrete;
+        $views = [
+            \Automation\Framework\Routing\NotFoundException::class => '404',
+        ];
+
+        if (!is_null($key)) {
+            return $views[$key];
+        }
+
+        return $aliases;
     }
+
+    private function __construct(
+
+    ) {
+        $this->shared[__CLASS__] = $this;
+    }
+    
+    private function __clone() {}
 }

@@ -42,9 +42,9 @@ if (!function_exists('app')) {
 if (!function_exists('exception_handler')) {
     function exception_handler($e): void
     {
-        if ($e instanceof Automation\Framework\Routing\NotFoundException) {
+        if ($e instanceof Automation\Framework\Exceptions\RendableInterface) {
             try {
-                Response::setContent(View::make('404'));
+                Response::setContent(View::make($e->getView()));
                 Response::send();
             } catch (Exception $e) {
                 exception_handler($e);

@@ -59,7 +59,7 @@ class Route
 
         $this->result = $this->app->resolve($this->action, $this->parameters);
 
-        $this->app->share(Route::class, $this);
+        $this->app->share($this);
     }
 
     public function path(): string
