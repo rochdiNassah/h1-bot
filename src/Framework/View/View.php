@@ -62,6 +62,7 @@ class View
         $this->view = $this->parent;
 
         $this->is_extending = false;
+        $this->include = false;
 
         $this->render();
     }
@@ -78,6 +79,11 @@ class View
     public function child(): string
     {
         return $this->child;
+    }
+
+    public function include(string $view, array $data = []): string
+    {
+        return ViewFactory::make($view, $data);
     }
 
     public function setTitle(string $title): self

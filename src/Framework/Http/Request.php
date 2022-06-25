@@ -43,9 +43,9 @@ class Request
         $request_scheme = $this->server->get('REQUEST_SCHEME');
         $server_name    = $this->server->get('SERVER_NAME');
 
-        $this->base_uri  = sprintf('%s://%s', $request_scheme, $server_name);
-        $this->uri       = sprintf('%s/%s', $this->base_uri, $request_uri);
         $this->base_path = substr($script_name, 0, -strlen(basename($script_name)));
+        $this->base_uri  = sprintf('%s://%s%s', $request_scheme, $server_name, $this->base_path);
+        $this->uri       = sprintf('%s/%s', $this->base_uri, $request_uri);
         $this->path      = substr($this->uri, strlen($this->base_path) + strlen($this->base_uri));
 
         $this->method    = $this->server->get('REQUEST_METHOD');
