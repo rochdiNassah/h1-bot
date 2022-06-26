@@ -100,7 +100,12 @@ class Request
         return $this->inputs[$name];
     }
 
-    public function flash(): void
+    public function missing(string $key): bool
+    {
+        return !array_key_exists($key, $this->inputs);
+    }
+
+    public function flash(): self
     {
         foreach ($this->inputs as $key => $value) {
             app('session')->set($key, $value);
@@ -109,9 +114,11 @@ class Request
                 $session->forget($key);
             });
         }
+
+        return $this;
     }
 
-    public function flashExcept($except): void
+    public function flashExcept($except): self
     {
         $except = is_array($except) ? $except : func_get_args();
 
@@ -130,6 +137,8 @@ class Request
         $this->flash();
 
         $this->inputs = array_merge($this->inputs, reset($inputs));
+
+        return $this;
     }
 
     public function old(string $key): string|null

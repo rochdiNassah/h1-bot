@@ -21,5 +21,10 @@
             <?= flashed('message') ?>
         </div>
         <?php endif; ?>
+        <?php if(isset($program)): ?>
+        <div class="w-full p-4 text-xs text-green-700 bg-green-100" role="alert">
+            <?= escape($program) ?>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
