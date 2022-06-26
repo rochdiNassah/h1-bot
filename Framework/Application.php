@@ -150,11 +150,14 @@ final class Application
             $parameters = $reflector?->getParameters();
         }
         if (is_array($abstract)) {
-            list($object, $method) = $abstract;
+            list($class, $method) = $abstract;
 
-            $reflector = new ReflectionMethod($object, $method);
+            $object      = $this->resolve($class);
+            $reflector   = $this->resolve(ReflectionMethod::class, [$object, $method]);
+            
+            $parameters  = $reflector?->getParameters();
 
-            $parameters = $reflector?->getParameters();
+            array_splice($abstract, 0, 1, [$object]);
         }
 
         $dependencies = array_merge($params, $this->resolveDependencies($abstract, $parameters ?? []));

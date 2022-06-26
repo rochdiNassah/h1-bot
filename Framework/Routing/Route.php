@@ -3,6 +3,7 @@
 namespace Automation\Framework\Routing;
 
 use Automation\Framework\Application;
+use Automation\Framework\Exceptions\ControllerNotFoundException;
 
 class Route
 {
@@ -54,7 +55,11 @@ class Route
     public function run(): void
     {
         if (is_array($this->action)) {
-            $this->action[0] = $this->app->resolve($this->action[0]);
+            $controller = $this->action[0];
+
+            if (!class_exists($controller)) {
+                throw new ControllerNotFoundException($controller);
+            }
         }
 
         $this->result = $this->app->resolve($this->action, $this->parameters);
