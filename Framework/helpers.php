@@ -53,6 +53,15 @@ if (!function_exists('exception_handler')) {
 
             return;
         }
+        if ($e instanceof Automation\Framework\Exceptions\RedirectableInterface) {
+            try {
+                Response::setStatusCode($e->getHttpResponseCode())->redirect($e->getRedirectionPath());
+            } catch (Exception $e) {
+                exception_handler($e);
+            }
+
+            return;
+        }
 
         dump((new ReflectionObject($e))->getshortName());
         dump("Message: {$e->getMessage()}");

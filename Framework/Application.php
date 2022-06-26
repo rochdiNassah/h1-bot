@@ -4,7 +4,7 @@ namespace Automation\Framework;
 
 use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType, ReflectionNamedType, ReflectionParameter;
 use Dotenv\Dotenv;
-use Automation\Exceptions\Framework\{ClassNotFoundHttpException, DependencyNotFoundHttpException};
+use Automation\Framework\Exceptions\{ClassNotFoundException, DependencyNotFoundException};
 
 final class Application
 {
@@ -137,7 +137,7 @@ final class Application
                 return $this->{$abstract};
             }
             if (!class_exists($abstract)) {
-                throw new ClassNotFoundHttpException($abstract);
+                throw new ClassNotFoundException($abstract);
             }
 
             $reflector = new ReflectionClass($abstract);
@@ -192,7 +192,7 @@ final class Application
                             $type_name = $param_type->getName();
     
                             if (!class_exists($type_name)) {
-                                throw new DependencyNotFoundHttpException($abstract, $type_name);
+                                throw new DependencyNotFoundException($abstract, $type_name);
                             }
     
                             $results[$param_name] = $this->resolve($type_name);

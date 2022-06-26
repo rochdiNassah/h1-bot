@@ -4,7 +4,7 @@ namespace Automation\Framework\Exceptions;
 
 use Closure;
 
-class DependencyNotFoundHttpException extends Exception
+class DependencyNotFoundException extends Exception
 {
     public function __construct($abstract, string $dependency)
     {

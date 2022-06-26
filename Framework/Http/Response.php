@@ -31,6 +31,11 @@ class Response implements ResponseInterface
         return $this->headers;
     }
 
+    public function getHeader(string $key): string
+    {
+        return $this->headers[$key];
+    }
+
     private function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {

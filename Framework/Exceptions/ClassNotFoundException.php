@@ -2,7 +2,7 @@
 
 namespace Automation\Framework\Exceptions;
 
-class ClassNotFoundHttpException extends Exception
+class ClassNotFoundException extends Exception
 {
     public function __construct(string $class)
     {

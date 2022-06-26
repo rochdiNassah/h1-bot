@@ -14,3 +14,13 @@
         </form>
     </div>
 </div>
+
+<?php 
+
+    if ($errors = app('request')->errors()) {
+        foreach ($errors as $error) {
+            echo $error;
+        }
+    }
+
+?>

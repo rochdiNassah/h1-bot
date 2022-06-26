@@ -21,6 +21,8 @@ class Request
 
     private array $inputs;
 
+    private array $errors = [];
+
     public function __construct(
         private Application $app,
         private ServerBag $server
@@ -31,8 +33,10 @@ class Request
     public function parse(): void
     {
         foreach ($this->server->all() as $key => $value):
-            if (str_starts_with($key, 'HTTP_')):
-                $this->headers[$key] = $value;
+            $header_prefix = 'HTTP_';
+
+            if (str_starts_with($key, $header_prefix)):
+                $this->headers[substr($key, strlen($header_prefix))] = $value;
             endif;
         endforeach;
 
@@ -66,6 +70,11 @@ class Request
     public function headers(): array
     {
         return $this->headers;
+    }
+
+    public function getHeader(string $key): string
+    {
+        return $this->headers[strtoupper($key)];
     }
 
     public function uri(): string
@@ -128,5 +137,35 @@ class Request
     public function old(string $key): string|null
     {
         return app('session')->get($key);
+    }
+
+    public function validate(array $targets): bool
+    {
+        foreach ($targets as $input_name => $rules) {
+            foreach ($rules as $rule) {
+                if ('required' === $rule) {
+                    if (!isset($this->inputs[$input_name])) {
+                        array_push($this->errors, sprintf('"%s" fiels is required!', $input_name));
+                    }
+                }
+            }
+        }
+
+        if (!empty($this->errors)) {
+            app('session')->set('errors', serialize($this->errors));
+
+            throw new ValidationException($this->getHeader('referer'));
+        }
+
+        return true;
+    }
+
+    public function errors(): array|false
+    {
+        if (app('session')->has('errors')) {
+            return unserialize(app('session')->pull('errors'));
+        }
+
+        return false;
     }
 }
