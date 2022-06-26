@@ -4,7 +4,7 @@ namespace Automation\Framework\Encoding;
 
 use Automation\Framework\Application;
 
-class Encoder implements EncoderInterface
+class Encoder
 {
     public const SUPPORTED_TYPES = ['base64', 'url', 'html'];
 
