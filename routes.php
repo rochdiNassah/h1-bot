@@ -7,7 +7,7 @@ Router::view('/program/add', 'program.add');
 
 Router::post('/', function (Automation\Framework\Http\Request $request) {
     Request::validate([
-        'program' => ['requires', 'min:2', 'max:512']
+        'program' => ['required', 'min:2', 'max:512']
     ]);
 
     Response::redirectBackWith([

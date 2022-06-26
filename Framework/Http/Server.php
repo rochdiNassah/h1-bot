@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Automation\Framework\Http\Bags;
+namespace Automation\Framework\Http;
 
-class ServerBag
+class Server
 {
     private array $server;
 

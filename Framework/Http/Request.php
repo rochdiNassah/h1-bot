@@ -3,7 +3,6 @@
 namespace Automation\Framework\Http;
 
 use Automation\Framework\Application;
-use Automation\Framework\Http\Bags\ServerBag;
 
 class Request
 {
@@ -25,7 +24,7 @@ class Request
 
     public function __construct(
         private Application $app,
-        private ServerBag $server
+        private Server $server
     ) {
 
     }
