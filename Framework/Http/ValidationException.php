@@ -20,6 +20,6 @@ class ValidationException extends \Exception implements RedirectableInterface
 
     public function getHttpResponseCode(): int
     {
-        return 429;
+        return 301;
     }
 }
