@@ -14,7 +14,7 @@
         </form>
 
         <?php if($status = flashed('status')): ?>
-        <?php 
+        <?php
             $color = 'success' === $status ? 'green' : ($status === 'error' ? 'red' : 'blue');
         ?>
         <div class="w-full p-4 text-xs text-<?= $color ?>-700 bg-<?= $color ?>-100" role="alert">

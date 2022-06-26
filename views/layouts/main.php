@@ -11,7 +11,6 @@
     <body>
         <div class="h-screen max-w-2xl sm:max-w-5xl container mx-auto">
             <?= $this->include('layouts.navbar') ?>
-
             <?= $this->child() ?>
         </div>
     </body>
