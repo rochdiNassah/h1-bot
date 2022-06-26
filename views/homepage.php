@@ -13,14 +13,11 @@
             <input class="w-32 p-4 font-bold hover:bg-gray-700 cursor-pointer text-xs bg-gray-800 text-white mx-auto" type="submit" value="Go" />
         </form>
 
-        <?php foreach($errors as $key => $value): ?>
-        <div class="w-full p-4 text-xs text-red-700 bg-red-100 dark:bg-red-200 dark:text-red-800" role="alert">
-            <?= $value ?>
-        </div>
-        <?php endforeach; ?>
-
-        <?php if(flashed('status')): ?>
-        <div class="w-full p-4 text-xs text-green-700 bg-green-100 dark:bg-green-200 dark:text-green-800" role="alert">
+        <?php if($status = flashed('status')): ?>
+        <?php 
+            $color = 'success' === $status ? 'green' : ($status === 'error' ? 'red' : 'blue');
+        ?>
+        <div class="w-full p-4 text-xs text-<?= $color ?>-700 bg-<?= $color ?>-100" role="alert">
             <?= flashed('message') ?>
         </div>
         <?php endif; ?>

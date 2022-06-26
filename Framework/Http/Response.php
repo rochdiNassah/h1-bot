@@ -15,6 +15,8 @@ class Response implements ResponseInterface
 
     private array $after_response_hooks = [];
 
+    private string $redirect_to;
+
     public function __construct(
         private Application $app
     ) {
@@ -63,20 +65,20 @@ class Response implements ResponseInterface
         return $this;
     }
 
-    public function redirect(string $to): void
+    public function redirect(string $to)
     {
-        $this->sendHeaders();
+        $this->setStatusCode(301);
 
         header(sprintf('Location: %s', $to));
     }
 
-    public function redirectBackWith($data): void
+    public function backWith($data): self
     {
         foreach ($data as $key => $value) {
             app('session')->set($key, $value);
         }
 
-        $this->setStatusCode(301)->redirect(app('request')->getHeader('referer'));
+        return $this->redirect(app('request')->getHeader('referer'));
     }
 
     public function setStatusCode(int $code): self

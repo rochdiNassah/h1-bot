@@ -35,12 +35,4 @@ interface ResponseInterface
      * @return self
      */
     public function setContent(string $content): self;
-
-    /**
-     * Send back a redirect response.
-     * 
-     * @param  string  $to
-     * @return void
-     */
-    public function redirect(string $to): void;
 }

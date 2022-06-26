@@ -1,17 +1,9 @@
 <?php declare(strict_types=1);
 
-use Automation\Framework\Facades\{Router, View, Request, Response};
+use Automation\Framework\Facades\Router;
+use App\Controllers\ProgramController;
 
 Router::view('/', 'homepage');
 Router::view('/program/add', 'program.add');
 
-Router::post('/', function (Automation\Framework\Http\Request $request) {
-    Request::validate([
-        'program' => ['required', 'min:2', 'max:512']
-    ]);
-
-    Response::redirectBackWith([
-        'status' => 'success',
-        'message' => 'Program found successfully!'
-    ]);
-});
+Router::post('/', [ProgramController::class, 'get']);

@@ -20,8 +20,6 @@ class Request
 
     private array $inputs;
 
-    private array $errors = [];
-
     public function __construct(
         private Application $app,
         private Server $server
@@ -137,42 +135,5 @@ class Request
     public function old(string $key): string|null
     {
         return app('session')->pull($key);
-    }
-
-    public function validate(array $targets): bool
-    {
-        foreach ($targets as $input_name => $rules) {
-            foreach ($rules as $rule) {
-                if ('required' === $rule) {
-                    if (!isset($this->inputs[$input_name])) {
-                        array_push($this->errors, sprintf('"%s" field is required!', $input_name));
-                    }
-                }
-                if ('min' === explode(':', $rule)[0]) {
-                    $min = explode(':', $rule)[1];
-
-                    if (strlen($this->inputs[$input_name]) < $min) {
-                        array_push($this->errors, sprintf('"%s" field must be at least %s characters long!', $input_name, $min));
-                    }
-                }
-                if ('max' === explode(':', $rule)[0]) {
-                    $max = explode(':', $rule)[1];
-
-                    if (strlen($this->inputs[$input_name]) > $max) {
-                        array_push($this->errors, sprintf('"%s" field must be at most %s characters long!', $input_name, $max));
-                    }
-                }
-            }
-        }
-
-        if (!empty($this->errors)) {
-            app('session')->set('errors', serialize($this->errors));
-
-            $this->flashExcept('password', 'password_confirmation');
-
-            throw new ValidationException($this->getHeader('referer'));
-        }
-
-        return true;
     }
 }

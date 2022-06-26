@@ -43,12 +43,6 @@ class View
 
         Filesystem::reset_root();
 
-        $errors = [];
-
-        if ($serialized_errors = app('session')->pull('errors')) {
-            $errors = unserialize($serialized_errors);
-        }
-
         extract($this->data);
 
         ob_start();

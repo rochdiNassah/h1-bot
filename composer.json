@@ -2,6 +2,7 @@
     "autoload": {
         "psr-4": {
             "Automation\\": "./",
+            "App\\": "App/",
             "Tests\\": "tests/"
         },
         "files": [
