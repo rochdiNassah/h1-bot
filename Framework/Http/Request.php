@@ -49,7 +49,7 @@ class Request
 
         $this->method    = $this->server->get('REQUEST_METHOD');
 
-        $this->inputs    = $_REQUEST;
+        $this->inputs    = array_merge($_REQUEST, $_FILES);
     }
 
     public function simulate(string $method, string $path, array $headers = [], array $inputs = []): void
@@ -95,9 +95,9 @@ class Request
         return $this->inputs;
     }
 
-    public function input(string $name): string
+    public function input(string $name): string|array|null
     {
-        return $this->inputs[$name];
+        return $this->inputs[$name] ?? null;
     }
 
     public function missing(string $key): bool

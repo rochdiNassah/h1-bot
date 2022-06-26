@@ -14,6 +14,10 @@ class DebugController
 
     public function post(Request $request)
     {
-        return $request->method();
+        dump($_FILES);
+
+        dump($request->input('file'));
+
+        echo sprintf('<a href="%s">Back</a>', url('/debug'));
     }
 }
