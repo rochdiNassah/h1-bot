@@ -55,7 +55,8 @@ if (!function_exists('exception_handler')) {
         }
         if ($e instanceof Automation\Framework\Exceptions\RedirectableInterface) {
             try {
-                Response::setStatusCode($e->getHttpResponseCode())->redirect($e->getRedirectionPath());
+                Response::setStatusCode($e->getHttpResponseCode())
+                    ->redirect($e->getRedirectionPath());
             } catch (Exception $e) {
                 exception_handler($e);
             }
