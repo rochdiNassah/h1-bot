@@ -22,7 +22,7 @@ final class RouterTest extends TestCase
 
         $this->expectException(NotFoundHttpException::class);
 
-        $request->simulate('GET', "/posts//comments/128");
+        $request->simulate('GET', "/posts//comments/64");
 
         $router->run();
     }
