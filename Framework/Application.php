@@ -152,10 +152,10 @@ final class Application
         if (is_array($abstract)) {
             list($class, $method) = $abstract;
 
-            $object      = $this->resolve($class);
-            $reflector   = $this->resolve(ReflectionMethod::class, [$object, $method]);
+            $object    = $this->resolve($class);
+            $reflector = $this->resolve(ReflectionMethod::class, [$object, $method]);
             
-            $parameters  = $reflector?->getParameters();
+            $parameters = $reflector?->getParameters();
 
             array_splice($abstract, 0, 1, [$object]);
         }
