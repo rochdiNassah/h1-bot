@@ -1,6 +1,6 @@
 <?php declare(strict_Types=1);
 
-namespace Tests\Unit;
+namespace Tests;
 
 use Automation\Framework\Filesystem\Filesystem;
 
@@ -10,7 +10,7 @@ final class FilesystemTest extends TestCase
     {
         $fs = app(Filesystem::class);
 
-        $fs->update_root('tests/Unit');
+        $fs->update_root('tests');
 
         $file_path = $fs->to('foo');
         $dir_path  = $fs->to('bar');
@@ -49,7 +49,7 @@ final class FilesystemTest extends TestCase
     {
         $fs = app(Filesystem::class);
 
-        $fs->update_root('tests/Unit');
+        $fs->update_root('tests');
 
         $file_path = $fs->to('foo');
         $dir_path  = $fs->to('bar');

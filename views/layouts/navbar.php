@@ -1,7 +1,8 @@
 <?php
     $nav_links = [
         ['name' => 'Home', 'path' => url('/'), 'is_current'],
-        ['name' => 'Add Program', 'path' => url('/program/add')]
+        ['name' => 'Add Program', 'path' => url('/program/add')],
+        ['name' => 'Programs', 'path' => url('/programs')]
     ];
 ?>
 <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">

@@ -55,11 +55,12 @@ class Request
         $this->inputs    = $_REQUEST;
     }
 
-    public function simulate(string $method, string $path, array $headers = []): void
+    public function simulate(string $method, string $path, array $headers = [], array $inputs = []): void
     {
         $this->method  = strtoupper($method);
         $this->path    = trim($path, '\\/');
         $this->headers = $headers;
+        $this->inputs  = $inputs;
     }
 
     public function method(): string
@@ -168,20 +169,11 @@ class Request
         if (!empty($this->errors)) {
             app('session')->set('errors', serialize($this->errors));
 
-            $this->flash();
+            $this->flashExcept('password', 'password_confirmation');
 
             throw new ValidationException($this->getHeader('referer'));
         }
 
         return true;
-    }
-
-    public function errors(): array|false
-    {
-        if (app('session')->has('errors')) {
-            return unserialize(app('session')->pull('errors'));
-        }
-
-        return false;
     }
 }

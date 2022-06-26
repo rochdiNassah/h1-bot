@@ -2,6 +2,22 @@
 
 use Automation\Framework\Facades\{Request, View, Response};
 
+if (!function_exists('flash')) {
+    function flashed($key): mixed
+    {
+        return app('session')->pull($key);
+    }
+}
+if (!function_exists('session')) {
+    function session($key, $value = null): mixed
+    {
+        if (null === $value) {
+            return app('session')->get($key);
+        } else {
+            return app('session')->set($key, $value);
+        }
+    }
+}
 if (!function_exists('old')) {
     function old(string $key): string
     {

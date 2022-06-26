@@ -6,11 +6,12 @@ Router::view('/', 'homepage');
 Router::view('/program/add', 'program.add');
 
 Router::post('/', function (Automation\Framework\Http\Request $request) {
-    $request->validate([
-        'program' => ['required', 'min:4', 'max:6']
+    Request::validate([
+        'program' => ['requires', 'min:2', 'max:512']
     ]);
 
-    Response::redirectBackWith(['status' => 'success']);
-
-    return 'fff';
+    Response::redirectBackWith([
+        'status' => 'success',
+        'message' => 'Program found successfully!'
+    ]);
 });

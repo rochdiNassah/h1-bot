@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Tests;
 
 use Automation\Framework\Routing\{Router, Route, NotFoundHttpException};
 use Automation\Framework\Http\Request;
@@ -12,8 +12,8 @@ final class RouterTest extends TestCase
         $request = app()->resolve(Request::class, share: true);
         $router  = app(Router::class);
         
-        $pid = rand(8, 4096):
-        $cid = rand(8, 4096);
+        $pid = rand(1, pow(2, 16));
+        $cid = rand(1, pow(2, 16));
 
         $router->get('/posts/{pid}/comments/{cid}', [Controller::class, 'echo']);
 
