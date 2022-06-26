@@ -11,18 +11,21 @@ final class RouterTest extends TestCase
     {
         $request = app()->resolve(Request::class, share: true);
         $router  = app(Router::class);
+        
+        $pid = rand(8, 4096):
+        $cid = rand(8, 4096);
 
         $router->get('/posts/{pid}/comments/{cid}', [Controller::class, 'echo']);
 
-        $request->simulate('GET', "/posts/32/comments/64");
+        $request->simulate('GET', "/posts/{$pid}/comments/{$cid}");
 
         $router->run();
 
-        $this->assertEquals([32, 64], app(Route::class)->result());
+        $this->assertEquals([$pid, $cid], app(Route::class)->result());
 
         $this->expectException(NotFoundHttpException::class);
 
-        $request->simulate('GET', "/posts//comments/64");
+        $request->simulate('GET', "/posts//comments/{$cid}");
 
         $router->run();
     }
