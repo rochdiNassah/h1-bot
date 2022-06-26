@@ -7,9 +7,10 @@ Router::view('/program/add', 'program.add');
 
 Router::post('/', function (Automation\Framework\Http\Request $request) {
     $request->validate([
-        'name' => ['required'],
-        'password' => ['string']
+        'program' => ['required', 'min:4', 'max:6']
     ]);
 
-    return $request->input('password');
+    Response::redirectBackWith(['status' => 'success']);
+
+    return 'fff';
 });

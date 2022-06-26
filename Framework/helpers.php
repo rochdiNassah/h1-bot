@@ -23,7 +23,7 @@ if (!function_exists('url')) {
 if (!function_exists('escape')) {
     function escape(string $string): string
     {
-        return app()->encoder->encode($string, 'html');
+        return htmlspecialchars($string);
     }
 }
 if (!function_exists('app')) {

@@ -74,7 +74,7 @@ class Request
 
     public function getHeader(string $key): string
     {
-        return $this->headers[strtoupper($key)];
+        return $this->headers[strtoupper($key)] ?? '';
     }
 
     public function uri(): string
@@ -136,7 +136,7 @@ class Request
 
     public function old(string $key): string|null
     {
-        return app('session')->get($key);
+        return app('session')->pull($key);
     }
 
     public function validate(array $targets): bool
@@ -145,7 +145,21 @@ class Request
             foreach ($rules as $rule) {
                 if ('required' === $rule) {
                     if (!isset($this->inputs[$input_name])) {
-                        array_push($this->errors, sprintf('"%s" fiels is required!', $input_name));
+                        array_push($this->errors, sprintf('"%s" field is required!', $input_name));
+                    }
+                }
+                if ('min' === explode(':', $rule)[0]) {
+                    $min = explode(':', $rule)[1];
+
+                    if (strlen($this->inputs[$input_name]) < $min) {
+                        array_push($this->errors, sprintf('"%s" field must be at least %s characters long!', $input_name, $min));
+                    }
+                }
+                if ('max' === explode(':', $rule)[0]) {
+                    $max = explode(':', $rule)[1];
+
+                    if (strlen($this->inputs[$input_name]) > $max) {
+                        array_push($this->errors, sprintf('"%s" field must be at most %s characters long!', $input_name, $max));
                     }
                 }
             }
@@ -153,6 +167,8 @@ class Request
 
         if (!empty($this->errors)) {
             app('session')->set('errors', serialize($this->errors));
+
+            $this->flash();
 
             throw new ValidationException($this->getHeader('referer'));
         }

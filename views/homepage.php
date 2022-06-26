@@ -8,19 +8,9 @@
 
         <h1 class="w-full sm:w-2/4 mx-auto text-lg sm:text-2xl text-gray-800 font-bold text-center">Maintain bug-bounty targets automatically!</h1>
 
-        <form class="w-full px-4 space-x-1 flex align-center" action="#" method="post">
-            <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Exact program name..." name="program" autocomplete="off" />
+        <form class="w-full px-4 space-x-1 flex align-center" action="" method="post">
+            <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Exact program name..." name="program" autocomplete="off" value="<?= escape(old('program')) ?>" />
             <input class="w-32 p-4 font-bold hover:bg-gray-700 cursor-pointer text-xs bg-gray-800 text-white mx-auto" type="submit" value="Go" />
         </form>
     </div>
 </div>
-
-<?php 
-
-    if ($errors = app('request')->errors()) {
-        foreach ($errors as $error) {
-            echo $error;
-        }
-    }
-
-?>
