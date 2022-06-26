@@ -70,9 +70,14 @@ class Request
         return $this->headers;
     }
 
-    public function getHeader(string $key): string
+    public function getHeader(string $key): string|null
     {
-        return $this->headers[strtoupper($key)] ?? '';
+        return $this->headers[strtoupper($key)] ?? null;
+    }
+
+    public function getReferer(): string
+    {
+        return $this->getHeader('referer');
     }
 
     public function uri(): string

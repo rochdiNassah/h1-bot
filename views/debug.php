@@ -2,7 +2,7 @@
 
 <?php
 
-    // dump(app('request')->getHeader('referer'));
+    // dump(app('request')->getReferer());
 
 ?>
 
