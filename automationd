@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+require './vendor/autoload.php';
+
+$app = Automation\Framework\Application::instance();
+
+$app->run();
+
+dump('Automation is daemonizing!');
+
+while (true) {
+    sleep(10);
+}

@@ -101,7 +101,7 @@ if (!function_exists('dump')) {
     {
         $is_cli = php_sapi_name() === 'cli';
 
-        print($is_cli ? PHP_EOL : '<pre>');
+        print($is_cli ? null : '<pre>');
         is_null($data) || is_bool($data) ? var_dump($data) : print_r($data);
         print($is_cli ? PHP_EOL : '</pre>');
     }
