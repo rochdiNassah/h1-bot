@@ -151,17 +151,18 @@ class Request
         return $this;
     }
 
+    public function getFlash(): array
+    {
+        return unserialize(app('session')->get('flash') ?? 'a:0:{}');
+    }
+
     public function old(string $key): string|null
     {
-        $flash = unserialize(app('session')->get('flash') ?? 'a:0:{}');
-
-        return $flash['old'][$key] ?? null;
+        return $this->getFlash()['old'][$key] ?? null;
     }
 
     public function errors(): array | null
     {
-        $flash = unserialize(app('session')->get('flash') ?? 'a:0:{}');
-
-        return $flash['errors'] ?? null;
+        return $this->getFlash()['errors'] ?? null;
     }
 }
