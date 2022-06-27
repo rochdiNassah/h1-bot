@@ -1,8 +1,8 @@
 <?php
     $nav_links = [
         ['text' => 'Debug', 'href' => url('/debug')],
-        ['text' => 'Home', 'href' => url('/'), 'is_current'],
-        ['text' => 'Add Program', 'href' => url('/program/add')],
+        ['text' => 'Home', 'href' => url('/')],
+        ['text' => 'Add Program', 'href' => url('/programs/add')],
         ['text' => 'Programs', 'href' => url('/programs')]
     ];
 ?>

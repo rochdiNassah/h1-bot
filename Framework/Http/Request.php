@@ -3,6 +3,7 @@
 namespace Automation\Framework\Http;
 
 use Automation\Framework\Application;
+use Automation\Framework\Facades\Validator;
 
 class Request
 {
@@ -100,9 +101,23 @@ class Request
         return $this->inputs;
     }
 
-    public function input(string $name): string|array|null
+    public function isValid(): bool
     {
-        return $this->inputs[$name] ?? null;
+        return Validator::status();
+    }
+
+    public function input(string $name): string|array|null|object
+    {
+        return Validator::make($name, $this->inputs[$name]);
+    }
+
+    public function back(): void
+    {
+        $this->flash();
+
+        $this->app->session->setErrors(Validator::getErrors());
+
+        $this->app->response->redirect($this->getReferer());
     }
 
     public function missing(string $key): bool
@@ -113,6 +128,7 @@ class Request
     public function flash(): self
     {
         foreach ($this->inputs as $key => $value) {
+            if (is_string($value))
             app('session')->set($key, $value);
 
             app('response')->registerAfterResponseHook(function (Session $session) use ($key) {

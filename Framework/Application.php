@@ -81,6 +81,7 @@ final class Application
             'view'        => \Automation\Framework\View\ViewFactory::class,
             'encoder'     => \Automation\Framework\Encoding\Encoder::class,
             'application' => \Automation\Framework\Application::class,
+            'validator'   => \Automation\Framework\Validation\ValidatorFactory::class
         ];
         
         if (!is_null($key)) {
@@ -215,6 +216,13 @@ final class Application
         endforeach;
 
         return $results;
+    }
+
+    public function getInstancesOf(string $class)
+    {
+        return array_filter($this->instances, function ($instance) use ($class) {
+            return $instance instanceof $class;
+        });
     }
 
     private function __construct(

@@ -14,10 +14,15 @@ class DebugController
 
     public function post(Request $request)
     {
-        dump($_FILES);
+        $first_name = $request->input('first_name')->length(32, 512);
+        $last_name  = $request->input('last_name')->length(64, 1024);
 
-        dump($request->input('file'));
+        if (!$request->isValid()) {
+            $request->back();
+        }
 
-        echo sprintf('<a href="%s">Back</a>', url('/debug'));
+        return $first_name;
+
+        app('response')->redirect($request->getReferer());
     }
 }

@@ -10,12 +10,12 @@ Router::post('/', [ProgramController::class, 'get']);
 Router::get('programs', [ProgramController::class, 'all']);
 
 Router::view('/programs/add', 'program.add');
-Router::post('/programs/add', [ProgramControler, 'add']);
+Router::post('/programs/add', [ProgramController::class, 'add']);
 
-Router::get('/programs/{id}/update', [ProgramController::class, 'updateView']);
-Router::post('/programs/{id}/update', [ProgramControler, 'update']);
+Router::get('/programs/{id}/update', [ViewController::class, 'updateView']);
+Router::post('/programs/{id}/update', [ProgramController::class, 'update']);
 
-Router::get('/programs/{id}/delete', [ProgramControler, 'delete']);
+Router::get('/programs/{id}/delete', [ProgramController::class, 'delete']);
 
 Router::get('/debug', [DebugController::class, 'get']);
 Router::post('/debug', [DebugController::class, 'post']);
