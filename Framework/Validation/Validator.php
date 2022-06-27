@@ -15,6 +15,11 @@ class Validator
         private mixed $input,
         private Application $app
     ) {
+        $input_name_parts = explode(' ', str_replace(['_', '-'], ' ', $input_name]));
+        
+        $formatted_name = array_map(function () {
+            
+        
         $this->formatted_input_name = implode(' ', array_map(function ($part) { return ucfirst($part); }, explode(' ', str_replace(['_', '-'], ' ', $input_name))));
     }
 
