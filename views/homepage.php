@@ -15,9 +15,9 @@
 
         
         <div class="max-w-2xl mx-auto space-y-2 my-2">
-        <?php foreach (errors() as $value): ?>
+        <?php foreach (errors() as $error): ?>
             <div class="w-full p-4 text-xs text-red-700 bg-red-100" role="alert">
-                <?= $value ?>
+                <?= $error ?>
             </div>
         <?php endforeach; ?>
         <div>
