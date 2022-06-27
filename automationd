@@ -8,6 +8,5 @@ $app = Automation\Framework\Application::instance();
 $app->run();
 
 while (true) {
-    // Pull and run jobs every 20-minute.
-    sleep(1200);
+    sleep(config('DAEMON_SLEEP_FOR'));
 }
