@@ -103,7 +103,15 @@ class Request
 
     public function isValid(): bool
     {
-        return Validator::status();
+        $errors = Validator::getErrors();
+
+        if (!empty($errors)) {
+            $this->app->session->setErrors(Validator::getErrors());
+
+            return false;
+        }
+
+        return true;
     }
 
     public function input(string $name): string|array|null|object
@@ -114,8 +122,6 @@ class Request
     public function back(): void
     {
         $this->flash();
-
-        $this->app->session->setErrors(Validator::getErrors());
 
         $this->app->response->redirect($this->getReferer());
     }

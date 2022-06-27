@@ -21,8 +21,6 @@ class DebugController
             $request->back();
         }
 
-        return $first_name;
-
-        app('response')->redirect($request->getReferer());
+        return 'Success';
     }
 }

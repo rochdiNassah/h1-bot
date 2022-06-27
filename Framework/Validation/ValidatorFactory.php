@@ -22,11 +22,6 @@ class ValidatorFactory
         return app(Validator::class, [$input_name, $input]);
     }
 
-    public function status()
-    {
-        return false;
-    }
-
     public function getErrors()
     {
         $errors = [];
