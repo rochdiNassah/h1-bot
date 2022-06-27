@@ -85,7 +85,8 @@ final class Application
             'view'        => \Automation\Framework\View\ViewFactory::class,
             'encoder'     => \Automation\Framework\Encoding\Encoder::class,
             'application' => \Automation\Framework\Application::class,
-            'validator'   => \Automation\Framework\Validation\ValidatorFactory::class
+            'validator'   => \Automation\Framework\Validation\ValidatorFactory::class,
+            'slack'       => \Automation\Framework\Notifications\Slack::class
         ];
         
         if (!is_null($key)) {

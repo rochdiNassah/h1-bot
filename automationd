@@ -7,6 +7,10 @@ $app = Automation\Framework\Application::instance();
 
 $app->run();
 
+$sleep_for = (int) config('DAEMON_SLEEP_FOR') ?? 1200;
+
 while (true) {
-    sleep(config('DAEMON_SLEEP_FOR'));
+    dump('Foo');
+
+    sleep($sleep_for);
 }
