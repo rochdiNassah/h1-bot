@@ -14,7 +14,7 @@
 
 #### Web application routes
 - /programs
-- /peograms/{id}
+- /programs/{id}
 - /programs/add
 - /programs/{id}/update
 - /programs/{id}/delete
