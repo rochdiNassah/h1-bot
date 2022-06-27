@@ -19,6 +19,6 @@
 - /programs
 - /peograms/{id}
 - /programs/add
-- /programs/{id}/delete
 - /programs/{id}/update
+- /programs/{id}/delete
 - /debug
