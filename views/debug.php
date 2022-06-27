@@ -11,11 +11,11 @@
         <div class="max-w-2xl rounded-lg shadow-xl bg-gray-50">
             <div class="m-4">
                 <div class="flex items-center justify-center w-full flex-wrap space-y-2">
-                <input value="Rochdi" class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="First name" name="first_name" autocomplete="off" value="<?= escape(old('first_name')) ?>" />
-                <input value="Nassah" class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Last name" name="last_name" autocomplete="off" value="<?= escape(old('last_name')) ?>" />
-                <input value="rochdinassah.1998@gmail.com" class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Email address" name="email_address" autocomplete="off" value="<?= escape(old('email_address')) ?>" />
-                <input value="nassah#/401:)xD" class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Password" name="password" autocomplete="off" value="<?= escape(old('password')) ?>" />
-                <input value="nassah#/401:)xD" class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Password confirmation" name="password_confirm" autocomplete="off" value="<?= escape(old('password_confirm')) ?>" />
+                <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="First name" name="first_name" autocomplete="off" value="<?= escape(old('first_name')) ?>" />
+                <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Last name" name="last_name" autocomplete="off" value="<?= escape(old('last_name')) ?>" />
+                <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Email address" name="email_address" autocomplete="off" value="<?= escape(old('email_address')) ?>" />
+                <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Password" name="password" autocomplete="off" value="<?= escape(old('password')) ?>" />
+                <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Password confirmation" name="password_confirm" autocomplete="off" value="<?= escape(old('password_confirm')) ?>" />
                     <label
                         class="flex flex-col w-full h-32 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
                         <div class="flex flex-col items-center justify-center pt-7">
@@ -39,7 +39,7 @@
 </form>
 
 <div class="max-w-2xl mx-auto space-y-2 my-2">
-<?php foreach (app('session')->errors() as $key => $value): ?>
+<?php foreach ($errors as $key => $value): ?>
     <div class="w-full p-4 text-xs text-red-700 bg-red-100" role="alert">
         <?php dump($value) ?>
     </div>

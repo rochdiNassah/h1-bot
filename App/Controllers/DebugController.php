@@ -14,13 +14,13 @@ class DebugController
 
     public function post(Request $request)
     {
-        $first_name = $request->input('first_name')->length(32, 512);
-        $last_name  = $request->input('last_name')->length(64, 1024);
+        $first_name = $request->input('first_name')->length(4, 16);
+        $last_name  = $request->input('last_name')->length(4);
 
         if (!$request->isValid()) {
             $request->back();
         }
 
-        return 'Success';
+        return 'success';
     }
 }

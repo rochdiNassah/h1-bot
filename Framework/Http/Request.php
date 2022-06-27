@@ -106,6 +106,7 @@ class Request
         $errors = Validator::getErrors();
 
         if (!empty($errors)) {
+            $this->flash();
             $this->app->session->setErrors(Validator::getErrors());
 
             return false;
@@ -121,8 +122,6 @@ class Request
 
     public function back(): void
     {
-        $this->flash();
-
         $this->app->response->redirect($this->getReferer());
     }
 
@@ -134,42 +133,26 @@ class Request
     public function flash(): self
     {
         foreach ($this->inputs as $key => $value) {
-            if (is_string($value))
-            app('session')->set($key, $value);
+            if (is_string($value)) {
+                $session = app('session');
 
-            app('response')->registerAfterResponseHook(function (Session $session) use ($key) {
-                $session->forget($key);
-            });
-        }
+                $flash = unserialize($session->get('flash') ?? 'a:0:{}');
 
-        return $this;
-    }
+                $flash['old'][$key] = $value;
 
-    public function flashExcept($except): self
-    {
-        $except = is_array($except) ? $except : func_get_args();
+                $flash = serialize($flash);
 
-        $inputs = array_map(function ($key) {
-            if (isset($this->inputs[$key])) {
-                $value = $this->inputs[$key];
-
-                unset($this->inputs[$key]);
-    
-                return [$key => $value];
+                $session->set('flash', $flash);
             }
-
-            return [];
-        }, $except);
-
-        $this->flash();
-
-        $this->inputs = array_merge($this->inputs, reset($inputs));
+        }
 
         return $this;
     }
 
     public function old(string $key): string|null
     {
-        return app('session')->pull($key);
+        $flash = unserialize(app('session')->get('flash') ?? 'a:0:{}');
+
+        return $flash['old'][$key] ?? null;
     }
 }

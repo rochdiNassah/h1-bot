@@ -26,10 +26,16 @@ class Validator
         return $this->input;
     }
 
-    public function length(int $min, int $max)
+    public function length(int $min, int $max = null)
     {
-        if (strlen($this->input) < $min || strlen($this->input) > $max) {
-            array_push($this->errors, sprintf('"%s" must be between %s to %s characters long.', $this->input_name, $min, $max));
+        if (strlen($this->input) < $min || (null !== $max && strlen($this->input) > $max)) {
+            $message = sprintf('"%s" must be between %s to %s characters long.', $this->input_name, $min, $max);
+
+            if (is_null($max)) {
+                $message = sprintf('"%s" must be at least %s characters long.', $this->input_name, $min);
+            }
+
+            array_push($this->errors, $message);
         }
 
         return $this;

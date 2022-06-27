@@ -12,11 +12,6 @@ class ValidatorFactory
 
     }
 
-    public function __invoke()
-    {
-        return true;
-    }
-
     public function make(string $input_name, mixed $input): Validator
     {
         return app(Validator::class, [$input_name, $input]);

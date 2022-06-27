@@ -53,8 +53,6 @@ final class Application
         $this->router->run();
 
         $this->response->send();
-
-        $this->response->runAfterResponseHooks();
     }
 
     public function __get(string $alias): mixed

@@ -13,8 +13,6 @@ class Response implements ResponseInterface
 
     private int $status_code = 200;
 
-    private array $after_response_hooks = [];
-
     private string $redirect_to;
 
     public function __construct(
@@ -91,17 +89,5 @@ class Response implements ResponseInterface
     public function getStatusCode(): int
     {
         return $this->status_code;
-    }
-
-    public function registerAfterResponseHook($hook): void
-    {
-        array_push($this->after_response_hooks, $hook);
-    }
-
-    public function runAfterResponseHooks(): void
-    {
-        foreach ($this->after_response_hooks as $hook) {
-            app($hook);
-        }
     }
 }
