@@ -6,14 +6,23 @@ use Automation\Framework\Application;
 
 class Slack
 {
+    private string $message;
+
     public function __construct(
         private Application $app
     ) {
 
     }
 
-    public function send(string $message): string
+    public function message(string $message): self
     {
-        return $message;
+        $this->message = $message;
+
+        return $this;
+    }
+
+    public function send(): void
+    {
+        echo $this->message;
     }
 }

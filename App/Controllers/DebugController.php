@@ -9,7 +9,7 @@ class DebugController
 {
     public function debug()
     {
-        $result = Slack::send('A message from bug-bounty-automation.');
+        $result = Slack::message('foo')->send();
 
         return $result;
     }
