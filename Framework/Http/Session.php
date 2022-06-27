@@ -51,20 +51,4 @@ class Session
     {
         unset($_SESSION[$key]);
     }
-
-    public function setErrors(array $errors): void
-    {
-        $errors = serialize($errors);
-
-        $this->set('errors', $errors);
-    }
-
-    public function errors(): array
-    {
-        if ($errors = $this->pull('errors')) {
-            return unserialize($errors);
-        }
-
-        return [];
-    }
 }
