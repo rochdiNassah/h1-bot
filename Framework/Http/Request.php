@@ -124,9 +124,7 @@ class Request
 
     public function input(string $name): string|array|null|object
     {
-        $input_name = implode(' ', array_map(function ($part) { return ucfirst($part); }, explode(' ', str_replace(['_', '-'], ' ', $name))));
-
-        return Validator::make($input_name, $this->inputs[$name]);
+        return Validator::make($name, $this->inputs[$name]);
     }
 
     public function missing(string $key): bool

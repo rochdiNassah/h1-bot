@@ -15,16 +15,16 @@
 
         
         <div class="max-w-2xl mx-auto space-y-2 my-2">
-        <?php foreach (errors() as $key => $value): ?>
+        <?php foreach (errors() as $value): ?>
             <div class="w-full p-4 text-xs text-red-700 bg-red-100" role="alert">
-                <span class="font-bold"><?= $key ?></span> <?= $value ?>
+                <?= $value ?>
             </div>
         <?php endforeach; ?>
         <div>
 
         <?php if (isset($program)): ?>
             <div class="w-full p-4 text-xs text-green-700 bg-green-100" role="alert">
-                <?= $program ?>
+                <?= escape($program) ?>
             </div>
         <?php endif; ?>
     </div>
