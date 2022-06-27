@@ -3,11 +3,18 @@
 namespace App\Controllers;
 
 use Automation\Framework\Http\{Request, Response};
-use Automation\Framework\Facades\View;
+use Automation\Framework\Facades\{View, Slack};
 
 class DebugController
 {
-    public function get(Request $request, Response $response)
+    public function debug()
+    {
+        $result = Slack::send('A message from bug-bounty-automation.');
+
+        return $result;
+    }
+
+    public function form(Request $request, Response $response)
     {
         return View::make('debug');
     }

@@ -111,6 +111,7 @@ final class Application
         $this->share($aliases['request']);
         $this->share($aliases['response']);
         $this->share($aliases['router']);
+        $this->share($aliases['slack']);
     }
 
     public function bind(string $abstract, mixed $concrete): void

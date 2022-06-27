@@ -3,11 +3,14 @@
 
 require './vendor/autoload.php';
 
-$app = Automation\Framework\Application::instance();
+use Automation\Framework\Application;
+use Automation\Framework\Facades\Slack;
 
-$app->run();
+Application::instance()->run();
 
 $sleep_for = (int) config('DAEMON_SLEEP_FOR') ?? 1200;
+
+Slack::send('Automation daemon has started...');
 
 while (true) {
     dump('Foo');
