@@ -17,9 +17,7 @@ class DebugController
         $first_name = $request->input('first_name')->length(4, 16);
         $last_name  = $request->input('last_name')->length(4);
 
-        if (!$request->isValid()) {
-            $request->back();
-        }
+        $request->validate();
 
         return 'success';
     }

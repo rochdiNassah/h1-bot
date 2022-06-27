@@ -39,9 +39,9 @@
 </form>
 
 <div class="max-w-2xl mx-auto space-y-2 my-2">
-<?php foreach ($errors as $key => $value): ?>
+<?php foreach (errors() as $key => $value): ?>
     <div class="w-full p-4 text-xs text-red-700 bg-red-100" role="alert">
-        <?php dump($value) ?>
+        <?= $value ?>
     </div>
 <?php endforeach; ?>
 <div>

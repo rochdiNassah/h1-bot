@@ -101,28 +101,30 @@ class Request
         return $this->inputs;
     }
 
-    public function isValid(): bool
+    public function validate(): void
     {
         $errors = Validator::getErrors();
 
         if (!empty($errors)) {
             $this->flash();
-            $this->app->session->setErrors(Validator::getErrors());
+            
+            $session = app('session');
 
-            return false;
+            $flash = unserialize($session->get('flash') ?? 'a:0:{}');
+
+            $flash['errors'] = $errors;
+
+            $flash = serialize($flash);
+
+            $session->set('flash', $flash);
+
+            $this->app->response->setStatusCode(301)->redirect($this->getReferer());
         }
-
-        return true;
     }
 
     public function input(string $name): string|array|null|object
     {
         return Validator::make($name, $this->inputs[$name]);
-    }
-
-    public function back(): void
-    {
-        $this->app->response->redirect($this->getReferer());
     }
 
     public function missing(string $key): bool
@@ -154,5 +156,12 @@ class Request
         $flash = unserialize(app('session')->get('flash') ?? 'a:0:{}');
 
         return $flash['old'][$key] ?? null;
+    }
+
+    public function errors(): array | null
+    {
+        $flash = unserialize(app('session')->get('flash') ?? 'a:0:{}');
+
+        return $flash['errors'] ?? null;
     }
 }

@@ -65,18 +65,9 @@ class Response implements ResponseInterface
 
     public function redirect(string $to)
     {
-        $this->setStatusCode(301);
+        $this->sendHeaders();
 
         header(sprintf('Location: %s', $to));
-    }
-
-    public function backWith($data): self
-    {
-        foreach ($data as $key => $value) {
-            app('session')->set($key, $value);
-        }
-
-        return $this->redirect(app('request')->getHeader('referer'));
     }
 
     public function setStatusCode(int $code): self

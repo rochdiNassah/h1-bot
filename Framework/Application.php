@@ -53,6 +53,12 @@ final class Application
         $this->router->run();
 
         $this->response->send();
+
+        register_shutdown_function(function () {
+            if (app('response')->getStatusCode() === 200) {
+                app('session')->forget('flash');
+            }
+        });
     }
 
     public function __get(string $alias): mixed

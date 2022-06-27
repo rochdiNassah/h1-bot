@@ -18,6 +18,12 @@ if (!function_exists('session')) {
         }
     }
 }
+if (!function_exists('errors')) {
+    function errors(): array
+    {
+        return Request::errors() ?? [];
+    }
+}
 if (!function_exists('old')) {
     function old(string $key): string
     {

@@ -43,8 +43,6 @@ class View
 
         Filesystem::reset_root();
 
-        $errors = app('session')->errors();
-
         extract($this->data);
 
         ob_start();
@@ -53,8 +51,6 @@ class View
 
         if (!$this->is_extending) {
             $this->content = ob_get_clean();
-
-            $this->app->session->forget('flash');
 
             return;
         }
