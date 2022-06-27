@@ -5,9 +5,6 @@
 - Get notified over slack when a program change is detected.
 - Inquiry about a program.
 
-#### Requirements
-- `PHP >= 8`, `Redis extension`.
-
 #### Installation
 - Clone this repository.
 - Run `composer install` within the project's root.
