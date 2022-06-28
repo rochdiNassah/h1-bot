@@ -7,8 +7,12 @@ use Automation\Framework\Facades\View;
 
 class ProgramController
 {
-    public function get()
+    public function show(Request $request)
     {
-        return View::make('homepage');
+        $program = $request->input('program')->length(4, 16);
+
+        $request->validate();
+
+        return $program;
     }
 }

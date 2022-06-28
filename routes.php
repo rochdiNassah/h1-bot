@@ -5,7 +5,7 @@ use App\Controllers\ProgramController;
 use App\Controllers\DebugController;
 
 Router::view('/', 'homepage');
-Router::post('/', [ProgramController::class, 'get']);
+Router::post('/', [ProgramController::class, 'show']);
 
 Router::get('programs', [ProgramController::class, 'all']);
 

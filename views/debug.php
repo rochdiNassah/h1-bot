@@ -40,7 +40,7 @@
 
 <div class="max-w-2xl mx-auto space-y-2 my-2">
 <?php foreach (errors() as $error): ?>
-    <div class="w-full p-4 text-xs text-red-700 bg-red-100" role="alert">
+    <div class="w-full p-4 text-xs text-amber-700 bg-amber-100" role="alert">
         <?= $error ?>
     </div>
 <?php endforeach; ?>
