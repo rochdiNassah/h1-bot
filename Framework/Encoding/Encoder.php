@@ -61,7 +61,7 @@ class Encoder
      * Detect the encoding type of a string.
      * 
      * @param  string  $string
-     * @return string
+     * @return string|false
      */
     public function detect(string $string): string|false
     {
