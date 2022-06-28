@@ -5,6 +5,8 @@ require './vendor/autoload.php';
 
 use Automation\Framework\Application;
 use Automation\Framework\Facades\Slack;
+use Automation\Framework\Queue\Queueable;
+use App\Jobs\CheckHackeronePrograms;
 
 Application::instance()->run();
 
@@ -14,14 +16,18 @@ if (false === ($message = Slack::channel('debug')->send('Automation daemon has s
     throw new Exception('Unable to notify that the daemon has started!');
 }
 
-dump('Notification sent!');
-
 sleep(4);
 
 Slack::delete($message);
 
-dump('Notification deleted!');
+app()->resolve(CheckHackeronePrograms::class);
 
-while (false) {
-    sleep($sleep_for);
+$jobs = app()->getInstancesOf(Queueable::class);
+
+while (true) {
+    foreach ($jobs as $job) {
+        app([$job, 'execute']);
+    }
+
+    sleep(4);
 }

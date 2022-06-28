@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use Automation\Framework\Facades\{Request, View, Response};
+use Automation\Framework\Exceptions\Renderable;
 
 if (!function_exists('session')) {
     function session($key, $value = null): mixed
@@ -58,7 +59,7 @@ if (!function_exists('app')) {
 if (!function_exists('exception_handler')) {
     function exception_handler($e): void
     {
-        if ($e instanceof Automation\Framework\Exceptions\RendableInterface) {
+        if ($e instanceof Renderable) {
             try {
                 Response::setStatusCode($e->getHttpResponseCode())
                     ->setContent(View::make($e->getViewName()))

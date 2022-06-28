@@ -161,12 +161,15 @@ final class Application
 
             list($class, $method) = $abstract;
 
-            $object    = $this->resolve($class);
-            $reflector = $this->resolve(ReflectionMethod::class, [$object, $method]);
+            if (!is_object($class)) {
+                $class = $this->resolve($class);
+            }
+
+            $reflector = $this->resolve(ReflectionMethod::class, [$class, $method]);
             
             $parameters = $reflector?->getParameters();
 
-            array_splice($abstract, 0, 1, [$object]);
+            array_splice($abstract, 0, 1, [$class]);
         }
 
         $dependencies = array_merge($params, $this->resolveDependencies($abstract, $parameters ?? []));

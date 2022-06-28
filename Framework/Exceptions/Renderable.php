@@ -2,7 +2,7 @@
 
 namespace Automation\Framework\Exceptions;
 
-interface RendableInterface
+interface Renderable
 {
     /**
      * Get the exception's associated view name.
