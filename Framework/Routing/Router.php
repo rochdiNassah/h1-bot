@@ -38,7 +38,7 @@ class Router
     {
         $route = $this->app->resolve(Route::class, [$method, $path, $action]);
 
-        $this->routes[] = $route;
+        $this->routes[hash('sha512', $method.$path)] = $route;
 
         $route->parse();
     }

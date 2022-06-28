@@ -6,7 +6,7 @@
             <img class="w-1/2 sm:w-52 mx-auto" src="<?= url('logo.svg') ?>" />
         </div>
 
-        <h1 class="w-full sm:w-3/4 mx-auto text-lg sm:text-2xl text-gray-800 font-bold text-center">Maintain bug-bounty targets automatically!</h1>
+        <h1 class="w-full sm:w-3/4 mx-auto text-lg sm:text-2xl text-gray-800 font-bold text-center">Maintain bug-bounty progams automatically!</h1>
 
         <form class="w-full space-x-1 flex align-center" action="" method="post">
             <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Exact program name..." name="program" autocomplete="off" value="<?= escape(old('program')) ?>" />
