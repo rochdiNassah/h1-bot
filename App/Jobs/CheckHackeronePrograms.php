@@ -16,13 +16,9 @@ class CheckHackeronePrograms implements Queueable
 
     public function execute(Slack $slack): bool
     {
-        $message = $slack->send('A new H1 program has launched!');
+        $message = $slack->send('A new program on HackerOne has launched!');
 
-        if (false !== $message) {
-            sleep(4);
-
-            $slack->delete($message);
-            
+        if (false !== $message) {            
             return true;
         }
 

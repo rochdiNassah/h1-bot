@@ -43,6 +43,8 @@ final class Application
         $this->instantiateServices($in_cli_mode);
 
         if ($in_cli_mode) {
+            $this->bind('sleep_for', config('daemon_sleep_for'));
+
             return;
         }
 
