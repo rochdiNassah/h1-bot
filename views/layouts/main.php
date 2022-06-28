@@ -8,7 +8,7 @@
         <script src="<?= url('js/tailwind.js') ?>"></script>
         <script src="<?= url('js/flowbite.js') ?>"></script>
     </head>
-    <body>
+    <body style="background-color: #FFFFF9">
         <div class="h-screen max-w-2xl sm:max-w-5xl container mx-auto">
             <?= $this->include('layouts.navbar') ?>
             <?= $this->child() ?>

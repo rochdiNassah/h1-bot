@@ -1,8 +1,8 @@
 <?php $this->extends('layouts.main')->setTitle('Not Found!') ?>
 
-<section class="mt-16 flex items-center sm:p-16 dark:bg-gray-900 dark:text-gray-100">
+<section class="mt-16 flex items-center sm:p-16  ">
     <div class="container flex flex-col items-center justify-center px-5 mx-auto space-y-8 text-center sm:max-w-md">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-40 h-40 dark:text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-40 h-40 ">
             <path fill="currentColor" d="M256,16C123.452,16,16,123.452,16,256S123.452,496,256,496,496,388.548,496,256,388.548,16,256,16ZM403.078,403.078a207.253,207.253,0,1,1,44.589-66.125A207.332,207.332,0,0,1,403.078,403.078Z"></path>
             <rect width="176" height="32" x="168" y="320" fill="currentColor"></rect>
             <polygon fill="currentColor" points="210.63 228.042 186.588 206.671 207.958 182.63 184.042 161.37 162.671 185.412 138.63 164.042 117.37 187.958 141.412 209.329 120.042 233.37 143.958 254.63 165.329 230.588 189.37 251.958 210.63 228.042"></polygon>
@@ -10,6 +10,6 @@
         </svg>
 
         <p class="text-3xl">"<?= escape($this->app->request->path()) ?>" Not Found!</p>
-        <a rel="noopener noreferrer" href="<?= url('/') ?>" class="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a>
+        <a rel="noopener noreferrer" href="<?= url('/') ?>" class="px-8 py-3 font-semibold rounded  ">Back to homepage</a>
     </div>
 </section>
