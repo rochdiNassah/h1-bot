@@ -102,7 +102,7 @@ final class Application
 
         $this->share($aliases['filesystem'], ['root' => app('project_root')]);
         $this->share($aliases['encoder']);
-        $this->share($aliases['slack'], [config('BOT_USER_OAUTH_TOKEN')]);
+        $this->share($aliases['slack'], [config('SLACK_OAUTH_TOKEN')]);
 
         if ($running_in_cli_mode) {
             return;
