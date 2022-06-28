@@ -9,10 +9,6 @@ class ProgramController
 {
     public function get(Request $request, Response $response)
     {
-        $program = $request->input('program')->length(4, 8);
-
-        $request->validate();
-
-        return View::make('homepage', ['program' => $program]);
+        return View::make('homepage');
     }
 }
