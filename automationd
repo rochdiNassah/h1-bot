@@ -6,7 +6,6 @@ require './vendor/autoload.php';
 use Automation\Framework\Application;
 use Automation\Framework\Facades\Slack;
 use Automation\Framework\Queue\Queueable;
-use App\Jobs\CheckHackeronePrograms;
 
 Application::instance()->run();
 
