@@ -84,7 +84,6 @@ final class Application
             'session'     => \Automation\Framework\Http\Session::class,
             'view'        => \Automation\Framework\View\ViewFactory::class,
             'encoder'     => \Automation\Framework\Encoding\Encoder::class,
-            'application' => \Automation\Framework\Application::class,
             'validator'   => \Automation\Framework\Validation\ValidatorFactory::class,
             'slack'       => \Automation\Framework\Notifications\Slack::class
         ];
