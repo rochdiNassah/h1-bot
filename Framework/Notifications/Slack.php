@@ -49,6 +49,24 @@ class Slack
         $response = json_decode((string) $this->request('POST', 'chat.postMessage', $form)->getBody());
 
         if ($response->ok) {
+            $response->message->channel = $response->channel;
+
+            return $response->message;
+        }
+
+        return false;
+    }
+
+    public function delete(object $message)
+    {
+        $form = [
+            'channel' => $message->channel,
+            'ts'      => $message->ts
+        ];
+
+        $response = json_decode((string) $this->request('POST', 'chat.delete', $form)->getBody());
+
+        if ($response->ok) {
             return true;
         }
 

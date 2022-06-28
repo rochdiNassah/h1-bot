@@ -8,11 +8,15 @@ use Automation\Framework\Facades\Slack;
 
 Application::instance()->run();
 
-$sleep_for = (int) config('DAEMON_SLEEP_FOR') ?? 1200;
+$sleep_for = (int) config('DAEMON_SLEEP_FOR');
 
-if (!Slack::channel('debug')->send('Automation daemon has started!')) {
+if (false === ($message = Slack::channel('debug')->send('Automation daemon has started!'))) {
     throw new Exception('Unable to notify that the daemon has started!');
 }
+
+sleep(4);
+
+Slack::delete($message);
 
 while (true) {
     sleep($sleep_for);
