@@ -12,7 +12,6 @@
             <input class="w-full appearance-none outline-none p-4 text-xs border border-gray-200" placeholder="Exact program name..." name="program" autocomplete="off" value="<?= escape(old('program')) ?>" />
             <input class="w-32 p-4 font-bold hover:bg-gray-700 cursor-pointer text-xs bg-gray-800 text-white mx-auto" type="submit" value="Go" />
         </form>
-
         
         <div class="max-w-2xl mx-auto space-y-2 my-2">
         <?php foreach (errors() as $error): ?>
