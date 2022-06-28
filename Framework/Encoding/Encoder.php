@@ -36,8 +36,6 @@ class Encoder
                 }, str_split(bin2hex($string), 2)
             )
         );
-
-        throw new Exception('Something went wrong with the encoder!');
     }
 
     public function decode(string $string, string $as): string
@@ -63,7 +61,7 @@ class Encoder
      * Detect the encoding type of a string.
      * 
      * @param  string  $string
-     * @return string
+     * @return string|false
      */
     public function detect(string $string): string|false
     {

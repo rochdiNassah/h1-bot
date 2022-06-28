@@ -18,5 +18,5 @@ Router::post('/programs/{id}/update', [ProgramController::class, 'update']);
 Router::get('/programs/{id}/delete', [ProgramController::class, 'delete']);
 
 Router::get('/debug', [DebugController::class, 'debug']);
-Router::get('/debug/form', [DebugController::class, 'form']);
+Router::get('/debug/view', [DebugController::class, 'view']);
 Router::post('/debug', [DebugController::class, 'post']);
