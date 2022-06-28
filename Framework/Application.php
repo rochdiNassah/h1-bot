@@ -157,9 +157,7 @@ final class Application
             $parameters = $reflector?->getParameters();
         }
         if (is_array($abstract)) {
-            if (!isset($abtract[1])) {
-                $abstract[1] = '__invoke';
-            }
+            2 === count($abstract) ?: array_push($abstract, '__invoke');
 
             list($class, $method) = $abstract;
 
