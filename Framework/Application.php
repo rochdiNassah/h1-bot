@@ -157,6 +157,10 @@ final class Application
             $parameters = $reflector?->getParameters();
         }
         if (is_array($abstract)) {
+            if (!isset($abtract[1])) {
+                $abstract[1] = '__invoke';
+            }
+
             list($class, $method) = $abstract;
 
             $object    = $this->resolve($class);
