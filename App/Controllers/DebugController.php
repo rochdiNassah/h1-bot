@@ -9,9 +9,11 @@ class DebugController
 {
     public function debug()
     {
-        $stmt = DB::prepare('SELECT * FROM programs');
+        $stmt = DB::prepare('show columns from programs');
 
         $stmt->execute();
+
+        dump($stmt->fetchAll(\PDO::FETCH_COLUMN));
     }
 
     public function view()

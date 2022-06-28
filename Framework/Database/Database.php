@@ -43,6 +43,13 @@ class Database
         $this->connection = new PDO($dsn, $this->user, $this->pass, $this->options);
     }
 
+    public function connectToServer(): void
+    {
+        $dsn = sprintf('mysql:host=%s', $this->host);
+
+        $this->connection = new PDO($dsn, $this->user, $this->pass, $this->options);
+    }
+
     public function __call(string $method, array $params = [])
     {
         return $this->connection()->{$method}(...$params);

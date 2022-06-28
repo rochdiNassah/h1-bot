@@ -1,6 +1,7 @@
 <?php
     $nav_links = [
         ['text' => 'Debug', 'href' => url('/debug')],
+        ['text' => '(Re) install', 'href' => url('/install')],
         ['text' => 'Home', 'href' => url('/')],
         ['text' => 'Add Program', 'href' => url('/programs/add')],
         ['text' => 'Programs', 'href' => url('/programs')]
