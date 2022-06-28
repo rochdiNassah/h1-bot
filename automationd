@@ -10,10 +10,10 @@ Application::instance()->run();
 
 $sleep_for = (int) config('DAEMON_SLEEP_FOR') ?? 1200;
 
-Slack::send('Automation daemon has started...');
+if (!Slack::channel('debug')->send('Automation daemon has started!')) {
+    throw new Exception('Unable to notify that the daemon has started!');
+}
 
 while (true) {
-    dump('Foo');
-
     sleep($sleep_for);
 }
