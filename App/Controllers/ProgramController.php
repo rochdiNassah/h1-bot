@@ -7,7 +7,7 @@ use Automation\Framework\Facades\View;
 
 class ProgramController
 {
-    public function get(Request $request, Response $response)
+    public function get()
     {
         return View::make('homepage');
     }
