@@ -1,7 +1,7 @@
 ### Maintain an up-to-date recon of bug-bounty programs automatically.
 
 #### Features
-- Get notified over slack when a new program is launched in HackerOne or BugCrowd.
+- Get notified over slack when a new program is launched on HackerOne.
 
 #### Installation
 - Clone this repository.
