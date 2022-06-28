@@ -36,8 +36,6 @@ class Encoder
                 }, str_split(bin2hex($string), 2)
             )
         );
-
-        throw new Exception('Something went wrong with the encoder!');
     }
 
     public function decode(string $string, string $as): string
