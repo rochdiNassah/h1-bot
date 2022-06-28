@@ -13,12 +13,14 @@ app()->instantiateJobs();
 
 $slack = app('slack')->channel('debug');
 
-$slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
+// $slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
+return;
+
 try {
-    while (true) {
+    while (false) {
         foreach ($jobs as $job) {
             $reflector = app(ReflectionObject::class, [$job]);
     
