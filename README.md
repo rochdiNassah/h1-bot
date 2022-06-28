@@ -10,4 +10,4 @@
 #### Usage
 - Adjust environment variables in `.env.example` then move it to `.env`.
 - Run `php automationd`.
-- All done! While the daemon script is running it will pull and run jobs every 20-minute and notify you if something interesting happened.
+- All done! While the daemon script is running, it will pull and run jobs every 20-minute and notify you if something interesting happened.
