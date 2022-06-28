@@ -12,7 +12,7 @@ class DebugController
         
     }
 
-    public function form()
+    public function view()
     {
         return View::make('debug');
     }
