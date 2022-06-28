@@ -9,9 +9,13 @@ class DebugController
 {
     public function debug()
     {
-        $result = Slack::message('foo')->send();
+        $message = rand(1, pow(2, 16));
 
-        return $result;
+        $result = Slack::channel('debug')->send($message);
+
+        dump($result);
+
+        return;
     }
 
     public function form(Request $request, Response $response)

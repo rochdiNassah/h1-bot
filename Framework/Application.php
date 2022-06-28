@@ -102,6 +102,7 @@ final class Application
 
         $this->share($aliases['filesystem'], ['root' => app('project_root')]);
         $this->share($aliases['encoder']);
+        $this->share($aliases['slack'], [config('BOT_USER_OAUTH_TOKEN')]);
 
         if ($running_in_cli_mode) {
             return;
@@ -111,7 +112,6 @@ final class Application
         $this->share($aliases['request']);
         $this->share($aliases['response']);
         $this->share($aliases['router']);
-        $this->share($aliases['slack']);
     }
 
     public function bind(string $abstract, mixed $concrete): void

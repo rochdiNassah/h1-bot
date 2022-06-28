@@ -3,26 +3,55 @@
 namespace Automation\Framework\Notifications;
 
 use Automation\Framework\Application;
+use GuzzleHttp\Client;
 
 class Slack
 {
-    private string $message;
+    private string $channel;
+
+    private Client $client;
 
     public function __construct(
+        private string $bot_user_oauth_token,
         private Application $app
     ) {
+        $client_options = [
+            'base_uri' => 'https://slack.com/api/'
+        ];
 
+        $this->client = $app->resolve(Client::class, [$client_options]);
+    }
+    
+    private function request(string $method, string $endpoint, mixed $form = []): mixed
+    {
+        $options = [
+            'headers'     => ['Authorization' => sprintf('Bearer %s', $this->bot_user_oauth_token)],
+            'form_params' => $form
+        ];
+
+        return $this->client->request($method, $endpoint, $options);
     }
 
-    public function message(string $message): self
+    public function channel(string $channel): self
     {
-        $this->message = $message;
+        $this->channel = $channel;
 
         return $this;
     }
 
-    public function send(): void
+    public function send($message)
     {
-        echo $this->message;
+        $form = [
+            'channel' => $this->channel,
+            'text'    => $message
+        ];
+
+        $response = json_decode((string) $this->request('POST', 'chat.postMessage', $form)->getBody());
+
+        if ($response->ok) {
+            return true;
+        }
+
+        return false;
     }
 }
