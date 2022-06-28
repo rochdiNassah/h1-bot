@@ -22,6 +22,6 @@ Slack::delete($message);
 
 dump('Notification deleted!');
 
-while (true) {
+while (false) {
     sleep($sleep_for);
 }

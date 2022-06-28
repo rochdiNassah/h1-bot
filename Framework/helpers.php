@@ -81,11 +81,7 @@ if (!function_exists('exception_handler')) {
 if (!function_exists('error_handler')) {
     function error_handler(int $errno, string $errstr, string $errfile = '', int $errline = 0, array $errcontext = []): void
     {
-        dump("Error {$errstr}");
-        dump("File: {$errfile}");
-        dump("Line: {$errline}");
-
-        die;
+        throw new ErrorException(...func_get_args());
     }
 }
 if (!function_exists('dd')) {

@@ -3,13 +3,15 @@
 namespace App\Controllers;
 
 use Automation\Framework\Http\{Request, Response};
-use Automation\Framework\Facades\{View, Slack};
+use Automation\Framework\Facades\{View, Slack, DB};
 
 class DebugController
 {
     public function debug()
     {
-        
+        $stmt = DB::prepare('SELECT * FROM programs');
+
+        $stmt->execute();
     }
 
     public function view()

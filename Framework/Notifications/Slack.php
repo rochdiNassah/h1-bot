@@ -7,14 +7,17 @@ use GuzzleHttp\Client;
 
 class Slack
 {
+    private string $token;
+
     private string $channel;
 
     private Client $client;
 
     public function __construct(
-        private string $bot_user_oauth_token,
         private Application $app
     ) {
+        $this->token = config('SLACK_OAUTH_TOKEN');
+
         $client_options = [
             'base_uri' => 'https://slack.com/api/'
         ];
@@ -25,7 +28,7 @@ class Slack
     private function request(string $method, string $endpoint, mixed $form = []): mixed
     {
         $options = [
-            'headers'     => ['Authorization' => sprintf('Bearer %s', $this->bot_user_oauth_token)],
+            'headers'     => ['Authorization' => sprintf('Bearer %s', $this->token)],
             'form_params' => $form
         ];
 

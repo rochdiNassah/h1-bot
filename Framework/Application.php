@@ -2,7 +2,7 @@
 
 namespace Automation\Framework;
 
-use stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType, ReflectionNamedType, ReflectionParameter;
+use PDO, stdClass, Closure, Exception, ReflectionClass, ReflectionFunction, ReflectionMethod, ReflectionObject, ReflectionUnionType, ReflectionNamedType, ReflectionParameter;
 use Dotenv\Dotenv;
 use Automation\Framework\Exceptions\{ClassNotFoundException, DependencyNotFoundException};
 
@@ -101,7 +101,8 @@ final class Application
 
         $this->share($aliases['filesystem'], ['root' => app('project_root')]);
         $this->share($aliases['encoder']);
-        $this->share($aliases['slack'], [config('SLACK_OAUTH_TOKEN')]);
+        $this->share($aliases['slack']);
+        $this->share($aliases['database'], ['options' => [PDO::ATTR_PERSISTENT => true]]);
 
         if ($running_in_cli_mode) {
             return;
