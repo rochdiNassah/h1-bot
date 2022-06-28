@@ -12,7 +12,7 @@
 
         <form class="w-full space-x-2 flex align-center" action="" method="post">
             <input class="font-bold rounded-sm text-gray-500 w-full appearance-none outline-none p-3.5 text-xs border border-gray-200" placeholder="Exact program name..." name="program" autocomplete="off" value="<?= escape(old('program')) ?>" />
-            <input class="w-16 p-3.5 rounded-sm font-bold hover:bg-amber-500 cursor-pointer text-xs bg-amber-400 text-white mx-auto" type="submit" value="Go" />
+            <input class="border border-amber-500 w-16 p-3.5 rounded-sm font-bold hover:bg-amber-500 cursor-pointer text-xs bg-amber-400 text-white mx-auto" type="submit" value="Go" />
         </form>
         
         <div class="max-w-2xl mx-auto space-y-2 my-2">
