@@ -10,7 +10,6 @@ use Automation\Framework\Queue\Queueable;
 Application::instance()->run();
 
 app()->instantiateJobs();
-app()->bind('sleep_for', config('DAEMON_SLEEP_FOR'));
 
 $slack = app('slack')->channel('debug');
 
@@ -18,24 +17,30 @@ $slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
-while (true) {
-    foreach ($jobs as $job) {
-        $reflector = app(ReflectionObject::class, [$job]);
-
-        $job_name = $reflector->getShortName();
-
-        dump(sprintf('Executing "%s" job ...', $job_name));
-
-        $result = app([$job, 'execute']);
-
-        if (!$result) {
-            Slack::send(sprintf('Job "%s" failed!', $job_name));
-
-            continue;
+try {
+    while (true) {
+        foreach ($jobs as $job) {
+            $reflector = app(ReflectionObject::class, [$job]);
+    
+            $job_name = $reflector->getShortName();
+    
+            dump(sprintf('Executing "%s" job ...', $job_name));
+    
+            $result = app([$job, 'execute']);
+    
+            if (!$result) {
+                Slack::send(sprintf('Job "%s" failed!', $job_name));
+    
+                continue;
+            }
+    
+            dump(sprintf('Executed "%s" job successfully!', $job_name));
         }
-
-        dump(sprintf('Executed "%s" job successfully!', $job_name));
+    
+        sleep((int) app('sleep_for'));
     }
+} catch (Throwable $e) {
+    Slack::send(sprintf('Automation dameon got an exception at %s', date('H:i')));
 
-    sleep((int) app('sleep_for'));
+    throw $e;
 }
