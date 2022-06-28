@@ -28,7 +28,7 @@ if (!function_exists('old')) {
 if (!function_exists('config')) {
     function config(string $key): string
     {
-        return $_ENV[$key];
+        return $_ENV[strtoupper($key)];
     }
 }
 if (!function_exists('url')) {

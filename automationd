@@ -10,24 +10,33 @@ use App\Jobs\CheckHackeronePrograms;
 
 Application::instance()->run();
 
-$sleep_for = (int) config('DAEMON_SLEEP_FOR');
+app()->instantiateJobs();
+app()->bind('sleep_for', config('DAEMON_SLEEP_FOR'));
 
-if (false === ($message = Slack::channel('debug')->send('Automation daemon has started!'))) {
-    throw new Exception('Unable to notify that the daemon has started!');
-}
+$slack = app('slack')->channel('debug');
 
-sleep(4);
-
-Slack::delete($message);
-
-app()->resolve(CheckHackeronePrograms::class);
+$slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
 while (true) {
     foreach ($jobs as $job) {
-        app([$job, 'execute']);
+        $reflector = app(ReflectionObject::class, [$job]);
+
+        $job_name = $reflector->getShortName();
+
+        dump(sprintf('Executing "%s" job ...', $job_name));
+
+        $result = app([$job, 'execute']);
+
+        if (!$result) {
+            Slack::send(sprintf('Job "%s" failed!', $job_name));
+
+            continue;
+        }
+
+        dump(sprintf('Executed "%s" job successfully!', $job_name));
     }
 
-    sleep(4);
+    sleep((int) app('sleep_for'));
 }

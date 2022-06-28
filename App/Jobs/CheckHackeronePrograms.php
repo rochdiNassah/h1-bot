@@ -14,24 +14,18 @@ class CheckHackeronePrograms implements Queueable
 
     }
 
-    public function execute(Slack $slack)
+    public function execute(Slack $slack): bool
     {
-        $job_name = app(\ReflectionObject::class, [$this])->getShortName();
-
-        dump(sprintf('Executing "%s" job!', $job_name));
-
-        $message = $slack->channel('debug')->send($job_name);
+        $message = $slack->send('A new H1 program has launched!');
 
         if (false !== $message) {
             sleep(4);
 
             $slack->delete($message);
             
-            dump(sprintf('Executed "%s" job successfully!', $job_name));
-
-            return;
+            return true;
         }
 
-        throw new \Exception(sprintf('"%s" job failed!', $job_name));
+        return false;
     }
 }

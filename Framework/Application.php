@@ -35,6 +35,8 @@ final class Application
         $this->bind('project_root', dirname(__DIR__, 1));
 
         Dotenv::createImmutable($this->resolve('project_root'))->load();
+
+        date_default_timezone_set(config('timezone'));
         
         $in_cli_mode = php_sapi_name() === 'cli';
         
@@ -112,6 +114,11 @@ final class Application
         $this->share($aliases['request']);
         $this->share($aliases['response']);
         $this->share($aliases['router']);
+    }
+
+    public function instantiateJobs(): void
+    {
+        $this->resolve(\App\Jobs\CheckHackeronePrograms::class);
     }
 
     public function bind(string $abstract, mixed $concrete): void
