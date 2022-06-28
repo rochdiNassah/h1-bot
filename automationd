@@ -14,9 +14,13 @@ if (false === ($message = Slack::channel('debug')->send('Automation daemon has s
     throw new Exception('Unable to notify that the daemon has started!');
 }
 
+dump('Notification sent!');
+
 sleep(4);
 
 Slack::delete($message);
+
+dump('Notification deleted!');
 
 while (true) {
     sleep($sleep_for);
