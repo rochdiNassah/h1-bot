@@ -41,5 +41,9 @@ try {
 } catch (Throwable $e) {
     Slack::send(sprintf('Automation dameon got an exception at %s', date('H:i')));
 
+    if ($e instanceof \GuzzleHttp\Exception\ConnectException) {
+        Console::signal(SIGQUIT);
+    }
+
     throw $e;
 }
