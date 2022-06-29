@@ -56,6 +56,12 @@ if (!function_exists('app')) {
         }
     }
 }
+if (!function_exists('signal_handler')) {
+    function signal_handler(int $signo, $siginfo): void
+    {
+        dump($signo);
+    }
+}
 if (!function_exists('exception_handler')) {
     function exception_handler($e): void
     {

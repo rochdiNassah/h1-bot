@@ -43,6 +43,9 @@ final class Application
         $this->instantiateServices($in_cli_mode);
 
         if ($in_cli_mode) {
+            pcntl_signal(SIGTERM, 'signal_handler');
+            pcntl_signal(SIGHUP, 'signal_handler');
+
             $this->bind('sleep_for', config('daemon_sleep_for'));
 
             return;

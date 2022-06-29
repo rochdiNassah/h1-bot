@@ -17,6 +17,8 @@ $slack = app('slack')->channel('debug');
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
+exit(1);
+/*
 return;
 
 try {
@@ -46,3 +48,4 @@ try {
 
     throw $e;
 }
+*/
