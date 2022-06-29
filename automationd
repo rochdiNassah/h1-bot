@@ -13,12 +13,10 @@ app()->instantiateJobs();
 
 $slack = app('slack')->channel('debug');
 
-// $slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
+//$slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
-exit(1);
-/*
 return;
 
 try {
@@ -48,4 +46,3 @@ try {
 
     throw $e;
 }
-*/

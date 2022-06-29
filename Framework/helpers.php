@@ -57,7 +57,7 @@ if (!function_exists('app')) {
     }
 }
 if (!function_exists('signal_handler')) {
-    function signal_handler(int $signo, $siginfo): void
+    function signal_handler(int $signo, $sig_info): void
     {
         dump($signo);
     }
