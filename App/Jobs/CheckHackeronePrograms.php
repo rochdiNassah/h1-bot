@@ -5,7 +5,8 @@ namespace App\Jobs;
 use Automation\Framework\Application;
 use Automation\Framework\Interfaces\JobInterface;
 use Automation\Framework\Notifications\Slack;
-use GuzzleHttp\Client;
+use Automation\Framework\Facades\Client;
+use GuzzleHttp\Client as GuzzleClient;
 
 class CheckHackeronePrograms implements JobInterface
 {
@@ -14,14 +15,20 @@ class CheckHackeronePrograms implements JobInterface
     public function __construct(
         private Application $app
     ) {
-        $this->client = $app->resolve(Client::class);
+        $client_options = [
+            'base_uri' => 'https://hackerone.com'
+        ];
+
+        $app->bind(Client::class, app(GuzzleClient::class, [$client_options]));
     }
 
     public function __invoke(Slack $slack): bool
     {
-        $message = false;
+        $response = Client::request('GET', '/directory/programs');
 
-        if (false !== $message) {            
+        dump((string) $response->getStatusCode());
+
+        if (false !== $response) {            
             return true;
         }
 

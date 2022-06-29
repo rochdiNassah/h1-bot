@@ -26,14 +26,18 @@ try {
             
             try {
                 $result = app($job);
-            } catch (Throwable) {
+            } catch (Throwable $e) {
                 dump(sprintf('Failed to execute "%s" job!', $name));
 
                 continue;
             }
 
             dump(sprintf('Executed "%s" job successfully!', $name));
+
+            dump($result);
         }
+
+        Console::signal(SIGHUP);
 
         sleep((int) app('sleep_for'));
     }
