@@ -14,7 +14,7 @@ class CheckHackeronePrograms implements JobInterface
 
     }
 
-    public function execute(Slack $slack): bool
+    public function __invoke(Slack $slack): bool
     {
         $message = $slack->send('A new program on HackerOne has launched!');
 

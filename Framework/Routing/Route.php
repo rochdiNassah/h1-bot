@@ -54,8 +54,14 @@ class Route
 
     public function run(): void
     {
-        if (is_array($this->action)) {
-            $controller = $this->action[0];
+        if (is_array($this->action) || is_string($this->action)) {
+            $controller = is_string($this->action) ? $this->action : $this->action[0];
+
+            if (is_array($this->action)) {
+                $this->action[0] = app($controller);
+            } else {
+                $this->action = app($controller);
+            }
 
             if (!class_exists($controller)) {
                 throw new ControllerNotFoundException($controller);

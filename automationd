@@ -16,27 +16,19 @@ app('slack')->channel('debug');
 $jobs = app()->getInstancesOf(JobInterface::class);
 
 try {
-    Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
+    dump(sprintf('Automation daemon has started at %s!', date('H:i')));
 
     while (true) {
         foreach ($jobs as $job) {
-            $reflector = app(ReflectionObject::class, [$job]);
-    
-            $job_name = $reflector->getShortName();
-    
-            dump(sprintf('Executing "%s" job ...', $job_name));
-    
-            $result = app([$job, 'execute']);
-    
-            if (!$result) {
-                Slack::send(sprintf('Job "%s" failed!', $job_name));
+            $name = (new ReflectionObject($job))->getShortName();
+            
+            if (false === ($result = app($job))) {
+                dump(sprintf('Job "%s" failed!', $name));
     
                 continue;
             }
-    
-            dump(sprintf('Executed "%s" job successfully!', $job_name));
         }
-    
+
         sleep((int) app('sleep_for'));
     }
 } catch (Throwable $e) {
@@ -44,7 +36,7 @@ try {
         Console::signal(SIGTERM);
     }
 
-    Slack::send(sprintf('Automation dameon got an exception at %s', date('H:i')));
+    dump(sprintf('Automation dameon got an exception at %s!', date('H:i')));
 
     throw $e;
 }

@@ -34,7 +34,7 @@ class Router
         $this->register($method, $path, $action);
     }
 
-    private function register(string $method, string $path, array|callable $action): void
+    private function register(string $method, string $path, array|callable|string $action): void
     {
         $route = $this->app->resolve(Route::class, [$method, $path, $action]);
 

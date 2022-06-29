@@ -22,4 +22,4 @@ Router::get('/debug', [DebugController::class, 'debug']);
 Router::get('/debug/view', [DebugController::class, 'view']);
 Router::post('/debug', [DebugController::class, 'post']);
 
-Router::get('/install', [InstallationController::class]);
+Router::get('/install', InstallationController::class);
