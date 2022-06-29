@@ -24,9 +24,11 @@ try {
 
             dump(sprintf('Executing "%s" job...', $name));
             
-            if (false === ($result = app($job))) {
-                dump(sprintf('Job "%s" failed!', $name));
-    
+            try {
+                $result = app($job);
+            } catch (Throwable) {
+                dump(sprintf('Failed to execute "%s" job!', $name));
+
                 continue;
             }
 
