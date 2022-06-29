@@ -12,9 +12,9 @@ class Server
         $this->server = $_SERVER;
     }
 
-    public function get(string $key, string $default = null): string
+    public function get(string $key, string $default = null): string|null
     {
-        return $this->server[$key];
+        return $this->server[$key] ?? null;
     }
 
     public function has(string $key): bool
