@@ -5,7 +5,7 @@ require __DIR__.'/vendor/autoload.php';
 
 use Automation\Framework\Application;
 use Automation\Framework\Facades\{Slack, Console};
-use Automation\Framework\Queue\Queueable;
+use Automation\Framework\Interfaces\JobInterface;
 use GuzzleHttp\Exception\ConnectException;
 
 Application::instance()->run();
@@ -13,7 +13,7 @@ Application::instance()->run();
 app()->instantiateJobs();
 app('slack')->channel('debug');
 
-$jobs = app()->getInstancesOf(Queueable::class);
+$jobs = app()->getInstancesOf(JobInterface::class);
 
 try {
     Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
