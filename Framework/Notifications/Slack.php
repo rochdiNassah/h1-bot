@@ -25,7 +25,7 @@ class Slack
         $this->client = $app->resolve(Client::class, [$client_options]);
     }
     
-    private function request(string $method, string $endpoint, mixed $form = []): mixed
+    private function request(string $method, string $endpoint, array $form = []): mixed
     {
         $options = [
             'headers'     => ['Authorization' => sprintf('Bearer %s', $this->token)],
