@@ -44,7 +44,8 @@ final class Application
 
         if ($in_cli_mode) {
             pcntl_signal(SIGTERM, 'signal_handler');
-            pcntl_signal(SIGHUP, 'signal_handler');
+            pcntl_signal(SIGHUP,  'signal_handler');
+            pcntl_signal(SIGUSR1, 'signal_hanlder');
 
             $this->bind('sleep_for', config('daemon_sleep_for'));
 
