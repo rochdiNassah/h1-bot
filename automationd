@@ -29,16 +29,14 @@ try {
             } catch (Throwable $e) {
                 dump(sprintf('Failed to execute "%s" job!', $name));
 
+                dump($e->getMessage());
+
                 continue;
             }
 
             dump(sprintf('Executed "%s" job successfully!', $name));
-
-            dump($result);
         }
-
-        Console::signal(SIGHUP);
-
+        
         sleep((int) app('sleep_for'));
     }
 } catch (Throwable $e) {
