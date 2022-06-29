@@ -16,7 +16,7 @@ class DeleteAllSlackMessages implements JobInterface
     public function __invoke(Slack $slack)
     {
         if (false !== $slack->channel('debug')->deleteAll()) {
-            $slack->send('Delete all messages from "debug" channel!');
+            $slack->send('Deleted all messages from "debug" channel!');
 
             return true;
         }
