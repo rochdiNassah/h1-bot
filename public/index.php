@@ -2,4 +2,6 @@
 
 require '../vendor/autoload.php';
 
-app()->run();
+use Automation\Framework\Application;
+
+Application::instance()->run();
