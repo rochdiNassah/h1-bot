@@ -8,7 +8,6 @@ use Automation\Framework\Notifications\Slack;
 use Automation\Framework\Facades\Client;
 use Automation\Framework\Facades\Filesystem;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\GuzzleException;
 
 class CheckHackeronePrograms implements JobInterface
 {
@@ -23,7 +22,7 @@ class CheckHackeronePrograms implements JobInterface
 
         $client_options = [
             'base_uri' => $this->base_uri,
-            'timeout'  => 10
+            'timeout'  => 20
         ];
 
         $app->bind(Client::class, app(GuzzleClient::class, [$client_options]));

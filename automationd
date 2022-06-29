@@ -7,6 +7,7 @@ use Automation\Framework\Application;
 use Automation\Framework\Facades\{Slack, Console};
 use Automation\Framework\Interfaces\JobInterface;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 
 Application::instance()->run();
 
@@ -16,7 +17,7 @@ app('slack')->channel('debug');
 $jobs = app()->getInstancesOf(JobInterface::class);
 
 try {
-    dump(sprintf('Automation daemon has started at %s!', date('H:i')));
+    Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
     while (true) {
         foreach ($jobs as $job) {
@@ -25,18 +26,20 @@ try {
             dump(sprintf('Executing "%s" job...', $name));
             
             try {
-                $result = app($job);
+                app($job);
             } catch (Throwable $e) {
                 dump(sprintf('Failed to execute "%s" job!', $name));
 
-                dump($e->getMessage());
+                if ($e instanceof GuzzleException) {
+                    app($job);
+                }
 
                 continue;
             }
 
             dump(sprintf('Executed "%s" job successfully!', $name));
         }
-        
+
         sleep((int) app('sleep_for'));
     }
 } catch (Throwable $e) {
@@ -44,7 +47,7 @@ try {
         Console::signal(SIGTERM);
     }
 
-    dump(sprintf('Automation dameon got an exception at %s!', date('H:i')));
+    Slack::send(sprintf('Action required! Daemon got an exception and stopped at %s!', date('H:i')));
 
     throw $e;
 }
