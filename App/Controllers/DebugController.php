@@ -9,7 +9,7 @@ class DebugController
 {
     public function debug()
     {
-        
+        dump(app()->instantiateJobs());
     }
 
     public function view()
