@@ -17,7 +17,7 @@ app('slack')->channel('debug');
 $jobs = app()->getInstancesOf(JobInterface::class);
 
 try {
-    Slack::send(sprintf('Automation daemon has started at %s! Jobs will run every %s-minute.', date('H:i'), (int) app('sleep_for')));
+    Slack::send(sprintf('Automation daemon has started at %s! Jobs will run every %s-minute.', date('H:i'), app('sleep_for')));
 
     while (true) {
         foreach ($jobs as $job) {
