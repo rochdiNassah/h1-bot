@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Automation\Framework\Application;
 use Automation\Framework\Interfaces\JobInterface;
+use Automation\Framework\Notifications\Slack;
 
 class DeleteAllSlackMessages implements JobInterface
 {
