@@ -1,10 +1,10 @@
 #!/usr/bin/env php
-<?php declare(strict_types=1);
+<?php declare(strict_types=1, ticks=1);
 
-require './vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 use Automation\Framework\Application;
-use Automation\Framework\Facades\Slack;
+use Automation\Framework\Facades\{Slack, Console};
 use Automation\Framework\Queue\Queueable;
 
 Application::instance()->run();
@@ -16,10 +16,8 @@ Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
-return;
-
 try {
-    while (false) {
+    while (true) {
         foreach ($jobs as $job) {
             $reflector = app(ReflectionObject::class, [$job]);
     

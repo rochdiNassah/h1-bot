@@ -43,10 +43,6 @@ final class Application
         $this->instantiateServices($in_cli_mode);
 
         if ($in_cli_mode) {
-            pcntl_signal(SIGTERM, 'signal_handler');
-            pcntl_signal(SIGHUP,  'signal_handler');
-            pcntl_signal(SIGUSR1, 'signal_hanlder');
-
             $this->bind('sleep_for', config('daemon_sleep_for'));
 
             return;
@@ -93,7 +89,8 @@ final class Application
             'view'        => \Automation\Framework\View\ViewFactory::class,
             'encoder'     => \Automation\Framework\Encoding\Encoder::class,
             'validator'   => \Automation\Framework\Validation\ValidatorFactory::class,
-            'slack'       => \Automation\Framework\Notifications\Slack::class
+            'slack'       => \Automation\Framework\Notifications\Slack::class,
+            'console'     => \Automation\Framework\Console\Console::class
         ];
         
         if (!is_null($key)) {
@@ -113,6 +110,8 @@ final class Application
         $this->share($aliases['database'], ['options' => [PDO::ATTR_PERSISTENT => true]]);
 
         if ($running_in_cli_mode) {
+            $this->share($aliases['console'], [posix_getpid()]);
+
             return;
         }
 
