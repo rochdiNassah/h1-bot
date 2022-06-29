@@ -6,17 +6,18 @@ require __DIR__.'/vendor/autoload.php';
 use Automation\Framework\Application;
 use Automation\Framework\Facades\{Slack, Console};
 use Automation\Framework\Queue\Queueable;
+use GuzzleHttp\Exception\ConnectException;
 
 Application::instance()->run();
 
 app()->instantiateJobs();
 app('slack')->channel('debug');
 
-Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
-
 $jobs = app()->getInstancesOf(Queueable::class);
 
 try {
+    Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
+
     while (true) {
         foreach ($jobs as $job) {
             $reflector = app(ReflectionObject::class, [$job]);
@@ -39,11 +40,11 @@ try {
         sleep((int) app('sleep_for'));
     }
 } catch (Throwable $e) {
-    Slack::send(sprintf('Automation dameon got an exception at %s', date('H:i')));
-
-    if ($e instanceof \GuzzleHttp\Exception\ConnectException) {
-        Console::signal(SIGQUIT);
+    if ($e instanceof ConnectException) {
+        Console::signal(SIGTERM);
     }
+
+    Slack::send(sprintf('Automation dameon got an exception at %s', date('H:i')));
 
     throw $e;
 }
