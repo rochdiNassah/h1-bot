@@ -12,13 +12,17 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class CheckHackeronePrograms implements JobInterface
 {
+    private string $base_uri;
+
     private Client $client;
 
     public function __construct(
         private Application $app
     ) {
+        $this->base_uri = 'https://hackerone.com';
+
         $client_options = [
-            'base_uri' => 'https://hackerone.com',
+            'base_uri' => $this->base_uri,
             'timeout'  => 10
         ];
 
@@ -31,9 +35,9 @@ class CheckHackeronePrograms implements JobInterface
 
         $current_date = new \DateTime(date(DATE_RFC3339));
 
-        $current_date->modify('-30 days');
+        $current_date->modify(sprintf('-%s minutes', app('sleep_for') / 60 * 2 -1));
 
-        $json_request = (array) json_decode(file_get_contents(Filesystem::to('resources/json/requests/hackerone/directory.json')));
+        $json_request = json_decode(file_get_contents(Filesystem::to('resources/json/requests/hackerone/directory.json')));
 
         $response = Client::request('POST', '/graphql', ['json' => $json_request]);
 
@@ -53,7 +57,9 @@ class CheckHackeronePrograms implements JobInterface
             $current_date->setTimeZone($launched_at->getTimezone());
 
             if ($launched_at > $current_date) {
-                $slack->send(sprintf('(HackerOne) A new program has launched (%s)', $name));
+                $message = sprintf('H1 new program launch <%s/%s>', $this->base_uri, $handle);
+
+                $slack->send($message);
             }
         }
 
