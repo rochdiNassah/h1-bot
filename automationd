@@ -10,10 +10,9 @@ use Automation\Framework\Queue\Queueable;
 Application::instance()->run();
 
 app()->instantiateJobs();
+app('slack')->channel('debug');
 
-$slack = app('slack')->channel('debug');
-
-//$slack->send(sprintf('Automation daemon has started at %s!', date('H:i')));
+Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
 
 $jobs = app()->getInstancesOf(Queueable::class);
 
