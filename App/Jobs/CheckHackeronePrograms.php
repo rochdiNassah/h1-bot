@@ -3,10 +3,10 @@
 namespace App\Jobs;
 
 use Automation\Framework\Application;
-use Automation\Framework\Queue\Queueable;
+use Automation\Framework\Interfaces\JobInterface;
 use Automation\Framework\Notifications\Slack;
 
-class CheckHackeronePrograms implements Queueable
+class CheckHackeronePrograms implements JobInterface
 {
     public function __construct(
         private Application $app
