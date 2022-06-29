@@ -123,17 +123,8 @@ final class Application
 
     public function instantiateJobs(): void
     {
-        $this->filesystem->update_root('App/Jobs');
-
-        $entries = scandir((string) $this->filesystem);
-
-        foreach ($entries as $entry) {
-            if (!in_array($entry, ['.', '..'])) {
-                $this->resolve(sprintf('App\Jobs\%s', pathinfo($entry, PATHINFO_FILENAME)));
-            }
-        }
-
-        $this->filesystem->reset_root();
+        $this->resolve(\App\Jobs\DeleteAllSlackMessages::class);
+        $this->resolve(\App\Jobs\CheckHackeronePrograms::class);
     }
 
     public function bind(string $abstract, mixed $concrete): void
