@@ -75,14 +75,12 @@ if (!function_exists('exception_handler')) {
         dump("Message: {$e->getMessage()}");
         dump("File: {$e->getFile()}");
         dump("Line: {$e->getLine()}");
-
-        die;
     }
 }
 if (!function_exists('error_handler')) {
     function error_handler(int $errno, string $errstr, string $errfile = '', int $errline = 0, array $errcontext = []): void
     {
-        throw new ErrorException($errstr, 1, $errno, $errfile, $errline);
+        throw new ErrorException($errstr, E_ERROR, $errno, $errfile, $errline);
     }
 }
 if (!function_exists('dd')) {
