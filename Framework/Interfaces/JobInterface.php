@@ -2,7 +2,4 @@
 
 namespace Automation\Framework\Interfaces;
 
-interface JobInterface
-{
-
-}
+interface JobInterface {}
