@@ -62,7 +62,7 @@ final class Application
         $this->response->send();
 
         register_shutdown_function(function () {
-            if (app('response')->getStatusCode() === 200) {
+            if (200 === app('response')->getStatusCode()) {
                 app('session')->forget('flash');
             }
         });
