@@ -21,12 +21,16 @@ try {
     while (true) {
         foreach ($jobs as $job) {
             $name = (new ReflectionObject($job))->getShortName();
+
+            dump(sprintf('Executing "%s" job...', $name));
             
             if (false === ($result = app($job))) {
                 dump(sprintf('Job "%s" failed!', $name));
     
                 continue;
             }
+
+            dump(sprintf('Executed "%s" job successfully!', $name));
         }
 
         sleep((int) app('sleep_for'));
