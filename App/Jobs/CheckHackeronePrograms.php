@@ -34,7 +34,7 @@ class CheckHackeronePrograms implements JobInterface
 
         $current_date = new \DateTime(date(DATE_RFC3339));
 
-        $current_date->modify(sprintf('-%s minutes', app('sleep_for') / 60 * 2 - 1));
+        $current_date->modify(sprintf('-%s minutes', app('sleep_for') * 2 - 1));
 
         $json_request = json_decode(file_get_contents(Filesystem::to('resources/json/requests/hackerone/directory.json')));
 

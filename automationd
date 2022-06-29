@@ -17,7 +17,7 @@ app('slack')->channel('debug');
 $jobs = app()->getInstancesOf(JobInterface::class);
 
 try {
-    Slack::send(sprintf('Automation daemon has started at %s!', date('H:i')));
+    Slack::send(sprintf('Automation daemon has started at %s! Jobs will run every %s-minute.', date('H:i'), (int) app('sleep_for')));
 
     while (true) {
         foreach ($jobs as $job) {
@@ -42,7 +42,7 @@ try {
             dump(sprintf('Executed "%s" job successfully!', $name));
         }
 
-        sleep((int) app('sleep_for'));
+        sleep((int) app('sleep_for') * 60);
     }
 } catch (Throwable $e) {
     if ($e instanceof ConnectException) {
