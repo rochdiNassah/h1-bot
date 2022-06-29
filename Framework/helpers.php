@@ -71,7 +71,7 @@ if (!function_exists('exception_handler')) {
             return;
         }
 
-        dump((new ReflectionObject($e))->getshortName());
+        dump((new ReflectionObject($e))->getShortName());
         dump("Message: {$e->getMessage()}");
         dump("File: {$e->getFile()}");
         dump("Line: {$e->getLine()}");
