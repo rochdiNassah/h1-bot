@@ -16,6 +16,8 @@ app('slack')->channel('debug');
 
 $jobs = app()->getInstancesOf(JobInterface::class);
 
+$iteration = 0;
+
 try {
     Slack::send(sprintf('Automation daemon has started at %s! Jobs will run every %s-minute.', date('H:i'), app('sleep_for')));
 
@@ -41,6 +43,8 @@ try {
 
             dump(sprintf('Executed "%s" job successfully!', $name));
         }
+
+        Slack::send(sprintf('Automation daemon has done %s iteration!', ++$iteration));
 
         sleep((int) app('sleep_for') * 60);
     }
