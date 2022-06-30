@@ -64,15 +64,11 @@ class Validator
         return $this;
     }
 
-    public function length(int $min, int $max = null): self
+    public function length(int $min, int $max ): self
     {
-        if (strlen($this->input) < $min || (null !== $max && strlen($this->input) > $max)) {
+        if (strlen($this->input) < $min || strlen($this->input) > $max)) {
             $message = sprintf('"%s" must be between %s to %s characters long.', $this->formatted_input_name, $min, $max);
-
-            if (is_null($max)) {
-                $message = sprintf('"%s" must be at least %s characters long.', $this->formatted_input_name, $min);
-            }
-
+            
             array_push($this->errors, $message);
         }
 
