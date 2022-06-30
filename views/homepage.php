@@ -10,7 +10,7 @@
 
         <h1 class="w-full sm:w-3/4 mx-auto text-lg sm:text-2xl text-gray-500 text-center">Maintain bug-bounty progams automatically!</h1>
 
-        <div class="w-full mx-auto sm:px-16 flex space-x-0 space-y-2 text-center flex-wrap sm:space-x-2 sm:space-y-0 sm:flex-nowrap">
+        <div class="w-full mx-auto sm:px-8 flex space-x-0 space-y-2 text-center flex-wrap sm:space-x-2 sm:space-y-0 sm:flex-nowrap">
             <a href="<?= url('/programs/add') ?>" class="p-2 text-md font-bold transition-all w-full rounded-lg border border-amber-400 text-amber-500 hover:bg-amber-500 hover:text-white cursor-pointer">Add Program</a>
             <a href="<?= url('/programs') ?>" class="p-2 text-md font-bold transition-all w-full rounded-lg border border-amber-400 text-amber-500 hover:bg-amber-500 hover:text-white cursor-pointer">Browse Programs</a>
         </div>

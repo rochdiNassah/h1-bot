@@ -2,13 +2,31 @@
 
 namespace App\Controllers;
 
-use Automation\Framework\Http\{Request, Response};
+use Automation\Framework\Http\{Request, Response, Session};
 use Automation\Framework\Facades\View;
+use Automation\Framework\Facades\DB;
+
 
 class ProgramController
 {
-    public function add()
+    public function add(Request $request, Session $session)
     {
-        return 'success';
+        $name = $request->input('name')->length(4, 256);
+        $root = $request->input('root')->length(8, 256);
+
+        $request->validate();
+
+        $stmt = DB::prepare('INSERT INTO programs(`name`, root_domain, created_at) VALUES(?, ?, ?)');
+
+        $result = $stmt->execute([$name, $root, time()]);
+
+        if ($result) {
+            $session->set('message', 'Program added!');
+        } else {
+            $session->set('error', 'Something went wrong!');
+        }
+
+
+        return View::make('homepage');
     }
 }

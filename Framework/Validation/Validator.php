@@ -6,15 +6,18 @@ use Automation\Framework\Application;
 
 class Validator
 {
+    private $input;
+
     private array $errors = [];
 
     private string $formatted_input_name;
 
     public function __construct(
         private string $input_name,
-        private mixed $input,
         private Application $app
     ) {
+        $this->input = $app->request->inputs()[$input_name] ?? '';
+
         $this->formatted_input_name = $this->formatInputName();
     }
 
@@ -56,5 +59,14 @@ class Validator
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function getFirstError(): array|null
+    {
+        if (empty($this->errors)) {
+            return null;
+        }
+
+        return [array_shift($this->errors)];
     }
 }

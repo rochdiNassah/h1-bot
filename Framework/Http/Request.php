@@ -121,9 +121,9 @@ class Request
         }
     }
 
-    public function input(string $name): string|array|null|object
+    public function input(string $name): string|object
     {
-        return Validator::make($name, $this->inputs[$name]);
+        return Validator::make($name);
     }
 
     public function missing(string $key): bool

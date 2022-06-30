@@ -12,9 +12,9 @@ class ValidatorFactory
 
     }
 
-    public function make(string $input_name, mixed $input): Validator
+    public function make(string $input_name): Validator
     {
-        return app(Validator::class, [$input_name, $input]);
+        return app(Validator::class, [$input_name]);
     }
 
     public function getErrors()
@@ -22,7 +22,11 @@ class ValidatorFactory
         $errors = [];
 
         foreach ($this->app->getInstancesOf(Validator::class) as $instance) {
-            $errors[] = $instance->getErrors();
+            $first_error = $instance->getFirstError();
+
+            if (!is_null($first_error)) {
+                $errors[] = $first_error;
+            }
         }
 
         return call_user_func_array('array_merge_recursive', $errors);
