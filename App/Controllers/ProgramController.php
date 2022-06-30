@@ -11,8 +11,11 @@ class ProgramController
 {
     public function add(Request $request, Session $session, Response $response)
     {
-        $name = $request->input('name')->length(4, 256);
-        $root = $request->input('root')->length(8, 256);
+        $platforms = ['hackerone'];
+
+        $name     = $request->input('name')->required()->missingFrom('programs', 'name');
+        $root     = $request->input('root')->required();
+        $platform = $request->input('platform')->required()->in($platforms);
 
         $request->validate();
 

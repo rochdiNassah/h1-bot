@@ -3,6 +3,7 @@
 namespace Automation\Framework\Validation;
 
 use Automation\Framework\Application;
+use Automation\Framework\Facades\DB;
 
 class Validator
 {
@@ -41,16 +42,68 @@ class Validator
         return $this->input;
     }
 
-    public function length(int $min, int $max = null)
+    public function required(): self
+    {
+        if (0 === strlen($this->input)) {
+            $message = sprintf('"%s" is required!', $this->formatted_input_name);
+
+            array_push($this->errors, $message);
+        }
+
+        return $this;
+    }
+
+    public function in(array $array): self
+    {
+        if (!in_array($this->input, $array)) {
+            $message = sprintf('"%s" value in %s is not expected!', $this->input, $this->formatted_input_name);
+
+            array_push($this->errors, $message);
+        }
+
+        return $this;
+    }
+
+    public function length(int $min, int $max = null): self
     {
         if (strlen($this->input) < $min || (null !== $max && strlen($this->input) > $max)) {
-            $message = sprintf('"%s" field must be between %s to %s characters long.', $this->formatted_input_name, $min, $max);
+            $message = sprintf('"%s" must be between %s to %s characters long.', $this->formatted_input_name, $min, $max);
 
             if (is_null($max)) {
-                $message = sprintf('"%s" field must be at least %s characters long.', $this->formatted_input_name, $min);
+                $message = sprintf('"%s" must be at least %s characters long.', $this->formatted_input_name, $min);
             }
 
-            $this->errors[$this->input_name] = $message;
+            array_push($this->errors, $message);
+        }
+
+        return $this;
+    }
+
+    public function exists(string $table, string $column): self
+    {
+        $stmt = DB::prepare(sprintf('SELECT * FROM `%s` where `%s` = ?', $table, $column));
+
+        $stmt->execute(array($this->input));
+
+        if (!$stmt->fetch()) {
+            $message = sprintf('"%s" does not exist.', $this->input);
+
+            array_push($this->errors, $message);
+        }
+
+        return $this;
+    }
+
+    public function missingFrom(string $table, string $column): self
+    {
+        $stmt = DB::prepare(sprintf('SELECT * FROM `%s` where `%s` = ?', $table, $column));
+
+        $stmt->execute(array($this->input));
+
+        if ($stmt->fetch()) {
+            $message = sprintf('"%s" is already exists.', $this->input);
+
+            array_push($this->errors, $message);
         }
 
         return $this;
@@ -58,7 +111,7 @@ class Validator
 
     public function getErrors(): array
     {
-        return $this->errors;
+        return [$this->input_name => $this->errors];
     }
 
     public function getFirstError(): array|null
