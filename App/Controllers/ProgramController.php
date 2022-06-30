@@ -25,7 +25,7 @@ class ProgramController
         if (!$result) {
             $request->addError('', 'Something went wrong!');
         
-            $request->back();
+            return $request->back();
         }
 
         $session->set('message', 'Program added!');
