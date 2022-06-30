@@ -53,7 +53,7 @@ class CheckHackeronePrograms implements JobInterface
             $handle      = $program->node->handle;
             $launched_at = (new \DateTimeImmutable($program->node->launched_at));
 
-            $current_date->setTimeZone($launched_at->getTimezone());
+            $current_date->setTimezone($launched_at->getTimezone());
 
             if ($launched_at > $current_date) {
                 $message = sprintf('H1 new program launch <%s/%s>', $this->base_uri, $handle);
