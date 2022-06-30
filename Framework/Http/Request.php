@@ -104,21 +104,33 @@ class Request
     {
         $errors = Validator::getErrors();
 
-        if (!empty($errors)) {
-            $this->flash();
-            
-            $session = app('session');
+        if (!empty($errors)) {            
+            foreach ($errors as $key => $value) {
+                $this->setError($key, $value);
+            }
 
-            $flash = unserialize($session->get('flash') ?? 'a:0:{}');
-
-            $flash['errors'] = $errors;
-
-            $flash = serialize($flash);
-
-            $session->set('flash', $flash);
-
-            $this->app->response->setStatusCode(301)->redirect($this->getReferer());
+            $this->back();
         }
+    }
+
+    public function setError($key, string $value): void
+    {
+        $session = app('session');
+
+        $flash = unserialize($session->get('flash') ?? 'a:0:{}');
+
+        $flash['errors'][$key] = $value;
+
+        $flash = serialize($flash);
+
+        $session->set('flash', $flash);
+    }
+
+    public function back(): void
+    {
+        $this->flash();
+
+        app('response')->setStatusCode(301)->redirect($this->getReferer());
     }
 
     public function input(string $name): string|object

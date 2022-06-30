@@ -9,7 +9,7 @@ use Automation\Framework\Facades\DB;
 
 class ProgramController
 {
-    public function add(Request $request, Session $session)
+    public function add(Request $request, Session $session, Response $response)
     {
         $name = $request->input('name')->length(4, 256);
         $root = $request->input('root')->length(8, 256);
@@ -20,12 +20,13 @@ class ProgramController
 
         $result = $stmt->execute([$name, $root, time()]);
 
-        if ($result) {
-            $session->set('message', 'Program added!');
-        } else {
-            $session->set('error', 'Something went wrong!');
+        if (!$result) {
+            $request->setError('', 'Something went wrong!');
+        
+            $request->back();
         }
 
+        $session->set('message', 'Program added!');
 
         return View::make('homepage');
     }
