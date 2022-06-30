@@ -6,7 +6,6 @@ use Automation\Framework\Http\{Request, Response, Session};
 use Automation\Framework\Facades\View;
 use Automation\Framework\Facades\DB;
 
-
 class ProgramController
 {
     public function add(Request $request, Session $session, Response $response)
