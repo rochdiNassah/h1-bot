@@ -6,15 +6,11 @@ use App\Controllers\DebugController;
 use App\Controllers\InstallationController;
 
 Router::view('/', 'homepage');
-Router::post('/', [ProgramController::class, 'show']);
 
 Router::get('programs', [ProgramController::class, 'all']);
 
 Router::view('/programs/add', 'program.add');
 Router::post('/programs/add', [ProgramController::class, 'add']);
-
-Router::get('/programs/{id}/update', [ViewController::class, 'updateView']);
-Router::post('/programs/{id}/update', [ProgramController::class, 'update']);
 
 Router::get('/programs/{id}/delete', [ProgramController::class, 'delete']);
 

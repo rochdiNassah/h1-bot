@@ -1,6 +1,6 @@
 <?php $this->extends('layouts.main')->setTitle('Homepage') ?>
 
-<div class="w-full mx-auto px-8 md:px-32 lg:px-52">
+<div class="w-full mx-auto px-4 md:px-32 lg:px-52">
     <div class="pt-16 space-y-8">
         <div class="w-full mx-auto">
             <div class="w-32 sm:w-44 mx-auto max-w-52">
@@ -10,10 +10,10 @@
 
         <h1 class="w-full sm:w-3/4 mx-auto text-lg sm:text-2xl text-gray-500 text-center">Maintain bug-bounty progams automatically!</h1>
 
-        <form class="w-full space-x-2 flex align-center" action="" method="post">
-            <input class="font-bold rounded-sm text-gray-500 w-full appearance-none outline-none p-3.5 text-xs border border-gray-200" placeholder="Exact program name..." name="program" autocomplete="off" value="<?= escape(old('program')) ?>" />
-            <input class="border border-amber-500 w-16 p-3.5 rounded-sm font-bold hover:bg-amber-500 cursor-pointer text-xs bg-amber-400 text-white mx-auto" type="submit" value="Go" />
-        </form>
+        <div class="w-full mx-auto sm:px-16 flex space-x-0 space-y-2 text-center flex-wrap sm:space-x-2 sm:space-y-0 sm:flex-nowrap">
+            <a href="<?= url('/programs/add') ?>" class="p-2 text-md font-bold transition-all w-full rounded-lg border border-amber-400 text-amber-500 hover:bg-amber-500 hover:text-white cursor-pointer">Add Program</a>
+            <a href="<?= url('/programs') ?>" class="p-2 text-md font-bold transition-all w-full rounded-lg border border-amber-400 text-amber-500 hover:bg-amber-500 hover:text-white cursor-pointer">Browse Programs</a>
+        </div>
         
         <div class="max-w-2xl mx-auto space-y-2 my-2">
         <?php foreach (errors() as $error): ?>
@@ -31,9 +31,9 @@
         <?php endif; ?>
         <div>
         <div class="max-w-2xl mx-auto space-y-2 my-2">
-        <?php if (null !== ($message = app('session')->pull('error'))): ?>
+        <?php if (null !== ($error = app('session')->pull('error'))): ?>
             <div class="w-full p-3.5 text-xs text-red-700 bg-red-100" role="alert">
-                <?= $message ?>
+                <?= $error ?>
             </div>
         <?php endif; ?>
         <div>

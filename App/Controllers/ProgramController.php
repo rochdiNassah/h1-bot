@@ -7,12 +7,8 @@ use Automation\Framework\Facades\View;
 
 class ProgramController
 {
-    public function show(Request $request)
+    public function add()
     {
-        $program = $request->input('program')->length(4, 16);
-
-        $request->validate();
-
-        return $program;
+        return 'success';
     }
 }
