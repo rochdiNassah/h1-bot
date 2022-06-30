@@ -66,7 +66,7 @@ class Validator
 
     public function length(int $min, int $max ): self
     {
-        if (strlen($this->input) < $min || strlen($this->input) > $max)) {
+        if (strlen($this->input) < $min || strlen($this->input) > $max) {
             $message = sprintf('"%s" must be between %s to %s characters long.', $this->formatted_input_name, $min, $max);
             
             array_push($this->errors, $message);
