@@ -106,14 +106,14 @@ class Request
 
         if (!empty($errors)) {            
             foreach ($errors as $key => $value) {
-                $this->setError($key, $value);
+                $this->addError($key, $value);
             }
 
             $this->back();
         }
     }
 
-    public function setError($key, string $value): void
+    public function addError($key, string $value): void
     {
         $session = app('session');
 

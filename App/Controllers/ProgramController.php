@@ -23,7 +23,7 @@ class ProgramController
         $result = $stmt->execute([$name, $root, time()]);
 
         if (!$result) {
-            $request->setError('', 'Something went wrong!');
+            $request->addError('', 'Something went wrong!');
         
             $request->back();
         }
