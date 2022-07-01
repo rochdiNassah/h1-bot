@@ -3,10 +3,12 @@
 namespace Automation\Framework\Validation;
 
 use Automation\Framework\Application;
+use Automation\Framework\Http\Request;
 
 class ValidatorFactory
 {
     public function __construct(
+        private Request $request,
         private Application $app
     ) {
 
@@ -14,7 +16,13 @@ class ValidatorFactory
 
     public function make(string $input_name): Validator
     {
-        return app(Validator::class, [$input_name]);
+        $input = '';
+
+        if ($this->request->has($input_name)) {
+            $input = $this->request->inputs($input_name);
+        }
+
+        return app(Validator::class, [$input, $input_name]);
     }
 
     public function getErrors()

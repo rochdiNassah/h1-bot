@@ -4,6 +4,7 @@ namespace Automation\Framework\Http;
 
 use Automation\Framework\Application;
 use Automation\Framework\Facades\Validator;
+use Automation\Framework\Validation\ValidationException;
 
 class Request
 {
@@ -95,9 +96,18 @@ class Request
         return $this->path;
     }
 
-    public function inputs(): array
+    public function inputs(string $key = null)
     {
+        if (!is_null($key)) {
+            return $this->inputs[$key];
+        }
+
         return $this->inputs;
+    }
+
+    public function has(string $key): bool
+    {
+        return array_key_exists($key, $this->inputs);
     }
 
     public function validate(): void
@@ -109,11 +119,13 @@ class Request
                 $this->addError($key, $value);
             }
 
-            $this->back();
+            $this->flash();
+
+            throw app(ValidationException::class);
         }
     }
 
-    public function addError($key, string $value): void
+    public function addError(string|int $key, string $value): void
     {
         $session = app('session');
 

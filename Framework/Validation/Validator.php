@@ -7,18 +7,15 @@ use Automation\Framework\Facades\DB;
 
 class Validator
 {
-    private $input;
-
     private array $errors = [];
 
     private string $formatted_input_name;
 
     public function __construct(
+        private string $input,
         private string $input_name,
         private Application $app
     ) {
-        $this->input = $app->request->inputs()[$input_name] ?? '';
-
         $this->formatted_input_name = $this->formatInputName();
     }
 

@@ -2,6 +2,7 @@
 
 use Automation\Framework\Facades\{Request, View, Response};
 use Automation\Framework\Exceptions\Renderable;
+use Automation\Framework\Exceptions\Redirectable;
 
 if (!function_exists('session')) {
     function session($key, $value = null): mixed
@@ -64,6 +65,17 @@ if (!function_exists('exception_handler')) {
                 Response::setStatusCode($e->getHttpResponseCode())
                     ->setContent(View::make($e->getViewName()))
                     ->send();
+            } catch (Exception $e) {
+                exception_handler($e);
+            }
+
+            return;
+        }
+
+        if ($e instanceof Redirectable) {
+            try {
+                Response::setStatusCode($e->getHttpResponseCode())
+                    ->redirect($e->getDestination());
             } catch (Exception $e) {
                 exception_handler($e);
             }
