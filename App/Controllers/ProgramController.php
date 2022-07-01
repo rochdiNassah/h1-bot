@@ -10,17 +10,13 @@ class ProgramController
 {
     public function add(Request $request, Session $session, Response $response)
     {
-        $platforms = ['hackerone'];
-
-        $name     = $request->input('name')->required()->missingFrom('programs', 'name');
-        $root     = $request->input('root')->required()->missingFrom('programs', 'root_domain');
-        $platform = $request->input('platform')->required()->in($platforms);
+        $handle = $request->input('handle')->required()->missingFrom('programs', 'handle');
 
         $request->validate();
 
-        $stmt = DB::prepare('INSERT INTO programs(`name`, root_domain, created_at) VALUES(?, ?, ?)');
+        $stmt = DB::prepare('INSERT INTO programs(handle, created_at) VALUES(?, ?)');
 
-        $result = $stmt->execute([$name, $root, time()]);
+        $result = $stmt->execute([$handle, time()]);
 
         if (!$result) {
             $request->addError('', 'Something went wrong!');

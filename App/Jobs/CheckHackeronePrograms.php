@@ -7,6 +7,7 @@ use Automation\Framework\Interfaces\JobInterface;
 use Automation\Framework\Notifications\Slack;
 use Automation\Framework\Facades\Client;
 use Automation\Framework\Facades\Filesystem;
+use Automation\Framework\Facades\DB;
 use GuzzleHttp\Client as GuzzleClient;
 
 class CheckHackeronePrograms implements JobInterface
@@ -29,6 +30,14 @@ class CheckHackeronePrograms implements JobInterface
     }
 
     public function __invoke(Slack $slack)
+    {
+        //$this->checkForNewPrograms();
+        $this->checkForNewAssets();
+
+        return true;
+    }
+
+    private function checkForNewPrograms(): void
     {
         $date_format = 'Y-m-d\TH:i:s\Z';
 
@@ -61,7 +70,30 @@ class CheckHackeronePrograms implements JobInterface
                 $slack->send($message);
             }
         }
+    }
 
-        return true;
+    private function checkForNewAssets(): void
+    {
+        $stmt = DB::prepare('SELECT * FROM programs');
+
+        $stmt->execute();
+
+        $programs = $stmt->fetchAll(\PDO::FETCH_OBJ);
+
+        $json_request = json_decode(file_get_contents(Filesystem::to('resources/json/requests/hackerone/assets.json')));
+
+        foreach ($programs as $program) {
+            $json_request->variables->handle = $program->handle;
+
+            $response = json_decode((string) Client::request('POST', '/graphql', ['json' => $json_request])->getBody());
+
+            if ($response) {
+                $assets = $response->data->team->in_scope_assets->edges;
+
+                foreach ($assets as $asset) {
+                    dump($asset->node->asset_identifier);
+                }
+            }
+        }
     }
 }

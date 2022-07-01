@@ -13,13 +13,7 @@
         <h1 class="text-md text-amber-500">Add a program</h1>
 
         <div class="space-y-2">
-            <input value="<?= escape(old('name')) ?>" autocomplete="off" name="name" class="appearance-none border rounded w-full py-1.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none" type="text" placeholder="Name">
-            <input value="<?= escape(old('root')) ?>" autocomplete="off" name="root" class="appearance-none border rounded w-full py-1.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none" type="text" placeholder="Root domain e.g https://google.com">
-            
-            <select name="platform" class="bg-gray-50 border text-gray-700 rounded text-sm focus:outline-none block w-full p-1.5">
-                <option value="" selected>Choose the platform</option>
-                <option value="hackerone" <?= !old('platform') ?: 'selected' ?>>HackerOne</option>
-            </select>
+            <input value="<?= escape(old('handle')) ?>" autocomplete="off" name="handle" class="appearance-none border rounded w-full py-1.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none" type="text" placeholder="Program handle e.g slack">
         </div>
 
         <button class="text-sm transition-all hover:bg-amber-500 hover:text-white p-2 rounded text-amber-500 bg-white border-amber-500 border">Submit</button>

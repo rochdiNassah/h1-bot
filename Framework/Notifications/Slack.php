@@ -47,6 +47,7 @@ class Slack
 
     public function send($message)
     {
+        return true;
         $form = [
             'channel' => $this->channel,
             'text'    => $message
