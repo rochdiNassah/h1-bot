@@ -44,7 +44,9 @@ try {
             dump(sprintf('Executed "%s" job successfully!', $name));
         }
 
-        Slack::send(sprintf('Automation daemon has done %s iteration%s!', ++$iteration, $iteration > 1 ? 's' : ''));
+        ++$iteration;
+
+        // Slack::send(sprintf('Automation daemon has done %s iteration%s!', $iteration, $iteration > 1 ? 's' : ''));
 
         sleep((int) app('sleep_for') * 60);
     }
