@@ -22,6 +22,7 @@ class InstallationController
             DB::exec('CREATE TABLE IF NOT EXISTS programs (
                 id INT(11) PRIMARY KEY AUTO_INCREMENT,
                 handle VARCHAR(512) NOT NULL UNIQUE,
+                assets TEXT NULL,
                 created_at INT(11) NOT NULL,
                 updated_at INT(11) NULL
             )');

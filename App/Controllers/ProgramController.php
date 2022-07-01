@@ -3,20 +3,34 @@
 namespace App\Controllers;
 
 use Automation\Framework\Http\{Request, Response, Session};
+use Automation\Framework\Filesystem\Filesystem;
 use Automation\Framework\Facades\View;
 use Automation\Framework\Facades\DB;
+use GuzzleHttp\Client;
 
 class ProgramController
 {
-    public function add(Request $request, Session $session, Response $response)
+    public function add(Request $request, Session $session, Response $response, Client $client, Filesystem $fs)
     {
         $handle = $request->input('handle')->required()->missingFrom('programs', 'handle');
 
         $request->validate();
 
-        $stmt = DB::prepare('INSERT INTO programs(handle, created_at) VALUES(?, ?)');
+        $json_request = json_decode(file_get_contents($fs->to('resources/json/requests/hackerone/assets.json')));
 
-        $result = $stmt->execute([$handle, time()]);
+        $json_request->variables->handle = (string) $handle;
+
+        $response = json_decode((string) $client->request('POST', 'https://hackerone.com/graphql', ['json' => $json_request])->getBody());
+
+        $assets = [];
+
+        foreach ($response->data->team->in_scope_assets->edges as $asset) {
+            array_push($assets, $asset->node->asset_identifier);
+        }
+
+        $stmt = DB::prepare('INSERT INTO programs(handle, assets, created_at) VALUES(?, ?, ?)');
+
+        $result = $stmt->execute([$handle, json_encode($assets), time()]);
 
         if (!$result) {
             $request->addError('', 'Something went wrong!');

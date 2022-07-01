@@ -87,12 +87,17 @@ class CheckHackeronePrograms implements JobInterface
 
             $response = json_decode((string) Client::request('POST', '/graphql', ['json' => $json_request])->getBody());
 
-            if ($response) {
-                $assets = $response->data->team->in_scope_assets->edges;
+            $current_assets = json_decode($program->assets);
 
-                foreach ($assets as $asset) {
-                    dump($asset->node->asset_identifier);
+            $assets = [];
+            
+            if ($response) {
+                foreach ($response->data->team->in_scope_assets->edges as $asset) {
+                    array_push($assets, $asset->node->asset_identifier);
                 }
+
+                dump($assets);
+                dump($current_assets);
             }
         }
     }
