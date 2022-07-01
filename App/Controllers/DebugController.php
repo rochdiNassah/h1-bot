@@ -9,7 +9,7 @@ class DebugController
 {
     public function debug()
     {
-        dump(app()->instantiateJobs());
+        Slack::channel('debug')->deleteAll();
     }
 
     public function view()
