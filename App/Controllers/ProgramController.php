@@ -13,7 +13,7 @@ class ProgramController
         $platforms = ['hackerone'];
 
         $name     = $request->input('name')->required()->missingFrom('programs', 'name');
-        $root     = $request->input('root')->required();
+        $root     = $request->input('root')->required()->missingFrom('programs', 'root_domain');
         $platform = $request->input('platform')->required()->in($platforms);
 
         $request->validate();
