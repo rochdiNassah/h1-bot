@@ -80,9 +80,8 @@ class Slack
     }
 
     /**
-     * Retrieve all messages from a channel then delete them one by one every 1 second to avoid 429 response.
+     * Retrieve all messages from a channel, then delete them individually every 1 second to avoid 429 response.
      * 
-     * @param  string  $channel_id
      * @return bool
      */
     public function deleteAll(): bool
