@@ -104,16 +104,20 @@ class CheckHackeronePrograms implements JobInterface
 
                 $diff  = array_diff($current_assets, $old_assets);
 
-                foreach ($diff as $new_asset) {
-                    array_push($old_assets, $new_asset);
+                if (!empty($diff)) {
+                    foreach ($diff as $new_asset) {
+                        array_push($old_assets, $new_asset);
+    
+                        Slack::send(sprintf('(HackerOne) New asset for %s (%s).', ucfirst($program->handle), $new_asset));
+                    }
 
-                    Slack::send(sprintf('(HackerOne) New asset for %s program (%s).', ucfirst($program->handle), $new_asset));
+                    $stmt = DB::prepare('UPDATE programs SET assets = ? WHERE handle = ?');
+
+                    $stmt->execute([json_encode($old_assets), $program->handle]);
                 }
-
-                return true;
             }
         }
 
-        throw new \Exception();
+        return true;
     }
 }
