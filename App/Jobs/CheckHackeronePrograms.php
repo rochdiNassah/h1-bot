@@ -4,10 +4,10 @@ namespace App\Jobs;
 
 use Automation\Framework\Application;
 use Automation\Framework\Interfaces\JobInterface;
-use Automation\Framework\Notifications\Slack;
 use Automation\Framework\Facades\Client;
 use Automation\Framework\Facades\Filesystem;
 use Automation\Framework\Facades\DB;
+use Automation\Framework\Facades\Slack;
 use GuzzleHttp\Client as GuzzleClient;
 
 class CheckHackeronePrograms implements JobInterface
@@ -29,7 +29,7 @@ class CheckHackeronePrograms implements JobInterface
         $app->bind(Client::class, app(GuzzleClient::class, [$client_options]));
     }
 
-    public function __invoke(Slack $slack)
+    public function __invoke()
     {
         //$this->checkForNewPrograms();
         $this->checkForNewAssets();
@@ -67,7 +67,7 @@ class CheckHackeronePrograms implements JobInterface
             if ($launched_at > $current_date) {
                 $message = sprintf('H1 new program launch <%s/%s>', $this->base_uri, $handle);
 
-                $slack->send($message);
+                Slack::send($message);
             }
         }
     }
@@ -85,19 +85,22 @@ class CheckHackeronePrograms implements JobInterface
         foreach ($programs as $program) {
             $json_request->variables->handle = $program->handle;
 
-            $response = json_decode((string) Client::request('POST', '/graphql', ['json' => $json_request])->getBody());
-
-            $current_assets = json_decode($program->assets);
-
-            $assets = [];
+            $response       = json_decode((string) Client::request('POST', '/graphql', ['json' => $json_request])->getBody());
+            $old_assets     = json_decode($program->assets);
+            $current_assets = [];
             
             if ($response) {
                 foreach ($response->data->team->in_scope_assets->edges as $asset) {
-                    array_push($assets, $asset->node->asset_identifier);
+                    array_push($current_assets, $asset->node->asset_identifier);
                 }
 
-                dump($assets);
-                dump($current_assets);
+                $diff  = array_diff($current_assets, $old_assets);
+
+                foreach ($diff as $new_asset) {
+                    array_push($old_assets, $new_asset);
+
+                    Slack::send(sprintf('(HackerOne) New asset for %s program (%s).', ucfirst($program->handle), $new_asset));
+                }
             }
         }
     }
