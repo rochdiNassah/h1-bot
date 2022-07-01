@@ -31,13 +31,17 @@ class CheckHackeronePrograms implements JobInterface
 
     public function __invoke()
     {
-        //$this->checkForNewPrograms();
-        $this->checkForNewAssets();
+        try {
+            $this->checkForNewPrograms();
+            $this->checkForNewAssets();
 
-        return true;
+            return true;
+        } catch (\Throwable $e) {
+            throw $e;
+        }
     }
 
-    private function checkForNewPrograms(): void
+    private function checkForNewPrograms(): bool
     {
         $date_format = 'Y-m-d\TH:i:s\Z';
 
@@ -69,10 +73,14 @@ class CheckHackeronePrograms implements JobInterface
 
                 Slack::send($message);
             }
+
+            return true;
         }
+
+        throw new \Exception();
     }
 
-    private function checkForNewAssets(): void
+    private function checkForNewAssets(): bool
     {
         $stmt = DB::prepare('SELECT * FROM programs');
 
@@ -101,7 +109,11 @@ class CheckHackeronePrograms implements JobInterface
 
                     Slack::send(sprintf('(HackerOne) New asset for %s program (%s).', ucfirst($program->handle), $new_asset));
                 }
+
+                return true;
             }
         }
+
+        throw new \Exception();
     }
 }
