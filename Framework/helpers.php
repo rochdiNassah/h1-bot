@@ -47,7 +47,7 @@ if (!function_exists('time_ago')) {
             $string = substr($string, 0, -1);
         }
 
-        return sprintf('About %d %s ago', $decimal, $string);
+        return sprintf('%d %s ago', $decimal, $string);
     }
 }
 if (!function_exists('session')) {
