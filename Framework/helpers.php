@@ -5,7 +5,6 @@ use Automation\Framework\Exceptions\Renderable;
 use Automation\Framework\Exceptions\Redirectable;
 
 if (!function_exists('time_ago')) {
-    // TODO (Refactoring)
     function time_ago($time): string|null
     {
         if (is_null($time)) {
@@ -58,6 +57,12 @@ if (!function_exists('session')) {
         } else {
             return app('session')->set($key, $value);
         }
+    }
+}
+if (!function_exists('messages')) {
+    function messages(): array
+    {
+        return Request::messages() ?? [];
     }
 }
 if (!function_exists('errors')) {

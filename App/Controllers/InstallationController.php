@@ -27,11 +27,11 @@ class InstallationController
                 updated_at INT(11) NULL
             )');
 
-            app('session')->set('message', 'Installation done!');
+            app('request')->addMessage('', 'Installation done!');
         } catch (\Throwable) {
-            app('session')->set('error', 'Something went wrong with the installation! <a class="font-bold" href="'.url('/install').'">Reinstall!</a>');
+            app('request')->addError('', 'Something went wrong with the installation! <a class="font-bold" href="'.url('/install').'">Reinstall!</a>');
         }
 
-        Response::setStatusCode(301)->redirect('/');
+        return app('request')->back();
     }
 }

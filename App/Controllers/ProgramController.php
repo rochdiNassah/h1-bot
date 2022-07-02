@@ -37,7 +37,7 @@ class ProgramController
         return $request->back();
     }
 
-    public function add(Request $request, Session $session, Response $response, Client $client, Filesystem $fs)
+    public function add(Request $request, Response $response, Client $client, Filesystem $fs)
     {
         $handle = $request->input('handle')->required()->missingFrom('programs', 'handle')->strtolower();
 
@@ -65,7 +65,7 @@ class ProgramController
             return $request->back();
         }
 
-        $session->set('message', 'Program added!');
+        $request->addMessage('', 'Program added!');
 
         return View::make('homepage');
     }

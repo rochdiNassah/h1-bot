@@ -138,6 +138,19 @@ class Request
         $session->set('flash', $flash);
     }
 
+    public function addMessage(string|int $key, string $value): void
+    {
+        $session = app('session');
+
+        $flash = unserialize($session->get('flash') ?? 'a:0:{}');
+
+        $flash['messages'][$key] = $value;
+
+        $flash = serialize($flash);
+
+        $session->set('flash', $flash);
+    }
+
     public function back(): void
     {
         $this->flash();
@@ -186,6 +199,11 @@ class Request
     public function old(string $key): string|null
     {
         return $this->getFlash()['old'][$key] ?? null;
+    }
+
+    public function messages(): array | null
+    {
+        return $this->getFlash()['messages'] ?? null;
     }
 
     public function errors(): array | null
