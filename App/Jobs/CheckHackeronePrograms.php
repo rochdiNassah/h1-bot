@@ -102,7 +102,7 @@ class CheckHackeronePrograms implements JobInterface
                     array_push($current_assets, $asset->node->asset_identifier);
                 }
 
-                $diff  = array_diff($current_assets, $old_assets);
+                $diff = array_diff($current_assets, $old_assets);
 
                 if (!empty($diff)) {
                     foreach ($diff as $new_asset) {
