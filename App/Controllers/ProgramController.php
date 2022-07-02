@@ -13,7 +13,7 @@ class ProgramController
 {
     public function index(Database $db)
     {
-        $stmt = $db->prepare('SELECT * FROM programs');
+        $stmt = $db->prepare('SELECT * FROM programs ORDER BY updated_at DESC');
 
         $stmt->execute();
 

@@ -5,6 +5,9 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
+                    #ID
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Handle
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -21,11 +24,14 @@
         <tbody>
             <?php foreach ($programs as $program): ?>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="px-6 py-4">
+                    #<?= $program->id ?>
+                </td>
                 <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                     <a target="_new" class="transition-all text-blue-500 hover:text-blue-700 hover:underline" href="<?= sprintf('https://hackerone.com/%s', $program->handle) ?>"><?= ucfirst(escape($program->handle)) ?></a>
                 </th>
                 <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                    <?= count(json_decode($program->assets)) ?>
+                    (<?= count(json_decode($program->assets)) ?>)
                 </th>
                 <td class="px-6 py-4">
                     <?= time_ago($program->updated_at) ?? 'Never!' ?>
