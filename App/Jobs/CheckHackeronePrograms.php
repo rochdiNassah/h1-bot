@@ -111,9 +111,7 @@ class CheckHackeronePrograms implements JobInterface
                         Slack::send(sprintf('(HackerOne) New asset for %s (%s).', ucfirst($program->handle), $new_asset));
                     }
 
-                    $stmt = DB::prepare('UPDATE programs SET assets = ? WHERE handle = ?');
-
-                    $stmt->execute([json_encode($old_assets), $program->handle]);
+                    DB::update('programs', ['assets', json_encode($old_assets)], ['handle', $program->handle]);
                 }
             }
         }

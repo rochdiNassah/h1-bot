@@ -4,6 +4,52 @@ use Automation\Framework\Facades\{Request, View, Response};
 use Automation\Framework\Exceptions\Renderable;
 use Automation\Framework\Exceptions\Redirectable;
 
+if (!function_exists('time_ago')) {
+    // TODO (Refactoring)
+    function time_ago($time): string|null
+    {
+        if (is_null($time)) {
+            return null;
+        }
+
+        $diff = time() - $time;
+
+        if ($diff < 60) {
+            if (0 === $diff) {
+                return 'Just now';
+            }
+
+            $result = [$diff, 'seconds'];
+        }
+        if ($diff >= 60 && $diff < 3600) {
+            $result = [$diff / 60, 'minutes'];
+        }
+        if ($diff >= 3600 && $diff < 86400) {
+            $result = [$diff / 60 / 60, 'hours'];
+        }
+        if ($diff >= 86400 && $diff < 604800) {
+            $result = [$diff / 60 / 60 / 24, 'days'];
+        }
+        if ($diff >= 604800 && $diff < 2592000) {
+            $result = [$diff / 60 / 60 / 24 / 7, 'weeks'];
+        }
+        if ($diff >= 2592000 && $diff < 31104000) {
+            $result = [$diff / 60 / 60 / 24 / 30, 'months'];
+        }
+        if ($diff >= 31104000) {
+            $result = [$diff / 60 / 60 / 24 / 30 / 12, 'years'];
+        }
+
+        $string  = $result[1];
+        $decimal = round($result[0]);
+
+        if ($decimal === 1) {
+            $string = substr($string, 0, -1);
+        }
+
+        return sprintf('About %d %s ago', $decimal, $string);
+    }
+}
 if (!function_exists('session')) {
     function session($key, $value = null): mixed
     {

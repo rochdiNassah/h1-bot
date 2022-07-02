@@ -43,6 +43,13 @@ class Database
         $this->connection = new PDO($dsn, $this->user, $this->pass, $this->options);
     }
 
+    public function update(string $table, array $set, array $where = [])
+    {
+        $stmt = $this->connection()->prepare(sprintf('UPDATE `%s` SET %s = ?, updated_at = ? WHERE (%s = ?)', $table, $set[0], $where[0]));
+
+        $stmt->execute([$set[1], time(), $where[1]]);
+    }
+
     public function connectToServer(): void
     {
         $dsn = sprintf('mysql:host=%s', $this->host);

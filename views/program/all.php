@@ -22,13 +22,13 @@
             <?php foreach ($programs as $program): ?>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                    <a class="transition-all text-blue-500 hover:text-blue-700 hover:underline" href="<?= sprintf('https://hackerone.com/%s', $program->handle) ?>"><?= ucfirst(escape($program->handle)) ?></a>
+                    <a target="_new" class="transition-all text-blue-500 hover:text-blue-700 hover:underline" href="<?= sprintf('https://hackerone.com/%s', $program->handle) ?>"><?= ucfirst(escape($program->handle)) ?></a>
                 </th>
                 <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                     <?= count(json_decode($program->assets)) ?>
                 </th>
                 <td class="px-6 py-4">
-                    <?= $program->updated_at ?? 'Never!' ?>
+                    <?= time_ago($program->updated_at) ?? 'Never!' ?>
                 </td>
                 <td class="px-6 py-4 text-right">
                     <a href="<?= url(sprintf('/programs/%s/delete', $program->id)) ?>" class="font-medium text-red-500 hover:text-red-700 hover:underline">Delete</a>

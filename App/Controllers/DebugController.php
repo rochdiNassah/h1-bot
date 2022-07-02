@@ -9,7 +9,9 @@ class DebugController
 {
     public function debug()
     {
-        Slack::channel('debug')->deleteAll();
+        // Slack::channel('debug')->deleteAll();
+
+        return strtotime('-10 year', time());
     }
 
     public function view()
