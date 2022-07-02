@@ -12,7 +12,7 @@ class Validator
     private string $formatted_input_name;
 
     public function __construct(
-        private string $input,
+        private $input,
         private string $input_name,
         private Application $app
     ) {
@@ -79,7 +79,7 @@ class Validator
         $stmt->execute(array($this->input));
 
         if (!$stmt->fetch()) {
-            $message = sprintf('"%s" does not exist.', $this->input);
+            $message = sprintf('%s "%s" does not exist.', $column, $this->input);
 
             array_push($this->errors, $message);
         }
@@ -94,10 +94,17 @@ class Validator
         $stmt->execute(array($this->input));
 
         if ($stmt->fetch()) {
-            $message = sprintf('"%s" is already exists.', $this->input);
+            $message = sprintf('%s "%s" is already exists.', $column, $this->input);
 
             array_push($this->errors, $message);
         }
+
+        return $this;
+    }
+
+    public function strtolower(): self
+    {
+        $this->input = strtolower($this->input);
 
         return $this;
     }

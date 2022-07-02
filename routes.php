@@ -7,7 +7,7 @@ use App\Controllers\InstallationController;
 
 Router::view('/', 'homepage');
 
-Router::get('programs', [ProgramController::class, 'all']);
+Router::get('programs', [ProgramController::class, 'index']);
 
 Router::view('/programs/add', 'program.add');
 Router::post('/programs/add', [ProgramController::class, 'add']);

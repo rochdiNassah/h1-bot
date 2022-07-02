@@ -6,13 +6,40 @@ use Automation\Framework\Http\{Request, Response, Session};
 use Automation\Framework\Filesystem\Filesystem;
 use Automation\Framework\Facades\View;
 use Automation\Framework\Facades\DB;
+use Automation\Framework\Database\Database;
 use GuzzleHttp\Client;
 
 class ProgramController
 {
+    public function index(Database $db)
+    {
+        $stmt = $db->prepare('SELECT * FROM programs');
+
+        $stmt->execute();
+
+        $programs = $stmt->fetchAll(\PDO::FETCH_OBJ);
+
+        return View::make('program.all', ['programs' => $programs]);
+    }
+
+    public function delete(int $id, Database $db, Request $request, Session $session)
+    {
+        $request->input('id', $id)->exists('programs', 'id');
+
+        $request->validate();
+
+        $stmt = $db->prepare('DELETE FROM programs WHERE id = ?');
+
+        $stmt->execute([$id]);
+
+        $session->set('message', 'Program deleted!');
+
+        return $request->back();
+    }
+
     public function add(Request $request, Session $session, Response $response, Client $client, Filesystem $fs)
     {
-        $handle = $request->input('handle')->required()->missingFrom('programs', 'handle');
+        $handle = $request->input('handle')->required()->missingFrom('programs', 'handle')->strtolower();
 
         $request->validate();
 

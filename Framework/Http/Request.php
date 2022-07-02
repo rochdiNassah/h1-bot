@@ -78,7 +78,7 @@ class Request
 
     public function getReferer(): string
     {
-        return $this->getHeader('referer');
+        return $this->getHeader('referer') ?? $this->base_uri;
     }
 
     public function uri(): string
@@ -145,8 +145,12 @@ class Request
         app('response')->setStatusCode(301)->redirect($this->getReferer());
     }
 
-    public function input(string $name): string|object
+    public function input(string $name, mixed $value = null): string|object
     {
+        if (!is_null($value)) {
+            $this->inputs[$name] = $value;
+        }
+
         return Validator::make($name);
     }
 

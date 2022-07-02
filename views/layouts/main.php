@@ -10,6 +10,7 @@
     </head>
     <body style="background-color: #FFFFF9">
         <div class="h-screen max-w-2xl sm:max-w-4xl container mx-auto">
+            <?= $this->include('layouts.message') ?>
             <?= $this->include('layouts.navbar') ?>
             <?= $this->child() ?>
         </div>
