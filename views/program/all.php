@@ -22,7 +22,7 @@
             <?php foreach ($programs as $program): ?>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-                    <a class="transition-all text-blue-500 hover:text-blue-700 hover:underline" href="<?= sprintf('https://hackerone/%s', $program->handle) ?>"><?= ucfirst(escape($program->handle)) ?></a>
+                    <a class="transition-all text-blue-500 hover:text-blue-700 hover:underline" href="<?= sprintf('https://hackerone.com/%s', $program->handle) ?>"><?= ucfirst(escape($program->handle)) ?></a>
                 </th>
                 <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
                     <?= count(json_decode($program->assets)) ?>
