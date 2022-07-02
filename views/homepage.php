@@ -22,20 +22,5 @@
             </div>
         <?php endforeach; ?>
         <div>
-
-        <div class="max-w-2xl mx-auto space-y-2 my-2">
-        <?php if (null !== ($message = app('session')->pull('message'))): ?>
-            <div class="w-full p-3.5 text-xs text-blue-700 bg-blue-100" role="alert">
-                <?= $message ?>
-            </div>
-        <?php endif; ?>
-        <div>
-        <div class="max-w-2xl mx-auto space-y-2 my-2">
-        <?php if (null !== ($error = app('session')->pull('error'))): ?>
-            <div class="w-full p-3.5 text-xs text-red-700 bg-red-100" role="alert">
-                <?= $error ?>
-            </div>
-        <?php endif; ?>
-        <div>
     </div>
 </div>
